@@ -63,7 +63,9 @@ body {
   flex-direction: column;
   width: 300px;
   max-width: 88vw;
-  height: 100dvh;
+  /* 内容に合わせた高さ（下部の無駄な余白を作らない）。多い時は画面高で頭打ち＆スクロール */
+  height: auto;
+  max-height: 100dvh;
   background: var(--surface);
   backdrop-filter: blur(16px) saturate(1.4);
   -webkit-backdrop-filter: blur(16px) saturate(1.4);
@@ -433,11 +435,16 @@ body {
 }
 
 .panel-foot {
+  flex: none;
+  padding: 12px 14px;
   font-size: 10.5px;
   line-height: 1.5;
   color: var(--ink-3);
   border-top: 1px solid var(--line);
-  padding-top: 12px;
+}
+
+.panel.collapsed .panel-foot {
+  display: none;
 }
 
 .panel-foot a {
@@ -611,8 +618,8 @@ body {
     padding: 14px 12px;
   }
 
-  .panel-body {
-    padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  .panel-foot {
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
   }
 
   /* 畳んだパネルのヘッダ分だけ、地図コントロール（右下:背景切替/情報, 左下:縮尺）を持ち上げる */

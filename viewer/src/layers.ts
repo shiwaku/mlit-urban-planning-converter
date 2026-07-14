@@ -27,6 +27,7 @@ const DEFAULT_OPACITY: Record<string, number> = {
   jyuntoshi: 0.2, // 準都市計画区域（広域・赤褐）
   ritteki: 0.3, // 立地適正化計画区域（広域）
   senbiki: 0.55, // 区域区分（市街化/調整の2色。やや下げる）
+  douro: 0.8, // 都市計画道路（線。やや透過して下を見せる）
 }
 
 /** テーマ既定の不透明度。 */
@@ -195,7 +196,8 @@ export function paintFor(def: ThemeDef): LayerPaint {
       type: 'line',
       paint: {
         'line-color': color,
-        'line-width': ['interpolate', ['linear'], ['zoom'], 8, 1, 15, 4],
+        // 高密度な路線網が下のレイヤー（用途地域等）を覆い隠さないよう細めにする
+        'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.4, 12, 1, 16, 2.4],
         'line-opacity': opacityOf(def),
       },
     }
