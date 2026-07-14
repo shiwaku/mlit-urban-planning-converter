@@ -1,0 +1,110 @@
+name: update-pmtiles
+
+# 週次（毎週火曜 06:00 JST = 月曜 21:00 UTC）と手動実行で、
+# 提供元データの更新を検知して PMTiles を再生成し、Release として配信する。
+on:
+  schedule:
+    - cron: "0 21 * * 1"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "更新が無くても強制的に再生成する"
+        type: boolean
+        default: false
+      split:
+        description: "PMTiles の分割方式"
+        type: choice
+        options: [theme, prefecture]
+        default: theme
+
+concurrency:
+  group: update-pmtiles
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+env:
+  TIPPECANOE_VERSION: "2.80.0"
+  SPLIT: ${{ github.event.inputs.split || 'theme' }}
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python deps
+        run: pip install -r requirements.txt
+
+      - name: Cache tippecanoe
+        id: cache-tippecanoe
+        uses: actions/cache@v4
+        with:
+          path: /usr/local/bin/tippecanoe
+          key: tippecanoe-${{ env.TIPPECANOE_VERSION }}-${{ runner.os }}
+
+      - name: Build tippecanoe
+        if: steps.cache-tippecanoe.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libsqlite3-dev zlib1g-dev
+          git clone --depth 1 -b "$TIPPECANOE_VERSION" https://github.com/felt/tippecanoe.git
+          make -C tippecanoe -j"$(nproc)"
+          sudo make -C tippecanoe install
+          tippecanoe --version
+
+      - name: Check for update
+        id: check
+        run: |
+          PYTHONPATH=src python -m tosiko_pmtiles.cli check-update --github-output "$GITHUB_OUTPUT"
+
+      - name: Download GeoJSON
+        if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
+        run: PYTHONPATH=src python -m tosiko_pmtiles.cli download
+
+      - name: Convert to PMTiles
+        if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
+        run: PYTHONPATH=src python -m tosiko_pmtiles.cli convert --split "$SPLIT"
+
+      - name: Build catalog
+        if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
+        run: |
+          TAG="${{ steps.check.outputs.tag }}"
+          URL="${{ github.server_url }}/${{ github.repository }}/releases/tag/${TAG}"
+          PYTHONPATH=src python -m tosiko_pmtiles.cli catalog --split "$SPLIT" --release-url "$URL"
+
+      - name: Publish release
+        if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${{ steps.check.outputs.tag }}"
+          VER="${{ steps.check.outputs.version }}"
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            gh release create "$TAG" \
+              --title "都市計画決定GISデータ ${VER}" \
+              --notes "国土交通省 都市局『都市計画決定GISデータ』を PMTiles 化した版 ${VER}。出典: https://www.mlit.go.jp/toshi/tosiko/toshi_tosiko_tk_000182.html"
+          fi
+          gh release upload "$TAG" dist/*.pmtiles dist/manifest.json --clobber
+
+      - name: Commit catalog
+        if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add versions/ versions.json CATALOG.md data/themes.json
+          if git diff --cached --quiet; then
+            echo "コミットする変更はありません"
+          else
+            git commit -m "data: 版 ${{ steps.check.outputs.version }} を反映"
+            git push
+          fi
+
+      - name: Summary
+        run: |
+          echo "changed=${{ steps.check.outputs.changed }} / version=${{ steps.check.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"

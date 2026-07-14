@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>都市計画決定GISデータ PMTiles ビューア</title>
+  <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/pmtiles@3.2.1/dist/pmtiles.js"></script>
+  <style>
+    html, body { margin: 0; height: 100%; }
+    #map { position: absolute; inset: 0; }
+    #panel {
+      position: absolute; top: 10px; left: 10px; z-index: 1;
+      background: rgba(255,255,255,.92); padding: 10px 12px; border-radius: 8px;
+      font: 13px/1.5 system-ui, sans-serif; box-shadow: 0 1px 4px rgba(0,0,0,.3);
+      max-width: 260px;
+    }
+    #panel h1 { font-size: 14px; margin: 0 0 6px; }
+    #panel select { width: 100%; padding: 4px; }
+    #panel .note { color: #555; font-size: 11px; margin-top: 8px; }
+    #panel a { color: #06c; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div id="panel">
+    <h1>都市計画決定GISデータ</h1>
+    <label>テーマ:
+      <select id="theme"></select>
+    </label>
+    <div class="note">
+      出典: 国土交通省 都市局「都市計画決定GISデータ」（参考情報）。
+      背景地図: 地理院タイル。
+      <br /><span id="src"></span>
+    </div>
+  </div>
+
+  <script>
+    // data/themes.json と同じ対応（ビューアは docs/ 単独配信のため埋め込み）
+    const THEMES = [
+      ["youto", "用途地域"], ["tokei", "都市計画区域"], ["jyuntoshi", "準都市計画区域"],
+      ["senbiki", "区域区分"], ["ritteki", "立地適正化計画区域"], ["koudoti", "高度地区"],
+      ["koudori", "高度利用地区"], ["bouka", "防火地域・準防火地域"], ["tkbt", "特別用途地区"],
+      ["tokuteiyouto", "特定用途制限地域"], ["tokuteiyuudou", "特定用途誘導地区"],
+      ["fuuchichiku", "風致地区"], ["ryokukachiiki", "緑化地域"], ["tokuryoku", "特別緑地保全地区"],
+      ["kousoujyukyo", "高層住居誘導地区"], ["kyojyuchosei", "居住調整地域"],
+      ["tokureiyouseki", "特例容積率適用地区"], ["tokuteibou", "特定防災街区整備地区"],
+      ["rekifuu", "歴史的風土保存地区"], ["toshisaisei", "都市再生特別地区"],
+      ["chikukei", "地区計画"], ["tochiku", "土地区画整理事業"], ["douro", "都市計画道路"],
+      ["kouen", "公園"], ["soubou", "航空機騒音障害防止地区"],
+      ["fukkousaiseikyoten", "一団地の復興再生拠点市街地形成施設"],
+    ];
+
+    // OWNER/REPO を Pages の URL から推定（<owner>.github.io/<repo>/）
+    function releaseBase() {
+      const host = location.hostname;
+      const owner = host.endsWith(".github.io") ? host.split(".")[0] : "shiwaku";
+      const seg = location.pathname.split("/").filter(Boolean)[0];
+      const repo = seg || "toshi-tosiko-tk";
+      return `https://github.com/${owner}/${repo}/releases/latest/download`;
+    }
+    const BASE = releaseBase();
+    document.getElementById("src").textContent = BASE;
+
+    const protocol = new pmtiles.Protocol();
+    maplibregl.addProtocol("pmtiles", protocol.tile);
+
+    const map = new maplibregl.Map({
+      container: "map",
+      style: {
+        version: 8,
+        sources: {
+          gsi: {
+            type: "raster",
+            tiles: ["https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png"],
+            tileSize: 256,
+            attribution: "地理院タイル",
+          },
+        },
+        layers: [{ id: "gsi", type: "raster", source: "gsi" }],
+      },
+      center: [139.75, 35.68],
+      zoom: 10,
+    });
+
+    function setTheme(code) {
+      for (const id of ["theme-fill", "theme-line"]) {
+        if (map.getLayer(id)) map.removeLayer(id);
+      }
+      if (map.getSource("theme")) map.removeSource("theme");
+      map.addSource("theme", { type: "vector", url: `pmtiles://${BASE}/${code}.pmtiles` });
+      map.addLayer({
+        id: "theme-fill", type: "fill", source: "theme", "source-layer": code,
+        paint: { "fill-color": "#e2792b", "fill-opacity": 0.35 },
+      });
+      map.addLayer({
+        id: "theme-line", type: "line", source: "theme", "source-layer": code,
+        paint: { "line-color": "#b3560f", "line-width": 0.6 },
+      });
+    }
+
+    const sel = document.getElementById("theme");
+    for (const [code, name] of THEMES) {
+      const opt = document.createElement("option");
+      opt.value = code; opt.textContent = `${name}（${code}）`;
+      sel.appendChild(opt);
+    }
+    sel.addEventListener("change", () => setTheme(sel.value));
+
+    map.on("load", () => setTheme(sel.value));
+    map.on("click", "theme-fill", (e) => {
+      const props = e.features[0]?.properties || {};
+      const html = Object.entries(props)
+        .map(([k, v]) => `<b>${k}</b>: ${v}`).join("<br />");
+      new maplibregl.Popup().setLngLat(e.lngLat).setHTML(html || "(属性なし)").addTo(map);
+    });
+    map.on("mouseenter", "theme-fill", () => (map.getCanvas().style.cursor = "pointer"));
+    map.on("mouseleave", "theme-fill", () => (map.getCanvas().style.cursor = ""));
+  </script>
+</body>
+</html>

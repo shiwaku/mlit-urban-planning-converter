@@ -1,0 +1,31 @@
+{
+  "_comment": "都市計画決定GISデータのテーマ（ファイル名接尾辞）→ 正式名称。出典: 国土交通省 都市局『都市計画決定GISデータ データ定義書』。order は表示順の目安。",
+  "themes": [
+    { "code": "youto",              "name": "用途地域",                             "order": 1 },
+    { "code": "tokei",              "name": "都市計画区域",                         "order": 2 },
+    { "code": "jyuntoshi",          "name": "準都市計画区域",                       "order": 3 },
+    { "code": "senbiki",            "name": "区域区分",                             "order": 4 },
+    { "code": "ritteki",            "name": "立地適正化計画区域",                   "order": 5 },
+    { "code": "koudoti",            "name": "高度地区",                             "order": 6 },
+    { "code": "koudori",            "name": "高度利用地区",                         "order": 7 },
+    { "code": "bouka",              "name": "防火地域・準防火地域",                 "order": 8 },
+    { "code": "tkbt",               "name": "特別用途地区",                         "order": 9 },
+    { "code": "tokuteiyouto",       "name": "特定用途制限地域",                     "order": 10 },
+    { "code": "tokuteiyuudou",      "name": "特定用途誘導地区",                     "order": 11 },
+    { "code": "fuuchichiku",        "name": "風致地区",                             "order": 12 },
+    { "code": "ryokukachiiki",      "name": "緑化地域",                             "order": 13 },
+    { "code": "tokuryoku",          "name": "特別緑地保全地区",                     "order": 14 },
+    { "code": "kousoujyukyo",       "name": "高層住居誘導地区",                     "order": 15 },
+    { "code": "kyojyuchosei",       "name": "居住調整地域",                         "order": 16 },
+    { "code": "tokureiyouseki",     "name": "特例容積率適用地区",                   "order": 17 },
+    { "code": "tokuteibou",         "name": "特定防災街区整備地区",                 "order": 18 },
+    { "code": "rekifuu",            "name": "歴史的風土保存地区",                   "order": 19 },
+    { "code": "toshisaisei",        "name": "都市再生特別地区",                     "order": 20 },
+    { "code": "chikukei",           "name": "地区計画",                             "order": 21 },
+    { "code": "tochiku",            "name": "土地区画整理事業",                     "order": 22 },
+    { "code": "douro",              "name": "都市計画道路",                         "order": 23 },
+    { "code": "kouen",              "name": "公園",                                 "order": 24 },
+    { "code": "soubou",             "name": "航空機騒音障害防止地区",               "order": 25 },
+    { "code": "fukkousaiseikyoten", "name": "一団地の復興再生拠点市街地形成施設",   "order": 26 }
+  ]
+}

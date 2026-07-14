@@ -1,0 +1,20 @@
+# ダウンロード・展開・変換の中間/出力物（gitには置かない。PMTilesはGitHub Releasesへ）
+raw/
+dist/
+*.zip
+*.pmtiles
+*.mbtiles
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
