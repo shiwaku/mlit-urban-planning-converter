@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
-  <title>都市計画決定GISビューワー</title>
+  <title>都市計画決定GISビューワ</title>
   <meta name="description" content="国土交通省「都市計画決定GISデータ」全国版を PMTiles でベクター表示するビューワー" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#2a78d6" />
@@ -22,7 +22,7 @@
     <header class="panel-head">
       <div class="brand">
         <span class="brand-mark" aria-hidden="true">🗺️</span>
-        <h1>都市計画決定GISビューワー</h1>
+        <h1>都市計画決定GISビューワ</h1>
       </div>
       <div class="head-actions">
         <button id="theme-btn" class="icon-btn" type="button" title="テーマ切替" aria-label="テーマ切替"></button>
@@ -35,6 +35,7 @@
         <div class="field-head">
           <span class="field-label">レイヤー</span>
           <div class="field-actions">
+            <button id="all-on" class="mini-btn" type="button">全ON</button>
             <button id="all-off" class="mini-btn" type="button">全OFF</button>
           </div>
         </div>
@@ -42,7 +43,7 @@
       </div>
 
       <footer class="panel-foot">
-        出典: 国土交通省 都市局「都市計画決定GISデータ」（参考情報）<br />
+        出典: 国土交通省 都市局<a href="https://www.mlit.go.jp/toshi/tosiko/toshi_tosiko_tk_000182.html" target="_blank" rel="noopener">「都市計画決定GISデータ」</a>（参考情報）<br />
         配色: <a href="https://toshikeikaku-info.jp/" target="_blank" rel="noopener">都市計画情報</a> を参考<br />
         背景: 国土地理院 最適化ベクトルタイル
       </footer>

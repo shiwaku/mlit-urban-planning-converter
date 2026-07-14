@@ -43,26 +43,47 @@ const defOf = (key: string): ThemeDef | undefined => THEMES.find((t) => t.key ==
 const activeLayerIds = (): string[] =>
   THEMES.filter((t) => t.on).map((t) => layerId(t.key)).filter((id) => map.getLayer(id))
 
-function addDataLayers(): void {
-  for (const def of THEMES) {
-    if (map.getLayer(layerId(def.key))) map.removeLayer(layerId(def.key))
-    if (map.getSource(def.key)) map.removeSource(def.key)
+const themeIndex = (key: string): number => THEMES.findIndex((t) => t.key === key)
+
+// canonical z順: THEMES 配列の後ろほど地図で最前面（都市計画区域が最背面, 都市計画道路が最前面）。
+// def の直上に来るべき既存レイヤーを beforeId に指定して正規順で挿入する。
+function beforeIdFor(def: ThemeDef): string | undefined {
+  const i = themeIndex(def.key)
+  for (let j = i + 1; j < THEMES.length; j++) {
+    const id = layerId(THEMES[j].key)
+    if (map.getLayer(id)) return id
   }
-  // THEMES は「先頭ほど最前面」。addLayer は末尾から行い、先頭を最後（最前面）に積む。
-  for (const def of [...THEMES].reverse()) {
-    map.addSource(def.key, {
-      type: 'vector',
-      url: `pmtiles://${PMTILES_BASE}/${def.key}.pmtiles`,
-    })
-    const p = paintFor(def)
-    map.addLayer({
+  return undefined
+}
+
+function ensureLayer(def: ThemeDef): void {
+  if (map.getLayer(layerId(def.key))) return
+  if (!map.getSource(def.key)) {
+    map.addSource(def.key, { type: 'vector', url: `pmtiles://${PMTILES_BASE}/${def.key}.pmtiles` })
+  }
+  const p = paintFor(def)
+  map.addLayer(
+    {
       id: layerId(def.key),
       type: p.type,
       source: def.key,
       'source-layer': def.key,
-      layout: { visibility: def.on ? 'visible' : 'none' },
       paint: p.paint,
-    } as maplibregl.LayerSpecification)
+    } as maplibregl.LayerSpecification,
+    beforeIdFor(def),
+  )
+}
+
+function removeLayer(def: ThemeDef): void {
+  if (map.getLayer(layerId(def.key))) map.removeLayer(layerId(def.key))
+  if (map.getSource(def.key)) map.removeSource(def.key)
+}
+
+// 有効なレイヤーのみを（正規 z順で）地図に載せる。無効なものはソースごと持たない＝軽量。
+function addDataLayers(): void {
+  for (const def of THEMES) {
+    if (def.on) ensureLayer(def)
+    else removeLayer(def)
   }
 }
 
@@ -169,8 +190,8 @@ function buildToggles(): void {
 
 function setLayerVisible(def: ThemeDef, on: boolean): void {
   def.on = on
-  const id = layerId(def.key)
-  if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', on ? 'visible' : 'none')
+  if (on) ensureLayer(def)
+  else removeLayer(def)
   const item = layersDiv.querySelector<HTMLElement>(`.layer-item[data-key="${def.key}"]`)
   item?.querySelector<HTMLElement>('.layer-legend')?.toggleAttribute('hidden', !on)
   item?.querySelector<HTMLElement>('.layer-opacity')?.toggleAttribute('hidden', !on)
@@ -183,15 +204,16 @@ function setLayerOpacity(def: ThemeDef, v: number): void {
   map.setPaintProperty(id, def.geom === 'line' ? 'line-opacity' : 'fill-opacity', v)
 }
 
-const allOffBtn = document.getElementById('all-off') as HTMLButtonElement
-allOffBtn.addEventListener('click', () => {
+function setAll(on: boolean): void {
   for (const def of THEMES) {
-    if (!def.on) continue
+    if (def.on === on) continue
     const input = layersDiv.querySelector<HTMLInputElement>(`.layer-item[data-key="${def.key}"] input`)
-    if (input) input.checked = false
-    setLayerVisible(def, false)
+    if (input) input.checked = on
+    setLayerVisible(def, on)
   }
-})
+}
+;(document.getElementById('all-on') as HTMLButtonElement).addEventListener('click', () => setAll(true))
+;(document.getElementById('all-off') as HTMLButtonElement).addEventListener('click', () => setAll(false))
 
 // ---- 背景地図スイッチャー（右下） ----
 class BasemapControl implements maplibregl.IControl {

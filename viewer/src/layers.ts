@@ -39,37 +39,38 @@ export function opacityOf(def: ThemeDef): number {
 }
 
 /**
- * 描画対象テーマ（全26種）。**リスト先頭ほど地図で最前面**（一般的なGISのレイヤーパネルと同じ）。
- * 線・細かい地区を上に、用途地域を中位、広域な区域（区域区分・都市計画区域など）を下に置く。
- * 実際の addLayer はこの配列を逆順に行い、先頭を最前面にする（main.ts）。
+ * 描画対象テーマ（全26種）。パネルの並び順（先頭＝一番上）。
+ * 広域な区域（都市計画区域）を上に、用途地域を中位、細かい地区・線（都市計画道路）を下に置く。
+ * 地図の描画順は main.ts の addDataLayers がこの配列順に addLayer するため、
+ * **配列末尾ほど地図で最前面**（都市計画区域が最背面、都市計画道路が最前面）になる。
  */
 export const THEMES: ThemeDef[] = [
-  { key: 'douro', name: '都市計画道路', geom: 'line', on: false },
+  { key: 'tokei', name: '都市計画区域', geom: 'fill', on: false },
+  { key: 'jyuntoshi', name: '準都市計画区域', geom: 'fill', on: false },
+  { key: 'senbiki', name: '区域区分', geom: 'fill', on: false },
+  { key: 'ritteki', name: '立地適正化計画区域', geom: 'fill', on: false },
+  { key: 'youto', name: '用途地域', geom: 'fill', on: true },
+  { key: 'tkbt', name: '特別用途地区', geom: 'fill', on: false },
+  { key: 'tokuteiyouto', name: '特定用途制限地域', geom: 'fill', on: false },
+  { key: 'tokuteiyuudou', name: '特定用途誘導地区', geom: 'fill', on: false },
+  { key: 'koudoti', name: '高度地区', geom: 'fill', on: false },
+  { key: 'koudori', name: '高度利用地区', geom: 'fill', on: false },
+  { key: 'tokureiyouseki', name: '特例容積率適用地区', geom: 'fill', on: false },
+  { key: 'kousoujyukyo', name: '高層住居誘導地区', geom: 'fill', on: false },
+  { key: 'kyojyuchosei', name: '居住調整地域', geom: 'fill', on: false },
+  { key: 'bouka', name: '防火地域・準防火地域', geom: 'fill', on: false },
+  { key: 'tokuteibou', name: '特定防災街区整備地区', geom: 'fill', on: false },
+  { key: 'fuuchichiku', name: '風致地区', geom: 'fill', on: false },
+  { key: 'ryokukachiiki', name: '緑化地域', geom: 'fill', on: false },
+  { key: 'tokuryoku', name: '特別緑地保全地区', geom: 'fill', on: false },
+  { key: 'rekifuu', name: '歴史的風土保存地区', geom: 'fill', on: false },
+  { key: 'toshisaisei', name: '都市再生特別地区', geom: 'fill', on: false },
+  { key: 'chikukei', name: '地区計画', geom: 'fill', on: false },
+  { key: 'tochiku', name: '土地区画整理事業', geom: 'fill', on: false },
   { key: 'kouen', name: '公園', geom: 'fill', on: false },
   { key: 'soubou', name: '航空機騒音障害防止地区', geom: 'fill', on: false },
   { key: 'fukkousaiseikyoten', name: '一団地の復興再生拠点市街地形成施設', geom: 'fill', on: false },
-  { key: 'tochiku', name: '土地区画整理事業', geom: 'fill', on: false },
-  { key: 'chikukei', name: '地区計画', geom: 'fill', on: false },
-  { key: 'toshisaisei', name: '都市再生特別地区', geom: 'fill', on: false },
-  { key: 'rekifuu', name: '歴史的風土保存地区', geom: 'fill', on: false },
-  { key: 'tokuryoku', name: '特別緑地保全地区', geom: 'fill', on: false },
-  { key: 'ryokukachiiki', name: '緑化地域', geom: 'fill', on: false },
-  { key: 'fuuchichiku', name: '風致地区', geom: 'fill', on: false },
-  { key: 'tokuteibou', name: '特定防災街区整備地区', geom: 'fill', on: false },
-  { key: 'bouka', name: '防火地域・準防火地域', geom: 'fill', on: false },
-  { key: 'kyojyuchosei', name: '居住調整地域', geom: 'fill', on: false },
-  { key: 'kousoujyukyo', name: '高層住居誘導地区', geom: 'fill', on: false },
-  { key: 'tokureiyouseki', name: '特例容積率適用地区', geom: 'fill', on: false },
-  { key: 'koudori', name: '高度利用地区', geom: 'fill', on: false },
-  { key: 'koudoti', name: '高度地区', geom: 'fill', on: false },
-  { key: 'tokuteiyuudou', name: '特定用途誘導地区', geom: 'fill', on: false },
-  { key: 'tokuteiyouto', name: '特定用途制限地域', geom: 'fill', on: false },
-  { key: 'tkbt', name: '特別用途地区', geom: 'fill', on: false },
-  { key: 'youto', name: '用途地域', geom: 'fill', on: true },
-  { key: 'ritteki', name: '立地適正化計画区域', geom: 'fill', on: false },
-  { key: 'senbiki', name: '区域区分', geom: 'fill', on: false },
-  { key: 'jyuntoshi', name: '準都市計画区域', geom: 'fill', on: false },
-  { key: 'tokei', name: '都市計画区域', geom: 'fill', on: false },
+  { key: 'douro', name: '都市計画道路', geom: 'line', on: false },
 ]
 
 // ---- 配色（https://toshikeikaku-info.jp/ を参考） ----

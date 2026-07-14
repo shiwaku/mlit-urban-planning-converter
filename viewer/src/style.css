@@ -56,19 +56,25 @@ body {
 /* ---- パネル ---- */
 .panel {
   position: absolute;
-  top: 16px;
-  left: 16px;
+  top: 0;
+  left: 0;
   z-index: 2;
-  width: 288px;
-  max-width: calc(100vw - 32px);
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  max-width: 88vw;
+  height: 100dvh;
   background: var(--surface);
   backdrop-filter: blur(16px) saturate(1.4);
   -webkit-backdrop-filter: blur(16px) saturate(1.4);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-right: 1px solid var(--line);
+  border-radius: 0;
   box-shadow: var(--shadow);
   overflow: hidden;
-  transition: box-shadow 0.2s ease;
+}
+
+.panel.collapsed {
+  height: auto;
 }
 
 .panel-head {
@@ -129,11 +135,17 @@ body {
   padding: 14px;
   display: grid;
   gap: 16px;
-  max-height: calc(100vh - 120px);
+  align-content: start;
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
   /* パネル内スクロールが地図のズーム/ページスクロールへ連鎖しないようにする */
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+}
+
+.panel-head {
+  flex: none;
 }
 
 .panel.collapsed .panel-body {
@@ -428,6 +440,15 @@ body {
   padding-top: 12px;
 }
 
+.panel-foot a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.panel-foot a:hover {
+  text-decoration: underline;
+}
+
 /* ---- ホバーツールチップ ---- */
 .map-tooltip {
   position: absolute;
@@ -520,9 +541,8 @@ body {
   display: flex;
   gap: 2px;
   padding: 3px;
-  background: var(--surface);
-  backdrop-filter: blur(16px) saturate(1.4);
-  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  /* backdrop-filter は背景切替時のホバーで白化するため使わず、不透明背景にする */
+  background: var(--surface-solid);
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow);
@@ -566,12 +586,25 @@ body {
 @media (max-width: 640px) {
   .panel {
     top: auto;
-    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
-    left: 10px;
-    right: 10px;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: auto;
     max-width: none;
-    border-radius: 18px;
+    height: auto;
+    max-height: 62dvh;
+    border: none;
+    border-top: 1px solid var(--line);
+    border-radius: 0;
+    /* iOS/Android では backdrop-filter × 内部スクロールでパネルが白化する既知不具合があるため、
+       モバイルではすりガラスをやめて不透明背景にする */
+    background: var(--surface-solid);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .panel.collapsed {
+    max-height: none;
   }
 
   .panel-head {
@@ -579,7 +612,7 @@ body {
   }
 
   .panel-body {
-    max-height: 52vh;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
   }
 
   /* 畳んだパネルのヘッダ分だけ、地図コントロール（右下:背景切替/情報, 左下:縮尺）を持ち上げる */
@@ -598,7 +631,7 @@ body {
   }
 
   .maplibregl-ctrl-top-right {
-    margin-top: calc(env(safe-area-inset-top, 0px));
+    margin-top: env(safe-area-inset-top, 0px);
   }
 }
 
