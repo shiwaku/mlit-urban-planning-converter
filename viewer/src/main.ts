@@ -25,7 +25,15 @@ const map = new maplibregl.Map({
   zoom: 10,
   attributionControl: false,
 })
-map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right')
+map.addControl(new maplibregl.NavigationControl({ showCompass: true, visualizePitch: true }), 'top-right')
+map.addControl(
+  new maplibregl.GeolocateControl({
+    positionOptions: { enableHighAccuracy: true },
+    trackUserLocation: true,
+    showUserLocation: true,
+  }),
+  'top-right',
+)
 map.addControl(new maplibregl.ScaleControl(), 'bottom-left')
 map.addControl(new maplibregl.AttributionControl({ compact: true, customAttribution: DATA_ATTRIBUTION }))
 
@@ -40,7 +48,8 @@ function addDataLayers(): void {
     if (map.getLayer(layerId(def.key))) map.removeLayer(layerId(def.key))
     if (map.getSource(def.key)) map.removeSource(def.key)
   }
-  for (const def of THEMES) {
+  // THEMES は「先頭ほど最前面」。addLayer は末尾から行い、先頭を最後（最前面）に積む。
+  for (const def of [...THEMES].reverse()) {
     map.addSource(def.key, {
       type: 'vector',
       url: `pmtiles://${PMTILES_BASE}/${def.key}.pmtiles`,
@@ -261,9 +270,18 @@ map.on('click', (e) => {
 
 // ---- 初期化 ----
 renderThemeBtn()
-renderCollapseBtn()
 buildToggles()
+// スマホでは初期状態でパネルを畳んで地図を広く見せる
+if (window.matchMedia('(max-width: 640px)').matches) panel.classList.add('collapsed')
+renderCollapseBtn()
 map.on('load', addDataLayers)
 
 // デバッグ/外部連携用にマップを公開
 ;(window as unknown as { __map: maplibregl.Map }).__map = map
+
+// PWA: Service Worker 登録（本番のみ。dev では HMR を妨げないよう無効）
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {})
+  })
+}

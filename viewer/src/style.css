@@ -566,16 +566,39 @@ body {
 @media (max-width: 640px) {
   .panel {
     top: auto;
-    bottom: 12px;
-    left: 12px;
-    right: 12px;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    left: 10px;
+    right: 10px;
     width: auto;
     max-width: none;
     border-radius: 18px;
   }
 
+  .panel-head {
+    padding: 14px 12px;
+  }
+
   .panel-body {
-    max-height: 46vh;
+    max-height: 52vh;
+  }
+
+  /* 畳んだパネルのヘッダ分だけ、地図コントロール（右下:背景切替/情報, 左下:縮尺）を持ち上げる */
+  .maplibregl-ctrl-bottom-right,
+  .maplibregl-ctrl-bottom-left {
+    margin-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* タッチ操作しやすいよう当たり判定を拡大 */
+  .toggle {
+    padding: 9px 8px;
+  }
+
+  .basemap-switch button {
+    padding: 7px 14px;
+  }
+
+  .maplibregl-ctrl-top-right {
+    margin-top: calc(env(safe-area-inset-top, 0px));
   }
 }
 
