@@ -647,3 +647,35 @@ body {
     transition: none !important;
   }
 }
+
+/* ---- 診断HUD（?debug 時のみ） ---- */
+#diag-hud {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  z-index: 9999;
+  max-width: 60vw;
+  max-height: 70vh;
+  overflow: auto;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.82);
+  color: #d6f5c8;
+  font: 11px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+  white-space: normal;
+  word-break: break-all;
+}
+
+#diag-hud b {
+  color: #fff;
+}
+
+#diag-hud u {
+  display: inline-block;
+  margin-top: 4px;
+  color: #7fd0ff;
+  text-decoration: none;
+  font-weight: 700;
+}

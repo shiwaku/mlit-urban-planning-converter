@@ -15,6 +15,9 @@ let theme: Theme = initialTheme()
 let base: Basemap = 'pale'
 applyThemeAttr(theme)
 
+const isMobile = window.matchMedia('(max-width: 640px)').matches
+const DEBUG = new URLSearchParams(location.search).has('debug')
+
 const protocol = new Protocol()
 maplibregl.addProtocol('pmtiles', protocol.tile)
 
@@ -24,6 +27,13 @@ const map = new maplibregl.Map({
   center: [139.74, 35.68],
   zoom: 10,
   attributionControl: false,
+  // モバイルはGPU/メモリが限られるため保持タイル数を絞る。youto(大)+douro(大)を
+  // 同時表示するとメモリ逼迫で WebGL コンテキストが失われ、地図（用途地域等）が
+  // まるごと消える（＝スマホで真っ白）事象があるため、その圧を下げる。
+  maxTileCacheSize: isMobile ? 24 : undefined,
+  // 近年のスマホは DPR=3。描画バッファ等の GPU メモリは DPR の2乗で効くため、
+  // モバイルでは 2 に抑える（2x も十分 Retina 画質）。コンテキスト消失の予防が主目的。
+  pixelRatio: isMobile ? Math.min(window.devicePixelRatio || 1, 2) : undefined,
 })
 map.addControl(new maplibregl.NavigationControl({ showCompass: true, visualizePitch: true }), 'top-right')
 map.addControl(
@@ -36,6 +46,52 @@ map.addControl(
 )
 map.addControl(new maplibregl.ScaleControl(), 'bottom-left')
 map.addControl(new maplibregl.AttributionControl({ compact: true, customAttribution: DATA_ATTRIBUTION }))
+
+// ---- 診断（?debug で画面表示。実機での原因切り分け用） ----
+// ログの直近行を保持し、HUD と console に出す。
+const diagLog: string[] = []
+let ctxLostCount = 0
+let hudEl: HTMLElement | null = null
+function diag(msg: string): void {
+  const line = `${new Date().toISOString().slice(11, 19)} ${msg}`
+  diagLog.push(line)
+  if (diagLog.length > 8) diagLog.shift()
+  // eslint-disable-next-line no-console
+  console.log('[diag]', line)
+  renderHud()
+}
+function renderHud(): void {
+  if (!DEBUG || !hudEl) return
+  const active = THEMES.filter((t) => t.on)
+  const rows = active
+    .map((t) => {
+      const id = layerId(t.key)
+      let n = 0
+      try {
+        n = map.getLayer(id) ? map.queryRenderedFeatures({ layers: [id] }).length : -1
+      } catch {
+        n = -2
+      }
+      return `${t.key}: ${n}`
+    })
+    .join('  ')
+  hudEl.innerHTML =
+    `<b>build ${__BUILD_TIME__}</b><br>` +
+    `zoom ${map.getZoom().toFixed(1)} · mobile ${isMobile} · ctxLost ${ctxLostCount}<br>` +
+    `<u>rendered features / layer</u><br>${rows || '(none)'}<br>` +
+    `<u>log</u><br>${diagLog.join('<br>')}`
+}
+function initHud(): void {
+  if (!DEBUG) return
+  hudEl = document.createElement('div')
+  hudEl.id = 'diag-hud'
+  document.body.append(hudEl)
+  renderHud()
+  map.on('render', () => {
+    // 過負荷を避けるため描画完了時のみ更新
+    if (map.areTilesLoaded()) renderHud()
+  })
+}
 
 const layerId = (key: string): string => `${key}-lyr`
 const keyFromLayer = (id: string): string => id.replace(/-lyr$/, '')
@@ -296,9 +352,41 @@ if (buildEl) buildEl.textContent = `build: ${__BUILD_TIME__}`
 renderThemeBtn()
 buildToggles()
 // スマホでは初期状態でパネルを畳んで地図を広く見せる
-if (window.matchMedia('(max-width: 640px)').matches) panel.classList.add('collapsed')
+if (isMobile) panel.classList.add('collapsed')
 renderCollapseBtn()
 map.on('load', addDataLayers)
+initHud()
+
+// WebGL コンテキスト消失からの復帰。iOS Safari 等ではメモリ逼迫時に GL コンテキストが
+// 失われ、地図（用途地域などのデータ層）がまるごと消えて戻らないことがある。
+// 復帰時に有効レイヤーを貼り直して自動回復する。
+const canvas = map.getCanvas()
+canvas.addEventListener(
+  'webglcontextlost',
+  (e) => {
+    // preventDefault しないと自動復帰イベントが発火しない
+    e.preventDefault()
+    ctxLostCount++
+    diag('WebGL context lost')
+  },
+  false,
+)
+canvas.addEventListener(
+  'webglcontextrestored',
+  () => {
+    diag('WebGL context restored → relayering')
+    // スタイルの再構築後にデータ層を貼り直す（既存なら no-op）
+    if (map.isStyleLoaded()) addDataLayers()
+    else map.once('idle', addDataLayers)
+  },
+  false,
+)
+
+// ソース/タイル読込などのエラーを診断ログへ
+map.on('error', (e) => {
+  const msg = (e && (e as unknown as { error?: Error }).error?.message) || 'map error'
+  diag(`error: ${msg}`)
+})
 
 // デバッグ/外部連携用にマップを公開
 ;(window as unknown as { __map: maplibregl.Map }).__map = map
