@@ -18,22 +18,9 @@ export interface ThemeDef {
   opacity?: number
 }
 
-/**
- * 広域を覆う単色レイヤーは既定不透明度を低くして地図を覆い隠さない
- * （都市計画区域などを ON にすると画面が真っ白/灰色に潰れる問題への対処）。
- */
-const DEFAULT_OPACITY: Record<string, number> = {
-  tokei: 0.15, // 都市計画区域（広域・灰色）
-  jyuntoshi: 0.2, // 準都市計画区域（広域・赤褐）
-  ritteki: 0.3, // 立地適正化計画区域（広域）
-  senbiki: 0.55, // 区域区分（市街化/調整の2色。やや下げる）
-  douro: 0.8, // 都市計画道路（線。やや透過して下を見せる）
-}
-
-/** テーマ既定の不透明度。 */
-export function defaultOpacity(def: ThemeDef): number {
-  if (def.key in DEFAULT_OPACITY) return DEFAULT_OPACITY[def.key]
-  return def.geom === 'line' ? 0.9 : FILL_OPACITY
+/** テーマ既定の不透明度。全テーマ一律 50%（スライダーで個別に変更可能）。 */
+export function defaultOpacity(_def: ThemeDef): number {
+  return 0.5
 }
 export function opacityOf(def: ThemeDef): number {
   return def.opacity ?? defaultOpacity(def)
@@ -110,8 +97,6 @@ type ThemeStyle =
   | { kind: 'cats'; prop: string; cats: Record<string, Cat>; fallback: Cat }
 
 const BLACK = 'rgba(0,0,0,1)'
-/** 塗りレイヤー共通の不透明度（参考サイトの既定値 0.7）。色の rgba アルファと乗算される。 */
-const FILL_OPACITY = 0.7
 
 // 色は https://toshikeikaku-info.jp/ の定義に準拠（rgba のアルファもサイトの値を踏襲）。
 // サイト未収録のテーマはアルファ 1 とし、共通の fill-opacity 0.7 で透過させる。
