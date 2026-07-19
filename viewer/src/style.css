@@ -621,6 +621,10 @@ body {
 
   .panel.collapsed {
     max-height: none;
+    /* デスクトップ用の .panel.collapsed { bottom:auto } を打ち消す。
+       モバイルは top:auto のため bottom まで auto になるとパネルが
+       画面最上部へ飛ぶ。畳んでも下端固定のボトムシートを維持する。 */
+    bottom: 0;
   }
 
   .panel-head {
