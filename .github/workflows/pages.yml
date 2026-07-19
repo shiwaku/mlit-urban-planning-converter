@@ -21,7 +21,7 @@ concurrency:
 
 env:
   # Pages のサブパス（= リポジトリ名）配下に PMTiles を置く
-  PMTILES_BASE: /mlit-toshikeikaku-converter/pmtiles
+  PMTILES_BASE: /mlit-urban-planning-converter/pmtiles
 
 jobs:
   deploy:
