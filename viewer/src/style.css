@@ -279,8 +279,49 @@ body {
 }
 
 .toggle .t-label {
-  flex: 1;
+  /* flex:1 にすると i ボタンが行の右端へ離れてしまうため自然幅（名前の直後に i が付く） */
+  flex: 0 1 auto;
+  min-width: 0;
   font-size: 13px;
+}
+
+/* ---- レイヤー説明の i ボタン / 説明文 ---- */
+.info-btn {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--line-2);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink-3);
+  font: italic 700 10px/1 Georgia, 'Times New Roman', serif;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.info-btn:hover {
+  background: var(--hover);
+  color: var(--ink);
+}
+
+.info-btn[aria-expanded='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.layer-desc {
+  padding: 2px 8px 6px 44px;
+  font-size: 11.5px;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+.layer-desc[hidden] {
+  display: none;
 }
 
 /* ---- 各レイヤー直下のインライン凡例 ---- */
@@ -617,6 +658,12 @@ body {
   /* タッチ操作しやすいよう当たり判定を拡大 */
   .toggle {
     padding: 9px 8px;
+  }
+
+  .info-btn {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
   }
 
   .basemap-switch button {

@@ -254,7 +254,28 @@ function buildToggles(): void {
     text.className = 't-label'
     text.textContent = def.name
 
-    label.append(input, sw, text)
+    // レイヤーの説明（i ボタンで開閉）
+    const desc = document.createElement('div')
+    desc.className = 'layer-desc'
+    desc.hidden = true
+    desc.textContent = def.desc
+
+    const info = document.createElement('button')
+    info.type = 'button'
+    info.className = 'info-btn'
+    info.textContent = 'i'
+    info.setAttribute('aria-label', `${def.name}の説明`)
+    info.setAttribute('aria-expanded', 'false')
+    info.addEventListener('click', (e) => {
+      // label 内のボタン。クリックが checkbox のトグルへ波及しないようにする
+      e.preventDefault()
+      e.stopPropagation()
+      const open = desc.hidden
+      desc.hidden = !open
+      info.setAttribute('aria-expanded', String(open))
+    })
+
+    label.append(input, sw, text, info)
 
     // 不透明度スライダー（有効時のみ表示）
     const opac = document.createElement('div')
@@ -282,7 +303,7 @@ function buildToggles(): void {
     legend.innerHTML = legendMarkup(def)
     legend.hidden = !def.on
 
-    item.append(label, opac, legend)
+    item.append(label, desc, opac, legend)
     layersDiv.append(item)
   }
 }
