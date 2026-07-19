@@ -63,10 +63,10 @@ body {
   flex-direction: column;
   width: 300px;
   max-width: 88vw;
-  /* 常に全高で固定。height:auto にすると内容が画面より低いときパネルが縮み、
-     縦長画面で「上半分だけ」になったり、レイヤー切替のたびに下端が動く。
-     全高固定なら位置が安定し、中身はパネル内スクロールで収める。 */
-  height: 100dvh;
+  /* 常に全高で固定。top:0 + bottom:0 で確実に画面の縦いっぱいにする
+     （height:100dvh の dvh 単位に頼らない）。height:auto にすると内容が
+     画面より低いときパネルが縮み、上半分だけになったり切替で下端が動く。 */
+  bottom: 0;
   /* 背景（すりガラス）は ::before の別レイヤーに逃がす。backdrop-filter を持つ要素の
      内側に内部スクロール（.panel-body）を置くと、Chromium で合成の不具合が起き
      スクロールが端（最上部）まで戻れなくなる。ブラー層をスクロールの祖先から外す。 */
@@ -89,6 +89,8 @@ body {
 }
 
 .panel.collapsed {
+  /* 畳んだらヘッダの高さだけに（全高固定を解除） */
+  bottom: auto;
   height: auto;
 }
 
@@ -156,7 +158,10 @@ body {
   overflow-y: auto;
   /* パネル内スクロールが地図のズーム/ページスクロールへ連鎖しないようにする */
   overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
+  /* -webkit-overflow-scrolling: touch は付けない。Safari/WebKit で独立スクロール
+     レイヤーを作り、レイヤーON等で内容高が変わるとスクロール範囲の計算が古いまま
+     残り、最上部まで戻れなくなる不具合の原因になる（区域区分で止まる症状）。
+     現行 Safari は指定なしでも慣性スクロールする。 */
 }
 
 .panel-head {
