@@ -66,13 +66,25 @@ body {
   /* 内容に合わせた高さ（下部の無駄な余白を作らない）。多い時は画面高で頭打ち＆スクロール */
   height: auto;
   max-height: 100dvh;
-  background: var(--surface);
-  backdrop-filter: blur(16px) saturate(1.4);
-  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  /* 背景（すりガラス）は ::before の別レイヤーに逃がす。backdrop-filter を持つ要素の
+     内側に内部スクロール（.panel-body）を置くと、Chromium で合成の不具合が起き
+     スクロールが端（最上部）まで戻れなくなる。ブラー層をスクロールの祖先から外す。 */
+  background: transparent;
   border-right: 1px solid var(--line);
   border-radius: 0;
   box-shadow: var(--shadow);
   overflow: hidden;
+}
+
+/* すりガラス背景（スクロール領域 .panel-body の祖先にはしない）。 */
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--surface);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
 }
 
 .panel.collapsed {
@@ -608,6 +620,11 @@ body {
     background: var(--surface-solid);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+  }
+
+  /* モバイルはブラー層も使わない（不透明背景で確定） */
+  .panel::before {
+    display: none;
   }
 
   .panel.collapsed {
