@@ -44,7 +44,7 @@ make catalog
 | サブコマンド | 内容 |
 | --- | --- |
 | `scrape` | ダウンロードページ解析 → `dist/sources.json` |
-| `download [--pref 東京都 ...]` | GeoJSON zip 取得・展開（`raw/`） |
+| `download [--pref 東京都 ...] [--force]` | GeoJSON zip 取得・展開（`raw/`）。**既取得で内容が変わっていない県はスキップ**（`--force` で全再取得） |
 | `convert [--split theme\|prefecture]` | PMTiles 生成（`dist/*.pmtiles`） |
 | `catalog` | `versions/manifest-<版>.json` / `versions.json` / `CATALOG.md` 生成 |
 | `all` | 上記を一括実行 |
@@ -61,8 +61,10 @@ make catalog
 [`.github/workflows/update.yml`](.github/workflows/update.yml) が
 
 1. **手動（`workflow_dispatch`）で起動**（Actions タブから実行。定期実行は行いません）
-2. `check-update` で提供元の更新を検知（`content-ID` の変化で判定）
-3. 変更があれば ダウンロード → 変換 → カタログ生成
+2. `check-update` で提供元の更新を検知（県ごとの `content-ID` の変化で判定。変更のあった県数も出力）
+3. 変更があれば ダウンロード → 変換 → カタログ生成。
+   **ダウンロードは差分方式**: 前回の zip を Actions cache（`raw/zip`）から復元し、
+   content-ID が変わった県だけ提供元から再取得します（提供元サーバーへの負荷も最小化）
 4. `data-<YYYYMMDD>` タグの **Release** を作成し、`*.pmtiles` と `manifest.json` を添付
 5. `versions/`・`versions.json`・`CATALOG.md` をコミット
 

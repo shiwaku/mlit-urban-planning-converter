@@ -51,16 +51,21 @@ def write_manifest(manifest: dict) -> tuple[Path, Path]:
     return versioned, dist_copy
 
 
-def latest_committed_fingerprint() -> Optional[str]:
-    """versions/ 内の最新 manifest の fingerprint（変更検知用）。無ければ None。"""
+def latest_committed_manifest() -> Optional[dict]:
+    """versions/ 内の最新 manifest（変更検知・差分判定用）。無ければ None。"""
     files = sorted(config.VERSIONS_DIR.glob("manifest-*.json"))
     if not files:
         return None
     try:
-        data = json.loads(files[-1].read_text(encoding="utf-8"))
-        return data.get("fingerprint")
+        return json.loads(files[-1].read_text(encoding="utf-8"))
     except Exception:  # noqa: BLE001
         return None
+
+
+def latest_committed_fingerprint() -> Optional[str]:
+    """versions/ 内の最新 manifest の fingerprint（変更検知用）。無ければ None。"""
+    data = latest_committed_manifest()
+    return data.get("fingerprint") if data else None
 
 
 def _versions_index_path() -> Path:

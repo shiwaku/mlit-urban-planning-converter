@@ -51,7 +51,10 @@ def cmd_download(args) -> int:
     config.ensure_dirs()
     sources = _load_sources()
     entries = download_mod.download_all(
-        sources["prefectures"], prefs=args.pref or None, sleep=args.sleep
+        sources["prefectures"],
+        prefs=args.pref or None,
+        sleep=args.sleep,
+        force=getattr(args, "force", False),
     )
     _write_json(_download_path(), {"generated_at": _now_iso(), "entries": entries})
     print(f"download: {len(entries)} 県分 完了 -> {_download_path()}")
@@ -110,27 +113,42 @@ def cmd_all(args) -> int:
 def cmd_check_update(args) -> int:
     """scrape して、コミット済み最新 manifest と fingerprint を比較。
 
-    JSON を stdout に出力。--github-output 指定時は key=value も追記する。
+    県単位（content_id）の差分も算出する。JSON を stdout に出力。
+    --github-output 指定時は key=value も追記する。
     """
     result = scrape_mod.scrape()
-    prev = catalog.latest_committed_fingerprint()
+    prev_manifest = catalog.latest_committed_manifest()
+    prev = prev_manifest.get("fingerprint") if prev_manifest else None
     changed = result["fingerprint"] != prev
+    # 県単位の差分（前回 manifest の content_id と比較）
+    prev_ids = {
+        p["pref"]: p.get("content_id")
+        for p in (prev_manifest.get("prefectures", []) if prev_manifest else [])
+    }
+    changed_prefs = [
+        s["pref"] for s in result["prefectures"] if prev_ids.get(s["pref"]) != s["content_id"]
+    ]
     out = {
         "version": result["version"],
         "tag": catalog.tag_for(result["version"]),
         "fingerprint": result["fingerprint"],
         "previous_fingerprint": prev,
         "changed": changed,
+        "changed_prefs": changed_prefs,
     }
     # sources.json も保存しておく（後続 download の再スクレイプ回避）
     _write_json(_sources_path(), result)
     json.dump(out, sys.stdout, ensure_ascii=False, indent=2)
     sys.stdout.write("\n")
+    if changed:
+        print(f"# 変更あり: {len(changed_prefs)} 県 ({'、'.join(changed_prefs[:10])}{' …' if len(changed_prefs) > 10 else ''})", file=sys.stderr)
     if args.github_output:
         with open(args.github_output, "a", encoding="utf-8") as fh:
             fh.write(f"version={out['version']}\n")
             fh.write(f"tag={out['tag']}\n")
             fh.write(f"changed={'true' if changed else 'false'}\n")
+            fh.write(f"fingerprint={out['fingerprint']}\n")
+            fh.write(f"changed_pref_count={len(changed_prefs)}\n")
     return 0
 
 
@@ -141,9 +159,10 @@ def build_parser() -> argparse.ArgumentParser:
     sp = sub.add_parser("scrape", help="ダウンロードページを解析し sources.json を出力")
     sp.set_defaults(func=cmd_scrape)
 
-    dp = sub.add_parser("download", help="GeoJSON zip を取得・展開")
+    dp = sub.add_parser("download", help="GeoJSON zip を取得・展開（既取得の県はスキップ）")
     dp.add_argument("--pref", action="append", help="対象都道府県名（複数指定可）。省略で全県")
     dp.add_argument("--sleep", type=float, default=1.0, help="県ごとの待機秒")
+    dp.add_argument("--force", action="store_true", help="変更が無くても再ダウンロードする")
     dp.set_defaults(func=cmd_download)
 
     cp = sub.add_parser("convert", help="GeoJSON を PMTiles に変換")
@@ -161,6 +180,7 @@ def build_parser() -> argparse.ArgumentParser:
     ap = sub.add_parser("all", help="scrape→download→convert→catalog を一括実行")
     ap.add_argument("--pref", action="append")
     ap.add_argument("--sleep", type=float, default=1.0)
+    ap.add_argument("--force", action="store_true", help="変更が無くても再ダウンロードする")
     ap.add_argument("--split", choices=["theme", "prefecture"], default="theme")
     ap.add_argument("--minzoom", type=int, default=4)
     ap.add_argument("--maxzoom", type=int, default=14)

@@ -61,9 +61,26 @@ jobs:
         run: |
           PYTHONPATH=src python -m tosiko_pmtiles.cli check-update --github-output "$GITHUB_OUTPUT"
 
+      # 差分ダウンロード: 前回実行時の zip（content_id 名）をキャッシュ復元しておくと、
+      # download が未変更の県をスキップし、変更のあった県だけ提供元から取得する。
+      - name: Cache GeoJSON zips (差分ダウンロード)
+        if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
+        uses: actions/cache@v4
+        with:
+          path: raw/zip
+          key: geojson-zips-${{ steps.check.outputs.fingerprint }}
+          restore-keys: |
+            geojson-zips-
+
       - name: Download GeoJSON
         if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
-        run: PYTHONPATH=src python -m tosiko_pmtiles.cli download
+        env:
+          FORCE: ${{ github.event.inputs.force }}
+        run: |
+          ARGS=""
+          if [ "$FORCE" = "true" ]; then ARGS="--force"; fi
+          PYTHONPATH=src python -m tosiko_pmtiles.cli download $ARGS
+          echo "変更県数: ${{ steps.check.outputs.changed_pref_count }}" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Convert to PMTiles
         if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
