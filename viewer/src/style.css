@@ -217,6 +217,12 @@ body {
 }
 
 .toggle {
+  /* 中の checkbox（position:absolute の視覚非表示）を必ずこのラベル内に閉じ込める。
+     これが無いと checkbox の基準がスクロール領域外の .panel になり、内容と一緒に
+     スクロールしない位置に固定される。クリックでそこへフォーカスが移ると
+     ブラウザのスクロール処理と衝突し、パネルがスクロール不能になる／位置が飛ぶ
+     （全ON=JS設定はフォーカスが発生しないため壊れない）。 */
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;

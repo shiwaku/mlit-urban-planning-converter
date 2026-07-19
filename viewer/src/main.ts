@@ -26,6 +26,8 @@ const map = new maplibregl.Map({
   style: getBasemapStyle(base, theme),
   center: [139.74, 35.68],
   zoom: 10,
+  // 地図位置を URL の #ズーム/緯度/経度 に反映（共有・リロード時の位置維持）
+  hash: true,
   attributionControl: false,
   // モバイルはGPU/メモリが限られるため保持タイル数を絞る。youto(大)+douro(大)を
   // 同時表示するとメモリ逼迫で WebGL コンテキストが失われ、地図（用途地域等）が
