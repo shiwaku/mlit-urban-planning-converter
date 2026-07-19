@@ -74,7 +74,7 @@ make catalog
 最新版の PMTiles は Release の固定 URL から取得できます:
 
 ```
-https://github.com/shiwaku/mlit-toshikeikaku-converter/releases/latest/download/youto.pmtiles
+https://github.com/shiwaku/mlit-urban-planning-converter/releases/latest/download/youto.pmtiles
 ```
 
 > ⚠️ Release アセットは CORS ヘッダを返さないため、ブラウザから直接 fetch（Range 取得）はできません。
@@ -94,7 +94,7 @@ npm run dev      # http://localhost:8000（dev サーバーが ../dist/*.pmtiles
 
 **公開**: [`.github/workflows/pages.yml`](.github/workflows/pages.yml) が最新 Release の PMTiles を
 ビューアに同梱して GitHub Pages へデプロイします（同一オリジン配信）。
-公開先 → https://shiwaku.github.io/mlit-toshikeikaku-converter/
+公開先 → https://shiwaku.github.io/mlit-urban-planning-converter/
 
 ## ディレクトリ構成
 
