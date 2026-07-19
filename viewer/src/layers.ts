@@ -261,11 +261,6 @@ function primaryLabel(key: string, p: Record<string, unknown>): string {
   )
 }
 
-export function hoverHtml(key: string, name: string, p: Record<string, unknown>): string {
-  const label = primaryLabel(key, p)
-  return `<b>${label || name}</b>${label ? ` <span class="tt-sub">${name}</span>` : ''}`
-}
-
 function esc(s: string): string {
   return s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] as string)
 }

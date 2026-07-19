@@ -3,7 +3,7 @@ import { Protocol } from 'pmtiles'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
 import { getBasemapStyle, type Basemap } from './basemap'
-import { THEMES, type ThemeDef, hoverHtml, legendFor, opacityOf, paintFor, popupHtml } from './layers'
+import { THEMES, type ThemeDef, legendFor, opacityOf, paintFor, popupHtml } from './layers'
 import { applyThemeAttr, initialTheme, type Theme } from './theme'
 import './style.css'
 
@@ -105,13 +105,52 @@ const themeIndex = (key: string): number => THEMES.findIndex((t) => t.key === ke
 
 // canonical z順: THEMES 配列の後ろほど地図で最前面（都市計画区域が最背面, 都市計画道路が最前面）。
 // def の直上に来るべき既存レイヤーを beforeId に指定して正規順で挿入する。
+// クリックハイライト層は常に全データ層より前面に保つ。
 function beforeIdFor(def: ThemeDef): string | undefined {
   const i = themeIndex(def.key)
   for (let j = i + 1; j < THEMES.length; j++) {
     const id = layerId(THEMES[j].key)
     if (map.getLayer(id)) return id
   }
-  return undefined
+  return map.getLayer(HL_FILL) ? HL_FILL : undefined
+}
+
+// ---- クリックハイライト（選択地物を黄色で強調） ----
+const HL_SRC = 'click-highlight'
+const HL_FILL = 'click-highlight-fill'
+const HL_LINE = 'click-highlight-line'
+const EMPTY_FC: GeoJSON.FeatureCollection = { type: 'FeatureCollection', features: [] }
+
+function ensureHighlightLayers(): void {
+  if (!map.getSource(HL_SRC)) {
+    map.addSource(HL_SRC, { type: 'geojson', data: EMPTY_FC })
+  }
+  if (!map.getLayer(HL_FILL)) {
+    map.addLayer({
+      id: HL_FILL,
+      type: 'fill',
+      source: HL_SRC,
+      filter: ['==', ['geometry-type'], 'Polygon'],
+      paint: { 'fill-color': 'rgba(255,230,0,0.4)' },
+    })
+  }
+  if (!map.getLayer(HL_LINE)) {
+    // 面の輪郭と線地物（都市計画道路）の両方を強調する
+    map.addLayer({
+      id: HL_LINE,
+      type: 'line',
+      source: HL_SRC,
+      paint: { 'line-color': 'rgba(255,200,0,1)', 'line-width': 3 },
+    })
+  }
+}
+
+function setHighlight(f: maplibregl.MapGeoJSONFeature | null): void {
+  const src = map.getSource(HL_SRC) as maplibregl.GeoJSONSource | undefined
+  if (!src) return
+  src.setData(
+    f ? { type: 'FeatureCollection', features: [{ type: 'Feature', geometry: f.geometry, properties: {} }] } : EMPTY_FC,
+  )
 }
 
 function ensureLayer(def: ThemeDef): void {
@@ -139,6 +178,8 @@ function removeLayer(def: ThemeDef): void {
 
 // 有効なレイヤーのみを（正規 z順で）地図に載せる。無効なものはソースごと持たない＝軽量。
 function addDataLayers(): void {
+  // 先にハイライト層を作っておくと、データ層は beforeIdFor 経由で常にその下に入る
+  ensureHighlightLayers()
   for (const def of THEMES) {
     if (def.on) ensureLayer(def)
     else removeLayer(def)
@@ -313,46 +354,46 @@ function setBase(next: Basemap): void {
   reloadStyle()
 }
 
-// ---- ホバーツールチップ ----
-// ホバーが使える環境（マウス等）のみ有効化する。タッチ端末ではタップ時に
-// ブラウザが mousemove を擬似発火するため、クリックポップアップと同時に
-// ツールチップも表示され「ポップアップが2つ出る」ように見えてしまう。
-const tooltip = document.getElementById('tooltip') as HTMLElement
-const canHover = window.matchMedia('(hover: hover)').matches
-if (canHover) {
+// ---- ホバーカーソル（マウス環境のみ。ツールチップは廃止） ----
+if (window.matchMedia('(hover: hover)').matches) {
   map.on('mousemove', (e) => {
     const ids = activeLayerIds()
-    const feats = ids.length ? map.queryRenderedFeatures(e.point, { layers: ids }) : []
-    if (feats.length) {
-      const f = feats[0]
-      const key = keyFromLayer(f.layer.id)
-      tooltip.innerHTML = hoverHtml(key, defOf(key)?.name ?? key, f.properties as Record<string, unknown>)
-      tooltip.style.left = `${e.point.x}px`
-      tooltip.style.top = `${e.point.y}px`
-      tooltip.hidden = false
-      map.getCanvas().style.cursor = 'pointer'
-    } else {
-      tooltip.hidden = true
-      map.getCanvas().style.cursor = ''
-    }
-  })
-  map.on('mouseout', () => {
-    tooltip.hidden = true
+    const hit = ids.length && map.queryRenderedFeatures(e.point, { layers: ids }).length > 0
+    map.getCanvas().style.cursor = hit ? 'pointer' : ''
   })
 }
 
-// ---- クリックポップアップ ----
+// ---- クリックポップアップ + 黄色ハイライト ----
+let popup: maplibregl.Popup | null = null
 map.on('click', (e) => {
   const ids = activeLayerIds()
   const feats = ids.length ? map.queryRenderedFeatures(e.point, { layers: ids }) : []
-  if (!feats.length) return
-  tooltip.hidden = true // 念のため（ポップアップとツールチップの二重表示防止）
+  if (!feats.length) {
+    // 何もない場所のクリック: 選択解除（ポップアップは closeOnClick が閉じる）
+    setHighlight(null)
+    return
+  }
   const f = feats[0]
   const key = keyFromLayer(f.layer.id)
-  new maplibregl.Popup({ closeButton: true, maxWidth: '300px' })
+  // 前のポップアップを静かに閉じてから（close ハンドラの誤発火防止に null を先に）
+  if (popup) {
+    const old = popup
+    popup = null
+    old.remove()
+  }
+  setHighlight(f)
+  const p = new maplibregl.Popup({ closeButton: true, maxWidth: '300px' })
     .setLngLat(e.lngLat)
     .setHTML(popupHtml(key, defOf(key)?.name ?? key, f.properties as Record<string, unknown>))
     .addTo(map)
+  // × ボタンや地図クリックで閉じたときはハイライトも解除
+  p.on('close', () => {
+    if (popup === p) {
+      popup = null
+      setHighlight(null)
+    }
+  })
+  popup = p
 })
 
 // ---- 初期化 ----

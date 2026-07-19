@@ -392,12 +392,6 @@ body {
   color: var(--ink);
 }
 
-.tt-sub {
-  color: var(--ink-3);
-  font-weight: 400;
-  font-size: 11px;
-}
-
 /* ---- 凡例 ---- */
 .legend {
   display: grid;
@@ -470,29 +464,6 @@ body {
 
 .panel-foot a:hover {
   text-decoration: underline;
-}
-
-/* ---- ホバーツールチップ ---- */
-.map-tooltip {
-  position: absolute;
-  z-index: 3;
-  pointer-events: none;
-  transform: translate(-50%, calc(-100% - 12px));
-  padding: 5px 9px;
-  border-radius: 8px;
-  background: var(--surface-solid);
-  color: var(--ink);
-  border: 1px solid var(--line-2);
-  box-shadow: var(--shadow);
-  font-size: 12px;
-  white-space: nowrap;
-  max-width: 60vw;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.map-tooltip b {
-  font-weight: 700;
 }
 
 /* ---- ポップアップ（MapLibre 上書き） ---- */
