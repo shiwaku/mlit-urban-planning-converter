@@ -343,7 +343,7 @@ function buildToggles(): void {
       cb.checked = stampOn
       cb.addEventListener('change', () => setStampVisible(cb.checked))
       const t = document.createElement('span')
-      t.textContent = `スタンプ表示（ズーム${STAMP_MINZOOM}以上）`
+      t.textContent = `用途地域スタンプ表示（ズーム${STAMP_MINZOOM}以上）`
       sub.append(cb, t)
       item.insertBefore(sub, legend)
     }
