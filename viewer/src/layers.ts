@@ -2,6 +2,7 @@ import type {
   ExpressionSpecification,
   FillLayerSpecification,
   LineLayerSpecification,
+  SymbolLayerSpecification,
 } from 'maplibre-gl'
 
 export type Geom = 'fill' | 'line'
@@ -235,6 +236,104 @@ export function paintFor(def: ThemeDef): LayerPaint {
     // 参考サイト（toshikeikaku-info.jp）と同様、塗りは fill-opacity 0.7 を基本とし、
     // 併せて各色の rgba アルファ（防火0.6 等）も効かせる。不透明度は UI で変更可能。
     paint: { 'fill-color': fill, 'fill-opacity': opacityOf(def), 'fill-outline-color': outline },
+  }
+}
+
+// ---- 用途地域スタンプ ----
+// 都市計画総括図の用途地域スタンプ（円を横罫線2本で3分割した枠）を、枠スプライト＋テキスト式で再現する。
+// 枠は組み合わせごとに焼いた画像ではなく1枚だけ持ち、中身は属性から描く。
+// 全国では（用途地域13種 × 容積率19種 × 建蔽率7種）の組み合わせが数百通りに達するため、
+// 組み合わせごとに画像を用意する方式は採らない。
+//
+// スプライト `用途地域スタンプ` の実測値: 150×150px、罫線は y=46 と y=103。
+//   上段 y 0–46（中心 y=23）  → 容積率
+//   中段 y 46–103（中心 y=74.5）→ 用途地域名（略称）
+//   下段 y 103–150（中心 y=126.5）→ 建蔽率
+// 段の中心間隔は (52 + 51.5) / 2 ≒ 51.75px。
+export const STAMP_ICON = '用途地域スタンプ'
+/** スタンプを出す最小ズーム。これ未満では枠が密集して読めない。 */
+export const STAMP_MINZOOM = 13
+const STAMP_SPRITE_PX = 150
+const STAMP_BAND_PITCH_PX = 51.75
+/**
+ * 画面上のスタンプ直径(px)と文字サイズ。円形の枠なので、上下段は段の中央でも弦の幅しか使えない。
+ * 中段4字（「工業専用」「1種低住」等）と上段4桁（容積率1300）が円弧に触れないよう、
+ * 直径64px / 文字11px にして各段に5px以上の余白を残している。
+ */
+const STAMP_SCREEN_PX = 64
+const STAMP_ICON_SIZE = STAMP_SCREEN_PX / STAMP_SPRITE_PX
+const STAMP_TEXT_SIZE = 11
+/**
+ * 行送り（em）。3行テキストは中央行がアンカー、上下行が ±(行送り×文字サイズ) に置かれるため、
+ * 枠実寸の段間隔と一致させると各行が各段の中央に来る。
+ */
+const STAMP_LINE_HEIGHT = (STAMP_BAND_PITCH_PX * STAMP_ICON_SIZE) / STAMP_TEXT_SIZE
+/**
+ * 3行テキストの微調整（em）。行送りだけでも各段の中心に概ね載るが、
+ * 実測（枠を黒・文字を赤に分離してスクリーンショットを解析）で 0.5px ほど下寄りだったぶんを戻す。
+ * これで各行の中心と各段の中心の差が ±0.4px 以内に収まる。
+ */
+const STAMP_TEXT_BASELINE_EM = -0.5 / STAMP_TEXT_SIZE
+
+/**
+ * 中段に入れる略称。「用途地域スタンプ作成.xlsx」の中段表記に準拠し、
+ * 「第N種」→「N種」、「低層住居専用」→「低住」、「中高層住居専用」→「中高」の規則で最大4字に揃える。
+ * 同 xlsx に出現しない 4（第二種中高層住居専用地域）と 8（田園住居地域）も同じ規則で補完。
+ */
+const YOUTO_ABBR: Record<number, string> = {
+  1: '1種低住', 2: '2種低住',
+  3: '1種中高', 4: '2種中高',
+  5: '1種住', 6: '2種住', 7: '準住居', 8: '田園住居',
+  9: '近隣商業', 10: '商業', 11: '準工', 12: '工業', 13: '工業専用',
+}
+
+function youtoAbbrExpr(): ExpressionSpecification {
+  const cases: (number | string)[] = []
+  for (let c = 1; c <= 13; c++) cases.push(c, YOUTO_ABBR[c])
+  const expr = ['match', ['to-number', ['get', 'YoutoCode'], 0], ...cases, '']
+  return expr as unknown as ExpressionSpecification
+}
+
+/**
+ * 容積率・建蔽率の表示文字列。元データは "200" と "200.0" が混在するため数値化して整数で描く。
+ * 欠損（null / 空）は空文字にして、段のずれが出ないよう行だけ残す。
+ */
+function rateExpr(prop: string): ExpressionSpecification {
+  const n = ['to-number', ['get', prop], 0]
+  const expr = ['case', ['>', n, 0], ['to-string', ['round', n]], '']
+  return expr as unknown as ExpressionSpecification
+}
+
+/** 用途地域スタンプのシンボルレイヤー定義。 */
+export function youtoStampLayer(id: string, source: string, spriteId: string): SymbolLayerSpecification {
+  return {
+    id,
+    type: 'symbol',
+    source,
+    'source-layer': 'youto',
+    minzoom: STAMP_MINZOOM,
+    layout: {
+      'icon-image': `${spriteId}:${STAMP_ICON}`,
+      'icon-size': STAMP_ICON_SIZE,
+      'icon-padding': 4,
+      // 上段=容積率 / 中段=用途地域名 / 下段=建蔽率。改行位置は枠の罫線に対応する。
+      'text-field': ['concat', rateExpr('FAR'), '\n', youtoAbbrExpr(), '\n', rateExpr('BCR')],
+      'text-font': ['NotoSansJP-Regular'],
+      'text-size': STAMP_TEXT_SIZE,
+      'text-line-height': STAMP_LINE_HEIGHT,
+      'text-anchor': 'center',
+      'text-justify': 'center',
+      'text-offset': [0, STAMP_TEXT_BASELINE_EM],
+      // 明示した改行だけで3段にしたいので自動折返しは実質無効化する
+      'text-max-width': 20,
+      'text-padding': 0,
+    },
+    paint: {
+      'text-color': 'rgba(0,0,0,1)',
+      // 枠内は透過で下の用途地域色が透けるため、白フチで文字を浮かせる
+      'text-halo-color': 'rgba(255,255,255,0.9)',
+      'text-halo-width': 1,
+    },
   }
 }
 

@@ -365,6 +365,30 @@ body {
   border: 1px solid var(--line-2);
 }
 
+/* ---- レイヤー配下のサブ切替（用途地域スタンプ等） ---- */
+.layer-sub {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 8px 4px 44px;
+  font-size: 11.5px;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.layer-sub[hidden] {
+  display: none;
+}
+
+.layer-sub input[type='checkbox'] {
+  flex: none;
+  width: 13px;
+  height: 13px;
+  margin: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
 /* ---- レイヤー不透明度スライダー ---- */
 .layer-opacity {
   display: flex;
