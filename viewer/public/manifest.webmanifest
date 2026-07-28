@@ -1,5 +1,5 @@
 {
-  "name": "都市計画決定GISビューワ",
+  "name": "全国都市計画GISビューワ",
   "short_name": "都市計画GIS",
   "description": "国土交通省「都市計画決定GISデータ」全国版を PMTiles でベクター表示するビューワ",
   "lang": "ja",

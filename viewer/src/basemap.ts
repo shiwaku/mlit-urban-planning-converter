@@ -84,9 +84,33 @@ function buildDarkStyle(): StyleSpecification {
   return style
 }
 
-let darkStyleCache: StyleSpecification | null = null
-
 export type Basemap = 'pale' | 'photo'
+
+// ---- 追加スプライト（用途地域スタンプの枠） ----
+// MapLibre は sprite を配列で複数指定できる。接頭辞なしで参照できるのは id 'default' の
+// スプライトだけなので、アイコンを接頭辞なしで参照している地理院スタイル側を 'default' に据え、
+// 追加分は `<id>:<アイコン名>` で参照する。背景（淡色 / 写真）を切り替えても枠が使えるよう、
+// スタイルを返す直前に必ず注入する。
+const STAMP_SPRITE_URL = 'https://geolonia.github.io/custom-smartmap-other-sprite/sprite'
+export const STAMP_SPRITE_ID = 'smartmap'
+
+interface SpriteEntry {
+  id: string
+  url: string
+}
+
+function withStampSprite(style: StyleSpecification): StyleSpecification {
+  const base = style.sprite
+  const list: SpriteEntry[] = []
+  if (typeof base === 'string') list.push({ id: 'default', url: base })
+  else if (Array.isArray(base)) list.push(...(base as SpriteEntry[]))
+  if (list.some((s) => s.id === STAMP_SPRITE_ID)) return style
+  list.push({ id: STAMP_SPRITE_ID, url: STAMP_SPRITE_URL })
+  return { ...style, sprite: list } as StyleSpecification
+}
+
+let lightStyleCache: StyleSpecification | null = null
+let darkStyleCache: StyleSpecification | null = null
 
 /** 地理院 全国最新写真（シームレス）ラスタスタイル。 */
 function photoStyle(): StyleSpecification {
@@ -108,8 +132,11 @@ function photoStyle(): StyleSpecification {
 }
 
 export function getBasemapStyle(base: Basemap, theme: Theme): StyleSpecification {
-  if (base === 'photo') return photoStyle()
-  if (theme === 'light') return paleStyle as StyleSpecification
-  if (!darkStyleCache) darkStyleCache = buildDarkStyle()
-  return darkStyleCache
+  if (base === 'photo') return withStampSprite(photoStyle())
+  if (theme === 'dark') {
+    if (!darkStyleCache) darkStyleCache = withStampSprite(buildDarkStyle())
+    return darkStyleCache
+  }
+  if (!lightStyleCache) lightStyleCache = withStampSprite(paleStyle as StyleSpecification)
+  return lightStyleCache
 }

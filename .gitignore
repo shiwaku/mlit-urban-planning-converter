@@ -13,6 +13,9 @@ venv/
 *.egg-info/
 .pytest_cache/
 
+# 作業用の受領資料（スタンプの文字割り当て等。原本は Figma / 元ファイル側で管理）
+用途地域スタンプ作成.xlsx
+
 # OS / editor
 .DS_Store
 Thumbs.db

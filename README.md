@@ -161,11 +161,30 @@ https://github.com/shiwaku/mlit-urban-planning-converter/releases/download/data-
 > Web 地図に組み込む場合は PMTiles を自分のホスト（同一オリジン）へ配置してください
 > （本プロジェクトのビューアも、デプロイ時に Release から PMTiles をコピーして同一オリジンで配信しています）。
 
-### ビューア（`viewer/`）
+### ビューア（`viewer/`）— 全国都市計画GISビューワ
 
 MapLibre GL JS + [pmtiles](https://github.com/protomaps/PMTiles) + 国土地理院 最適化ベクトルタイルの
 モダンなビューア（Vite + TypeScript / ライト・ダークテーマ）を同梱しています。
 用途地域などの配色は [全国都市計画GISビューア](https://toshikeikaku-info.jp/) を参考にしています。
+
+#### 用途地域スタンプ
+
+都市計画総括図と同じ円形3段のスタンプで、用途地域の指定内容を地図上に直接表示します
+（用途地域レイヤーの「スタンプ表示」で切替、ズーム13以上）。
+
+| 段 | 内容 | 属性 |
+| --- | --- | --- |
+| 上段 | 容積率(%) | `FAR` |
+| 中段 | 用途地域名（略称） | `YoutoCode` |
+| 下段 | 建蔽率(%) | `BCR` |
+
+- 枠は [custom-smartmap-other-sprite](https://github.com/geolonia/custom-smartmap-other-sprite) の
+  `用途地域スタンプ`（150×150、罫線 y=46 / y=103）を使用。MapLibre のスプライト複数指定で
+  国土地理院スタイルのスプライトと併用しています（`smartmap:用途地域スタンプ`）。
+- 中身は組み合わせごとに焼いた画像ではなく、属性からテキスト式で描いています。全国では
+  （用途地域13種 × 容積率19種 × 建蔽率7種）の組み合わせが数百通りに達するためです。
+- 中段の略称は最大4字（`1種低住` `1種中高` `準住居` `田園住居` `近隣商業` `準工` `工業専用` など）。
+  正式名称はクリック時のポップアップで確認できます。
 
 ```bash
 cd viewer

@@ -2,8 +2,17 @@ import maplibregl from 'maplibre-gl'
 import { Protocol } from 'pmtiles'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
-import { getBasemapStyle, type Basemap } from './basemap'
-import { THEMES, type ThemeDef, legendFor, opacityOf, paintFor, popupHtml } from './layers'
+import { getBasemapStyle, STAMP_SPRITE_ID, type Basemap } from './basemap'
+import {
+  STAMP_MINZOOM,
+  THEMES,
+  type ThemeDef,
+  legendFor,
+  opacityOf,
+  paintFor,
+  popupHtml,
+  youtoStampLayer,
+} from './layers'
 import { applyThemeAttr, initialTheme, type Theme } from './theme'
 import './style.css'
 
@@ -153,6 +162,22 @@ function setHighlight(f: maplibregl.MapGeoJSONFeature | null): void {
   )
 }
 
+// ---- 用途地域スタンプ ----
+// 用途地域と同じソースに載せるシンボルレイヤー。用途地域が ON かつスタンプ ON のときだけ存在する。
+const STAMP_LYR = 'youto-stamp-lyr'
+let stampOn = true
+
+// 常に最前面（データ層・ハイライト層より上）に置いて読めるようにする
+function ensureStampLayer(): void {
+  const def = defOf('youto')
+  if (!def || !stampOn || !def.on || !map.getSource('youto')) {
+    if (map.getLayer(STAMP_LYR)) map.removeLayer(STAMP_LYR)
+    return
+  }
+  if (map.getLayer(STAMP_LYR)) return
+  map.addLayer(youtoStampLayer(STAMP_LYR, 'youto', STAMP_SPRITE_ID))
+}
+
 function ensureLayer(def: ThemeDef): void {
   if (map.getLayer(layerId(def.key))) return
   if (!map.getSource(def.key)) {
@@ -172,6 +197,8 @@ function ensureLayer(def: ThemeDef): void {
 }
 
 function removeLayer(def: ThemeDef): void {
+  // スタンプは用途地域と同じソースを使うため、ソース削除より先に外す
+  if (def.key === 'youto' && map.getLayer(STAMP_LYR)) map.removeLayer(STAMP_LYR)
   if (map.getLayer(layerId(def.key))) map.removeLayer(layerId(def.key))
   if (map.getSource(def.key)) map.removeSource(def.key)
 }
@@ -184,6 +211,7 @@ function addDataLayers(): void {
     if (def.on) ensureLayer(def)
     else removeLayer(def)
   }
+  ensureStampLayer()
 }
 
 // ---- テーマ切替 ----
@@ -304,8 +332,29 @@ function buildToggles(): void {
     legend.hidden = !def.on
 
     item.append(label, desc, opac, legend)
+
+    // 用途地域だけ、スタンプ（容積率 / 用途地域名 / 建蔽率）の表示切替を子に持つ
+    if (def.key === 'youto') {
+      const sub = document.createElement('label')
+      sub.className = 'layer-sub'
+      sub.hidden = !def.on
+      const cb = document.createElement('input')
+      cb.type = 'checkbox'
+      cb.checked = stampOn
+      cb.addEventListener('change', () => setStampVisible(cb.checked))
+      const t = document.createElement('span')
+      t.textContent = `スタンプ表示（ズーム${STAMP_MINZOOM}以上）`
+      sub.append(cb, t)
+      item.insertBefore(sub, legend)
+    }
+
     layersDiv.append(item)
   }
+}
+
+function setStampVisible(on: boolean): void {
+  stampOn = on
+  ensureStampLayer()
 }
 
 function setLayerVisible(def: ThemeDef, on: boolean): void {
@@ -315,6 +364,10 @@ function setLayerVisible(def: ThemeDef, on: boolean): void {
   const item = layersDiv.querySelector<HTMLElement>(`.layer-item[data-key="${def.key}"]`)
   item?.querySelector<HTMLElement>('.layer-legend')?.toggleAttribute('hidden', !on)
   item?.querySelector<HTMLElement>('.layer-opacity')?.toggleAttribute('hidden', !on)
+  if (def.key === 'youto') {
+    item?.querySelector<HTMLElement>('.layer-sub')?.toggleAttribute('hidden', !on)
+    ensureStampLayer()
+  }
 }
 
 function setLayerOpacity(def: ThemeDef, v: number): void {
