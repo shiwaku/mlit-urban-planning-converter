@@ -67,6 +67,7 @@
 ## ローカルでの実行
 
 前提: Python 3.10+ / [tippecanoe](https://github.com/felt/tippecanoe)（PMTiles 出力対応版）。
+tippecanoe が必要なのは `convert` のみで、`scrape` / `download` は Python だけで動きます。
 
 ```bash
 make setup                         # venv 作成 + 依存インストール
@@ -77,6 +78,37 @@ make download PREF="東京都"
 make convert SPLIT=theme           # dist/*.pmtiles を生成
 make catalog
 ```
+
+### 元データ（GeoJSON）だけ取得する
+
+PMTiles 変換は行わず、提供元の GeoJSON を全国分ローカルに置きたい場合は
+`download` だけを実行します（tippecanoe は不要）。
+
+```bash
+make setup                         # 初回のみ
+make scrape                        # ダウンロードページを解析し dist/sources.json を最新化
+make download                      # PREF 省略 = 47都道府県すべて（県ごとに1秒待機）
+```
+
+- `PREF` を**省略すると全県**が対象。`PREF="東京都 京都府"` のように空白区切りで県を絞れる。
+- `scrape` は必須ではない（`sources.json` が無ければ `download` が内部で自動スクレイプする）が、
+  手元の `sources.json` が古いと旧版の zip を取りにいくため、**取得前に実行しておくのが安全**。
+- 既に取得済みで提供元の `content-ID` が変わっていない県は**スキップ**される。
+  変更が無くても取り直したい場合は `--force` を付ける（`make download` は `--force` を
+  渡せないので CLI を直接呼ぶ）:
+  `PYTHONPATH=src .venv/bin/python3 -m tosiko_pmtiles.cli download --force`
+
+取得後の配置（`raw/` は `.gitignore` 対象）:
+
+```
+raw/zip/<content_id>.zip
+raw/extracted/<都道府県コード>_<都道府県>/<市区町村コード>_<市区町村名>/<市区町村コード>_<テーマ>.geojson
+例: raw/extracted/13_東京都/13101_千代田区/13101_youto.geojson
+```
+
+全国分の容量目安（版 `20260707` 実測）: zip 47本で約 **750 MB**、
+展開後は GeoJSON **8,173 ファイル**・約 **2.4 GB**。
+取得結果（県ごとの URL・サイズ・sha256・GeoJSON 件数）は `dist/download.json` に記録されます。
 
 主なコマンド（`python -m tosiko_pmtiles.cli <sub>`）:
 
