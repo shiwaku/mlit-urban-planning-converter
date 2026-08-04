@@ -152,7 +152,8 @@ def build_release_notes(manifest: dict, *, repo: Optional[str] = None) -> str:
         )
     if pmtiles:
         lines.append(
-            f"| `<テーマ>.pmtiles` | 地図描画用のベクタタイル（{len(pmtiles)}本） | "
+            f"| `<テーマ>.pmtiles` | MapLibre GL JS 等の地図描画用のベクトルタイル"
+            f"（{len(pmtiles)}本） | "
             f"合計 {_fmt_mb(pm_bytes)} |"
         )
     lines += [
