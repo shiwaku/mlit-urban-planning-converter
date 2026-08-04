@@ -29,6 +29,10 @@ PROJECT_TITLE = "都市計画決定GISデータ（全国）"
 BASEMAP_NAME = "地理院タイル 淡色地図"
 BASEMAP_URL = "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png"
 BASEMAP_ID = "gsi_pale_basemap"
+# XYZ タイルの座標系と全球範囲（Web メルカトルのメートル）。
+BASEMAP_EPSG = 3857
+_WEB_MERCATOR_MAX = 20037508.342789244
+BASEMAP_EXTENT = (-_WEB_MERCATOR_MAX, -_WEB_MERCATOR_MAX, _WEB_MERCATOR_MAX, _WEB_MERCATOR_MAX)
 # 初期表示範囲（EPSG:6668 の経緯度）。日本全体が入る範囲。
 DEFAULT_EXTENT = (122.0, 20.0, 154.0, 46.0)
 # .qgz（zip）内のタイムスタンプ。再現性のため固定する（ZIP 形式が表せる最小の日時）。
@@ -46,29 +50,42 @@ _WKB_TYPE = {
 }
 
 
-def _srs_xml() -> str:
-    """<spatialrefsys>。pyproj から proj4 / WKT を引く。"""
+def _srs_xml(epsg: int = config.SOURCE_EPSG) -> str:
+    """<spatialrefsys>。pyproj から proj4 / WKT を引く。
+
+    背景地図（XYZ タイル）は EPSG:3857 なので、データ側の EPSG:6668 とは別に
+    書き出す必要がある。ここを取り違えるとタイル座標が度として扱われ、
+    レイヤが画面上のどこにも出てこない。
+    """
     import warnings
 
     from pyproj import CRS
 
-    crs = CRS.from_epsg(config.SOURCE_EPSG)
+    crs = CRS.from_epsg(epsg)
     with warnings.catch_warnings():
-        # 一般に proj4 化は情報が落ちうるという警告だが、経緯度の地理座標系なので
-        # 落ちるものは無い。QGIS の旧バージョン互換のため proj4 も併記しておく。
+        # 一般に proj4 化は情報が落ちうるという警告だが、扱うのは経緯度と
+        # Web メルカトルなので落ちるものは無い。QGIS の旧バージョン互換のため併記する。
         warnings.simplefilter("ignore", UserWarning)
         proj4 = crs.to_proj4()
+    acronym = "longlat" if crs.is_geographic else (
+        dict(p.split("=", 1) for p in proj4.split() if "=" in p).get("+proj", "")
+    )
+    # 楕円体は EPSG コードで書く（GRS80 = EPSG:7019、WGS84 = EPSG:7030）。
+    ident = (crs.ellipsoid.to_json_dict().get("id") or {}) if crs.ellipsoid else {}
+    ellipsoid = (
+        f"{ident['authority']}:{ident['code']}" if ident.get("authority") and ident.get("code") else ""
+    )
     return (
         "      <spatialrefsys nativeFormat=\"Wkt\">\n"
         f"        <wkt>{escape(crs.to_wkt())}</wkt>\n"
         f"        <proj4>{escape(proj4)}</proj4>\n"
-        f"        <srsid>{config.SOURCE_EPSG}</srsid>\n"
-        f"        <srid>{config.SOURCE_EPSG}</srid>\n"
-        f"        <authid>EPSG:{config.SOURCE_EPSG}</authid>\n"
+        f"        <srsid>{epsg}</srsid>\n"
+        f"        <srid>{epsg}</srid>\n"
+        f"        <authid>EPSG:{epsg}</authid>\n"
         f"        <description>{escape(crs.name)}</description>\n"
-        "        <projectionacronym>longlat</projectionacronym>\n"
-        "        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>\n"
-        "        <geographicflag>true</geographicflag>\n"
+        f"        <projectionacronym>{escape(acronym)}</projectionacronym>\n"
+        f"        <ellipsoidacronym>{ellipsoid}</ellipsoidacronym>\n"
+        f"        <geographicflag>{'true' if crs.is_geographic else 'false'}</geographicflag>\n"
         "      </spatialrefsys>"
     )
 
@@ -122,22 +139,68 @@ def _maplayer(theme: str, meta: dict, srs: str) -> str:
     )
 
 
-def _basemap_maplayer(srs: str) -> str:
-    """地理院タイル（淡色地図）の XYZ ラスタレイヤ。"""
+def _basemap_maplayer() -> str:
+    """地理院タイル（淡色地図）の XYZ ラスタレイヤ。
+
+    QGIS 自身が書き出した .qgs（QGIS-Documentation の training_manual、pfaedle）の
+    XYZ レイヤをそのまま写した構造にしてある。ラスタは手書きの最小構成では読み込みに
+    失敗しうるので、実物に合わせるのが確実:
+
+      - タイルは Web メルカトル。レイヤの CRS と extent は EPSG:3857 で書く
+        （プロジェクトの EPSG:6668 を流用すると、メートル値が度として扱われて出てこない）
+      - URI はパラメータをアルファベット順に並べ、`format` は**値を持たないフラグ**として
+        書く（`format=` ではない）
+      - **`url` は percent encode しない**。QGIS 3.34 の読み取り経路では
+        `mBaseUrl = uri.param("url")` をそのまま使い、リテラルの `{x}` `{y}` `{z}` を
+        文字列置換する（`qgswmsprovider.cpp` の createTileRequestsXYZ）。デコードを
+        行う prepareUri() はこの経路を通らないので、`%7Bz%7D` と書くと置換されず
+        壊れた URL を叩いて真っ白になる。`&` や `=` を含まない URL なので、
+        波括弧のまま書いても URI のパース自体は壊れない
+      - `crs` は xyz では provider 側が EPSG:3857 に固定するので効かないが、実物に
+        合わせて書いておく（`EPSG3857` のようにコロンを落とした値は無効）
+      - <pipe> には rasterrenderer だけでなく brightnesscontrast / huesaturation /
+        rasterresampler まで入れる。<noData> と <map-layer-style-manager> も実物にある
+    """
     ds = (
-        "type=xyz&amp;url="
-        + BASEMAP_URL.replace("{", "%7B").replace("}", "%7D")
-        + "&amp;zmax=18&amp;zmin=0&amp;crs=EPSG3857"
+        f"crs=EPSG:{BASEMAP_EPSG}&amp;format&amp;type=xyz&amp;url={escape(BASEMAP_URL)}"
+        "&amp;zmax=18&amp;zmin=0"
     )
     return (
         f'    <maplayer type="raster" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" '
-        f'styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">\n'
-        f"{_extent_xml(None, '      ')}\n"
+        f'styleCategories="AllStyleCategories" autoRefreshEnabled="0" autoRefreshTime="0" '
+        f'refreshOnNotifyEnabled="0" refreshOnNotifyMessage="" legendPlaceholderImage="">\n'
+        f"{_extent_xml(list(BASEMAP_EXTENT), '      ')}\n"
+        f"      <wgs84extent>\n"
+        f"        <xmin>-180</xmin>\n"
+        f"        <ymin>-85.05112877980660357</ymin>\n"
+        f"        <xmax>180</xmax>\n"
+        f"        <ymax>85.05112877980658936</ymax>\n"
+        f"      </wgs84extent>\n"
         f"      <id>{BASEMAP_ID}</id>\n"
         f"      <datasource>{ds}</datasource>\n"
+        f"      <keywordList>\n        <value></value>\n      </keywordList>\n"
         f"      <layername>{escape(BASEMAP_NAME)}</layername>\n"
-        f"      <srs>\n{srs}\n      </srs>\n"
-        f'      <provider>wms</provider>\n'
+        f"      <srs>\n{_srs_xml(BASEMAP_EPSG)}\n      </srs>\n"
+        f"      <customproperties>\n"
+        f'        <property key="identify/format" value="Undefined"/>\n'
+        f"      </customproperties>\n"
+        f"      <provider>wms</provider>\n"
+        f"      <noData>\n"
+        f'        <noDataList bandNo="1" useSrcNoData="0"/>\n'
+        f"      </noData>\n"
+        f'      <map-layer-style-manager current="default">\n'
+        f'        <map-layer-style name="default"/>\n'
+        f"      </map-layer-style-manager>\n"
+        f"      <pipe>\n"
+        f'        <rasterrenderer opacity="1" alphaBand="-1" band="1" type="singlebandcolordata">\n'
+        f"          <rasterTransparency/>\n"
+        f"        </rasterrenderer>\n"
+        f'        <brightnesscontrast brightness="0" contrast="0"/>\n'
+        f'        <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" '
+        f'colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>\n'
+        f'        <rasterresampler maxOversampling="2"/>\n'
+        f"      </pipe>\n"
+        f"      <blendMode>0</blendMode>\n"
         f"    </maplayer>"
     )
 
@@ -206,7 +269,7 @@ def build_qgs(themes: list[str], meta: dict[str, dict]) -> str:
     )
     tree += "\n" + _tree_layer(BASEMAP_ID, BASEMAP_NAME, True, "    ")
     layers = "\n".join(_maplayer(t, meta.get(t, {}), srs) for t in themes)
-    layers += "\n" + _basemap_maplayer(srs)
+    layers += "\n" + _basemap_maplayer()
     # 描画順（先頭が最前面）。レイヤツリーと同じ並びを明示しておく。
     order = "\n".join(
         f'    <layer id={quoteattr(_layer_id(t))}/>' for t in reversed(themes)
