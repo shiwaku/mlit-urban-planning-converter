@@ -3,9 +3,9 @@
     {
       "version": "20260707",
       "tag": "data-20260707",
-      "generated_at": "2026-08-04T09:42:56+00:00",
+      "generated_at": "2026-08-04T11:14:22+00:00",
       "split": "theme",
-      "release_url": null,
+      "release_url": "https://github.com/shiwaku/mlit-urban-planning-converter/releases/tag/data-20260707",
       "prefecture_count": 47,
       "pmtiles": [
         {
@@ -243,6 +243,13 @@
           "name": "fukkousaiseikyoten.parquet",
           "bytes": 23056,
           "features": 2
+        }
+      ],
+      "bundles": [
+        {
+          "name": "toshikeikaku-qgis.zip",
+          "bytes": 613982409,
+          "entries": 55
         }
       ]
     }

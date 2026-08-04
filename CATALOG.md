@@ -1,10 +1,19 @@
 # データカタログ
 
 - 最新版: **20260707**（タグ `data-20260707`）
-- 生成日時: 2026-08-04T09:42:56+00:00
+- 生成日時: 2026-08-04T11:14:22+00:00
 - 出典: 国土交通省 都市局「都市計画決定GISデータ」 https://www.mlit.go.jp/toshi/tosiko/toshi_tosiko_tk_000182.html
 - 分割方式: `theme`
 - 座標参照系: EPSG:6668
+
+## 一括ダウンロード（QGIS 用一式）
+
+GeoParquet 全テーマ + QML + `.qlr` / `.qgz` を1本にまとめた zip です。
+解凍してできたフォルダの `toshikeikaku.qgz` を開くと、26レイヤが重ね順どおりに表示されます。
+
+| ファイル | 内容 | サイズ |
+| --- | --- | --- |
+| `toshikeikaku-qgis.zip` | GeoParquet 26テーマ + QML + `.qlr` / `.qgz` （55 ファイル） | 585.5 MB |
 
 ## PMTiles（地図描画用）
 
@@ -37,9 +46,9 @@
 | `soubou.pmtiles` | 航空機騒音障害防止地区 | 0.1 MB | 5 |
 | `fukkousaiseikyoten.pmtiles` | 一団地の復興再生拠点市街地形成施設 | 0.0 MB | 1 |
 
-## GeoParquet（解析用・属性と座標は元データのまま）
+## GeoParquet（QGIS・解析用。属性と座標は元データのまま）
 
-同名の QML（`styles/<テーマ>.qml`）を隣に置くと QGIS が配色を自動適用します。
+Release には個別添付せず、**上の zip に同梱**しています（同名の QML も隣に入っているので、QGIS に読み込むだけで配色が当たります）。
 
 | ファイル | 名称 | サイズ | 地物数 |
 | --- | --- | --- | --- |

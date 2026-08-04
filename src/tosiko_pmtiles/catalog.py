@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import os
 from pathlib import Path
 from typing import Optional
 
@@ -117,8 +118,89 @@ def _fmt_mb(nbytes: Optional[int]) -> str:
     return f"{nbytes / 1048576:.1f} MB"
 
 
+def build_release_notes(manifest: dict, *, repo: Optional[str] = None) -> str:
+    """Release 本文を manifest から組み立てる。
+
+    手書きの固定文にしていると、配信物を足したり外したりしたときに本文だけ古いまま
+    残る（実際 GeoParquet 追加後もしばらく「PMTiles 化した版」と書かれていた）。
+    公開のたびに manifest から作り直して `gh release edit --notes-file` で当てる。
+    """
+    repo = repo or os.environ.get("GITHUB_REPOSITORY") or "shiwaku/mlit-urban-planning-converter"
+    base = f"https://github.com/{repo}/releases/latest/download"
+    pmtiles = manifest.get("pmtiles", [])
+    parquet = manifest.get("parquet", [])
+    bundles = manifest.get("bundles", [])
+    pm_bytes = sum(p.get("bytes") or 0 for p in pmtiles)
+    features = sum(p.get("features") or 0 for p in parquet)
+    themes = len(parquet) or len(pmtiles)
+    lines = [
+        f"国土交通省 都市局『都市計画決定GISデータ』全国版を PMTiles / GeoParquet 化した版 "
+        f"{manifest['version']}。",
+        "",
+        f"{len(manifest.get('prefectures', []))}都道府県 / {themes}テーマ / "
+        f"{features:,} 地物 / 座標系 {manifest.get('crs', f'EPSG:{config.SOURCE_EPSG}')}",
+        "",
+        "## 添付ファイル",
+        "",
+        "| ファイル | 内容 | サイズ |",
+        "| --- | --- | --- |",
+    ]
+    for b in bundles:
+        lines.append(
+            f"| `{b['file']}` | **QGIS 用一式**。GeoParquet {b.get('themes', 0)}テーマ + QML + "
+            f"`.qlr` / `.qgz`（解凍して `toshikeikaku.qgz` を開くだけ） | {_fmt_mb(b.get('bytes'))} |"
+        )
+    if pmtiles:
+        lines.append(
+            f"| `<テーマ>.pmtiles` | MapLibre GL JS 等の地図描画用のベクトルタイル"
+            f"（{len(pmtiles)}本） | "
+            f"合計 {_fmt_mb(pm_bytes)} |"
+        )
+    lines += [
+        "| `manifest.json` | 収録内容の台帳（都道府県ごとの取得元 URL・sha256・件数） | - |",
+        "",
+    ]
+    if bundles:
+        lines += [
+            "## QGIS で見る",
+            "",
+            f"[`{bundles[0]['file']}`]({base}/{bundles[0]['file']}) を解凍し、"
+            f"`toshikeikaku.qgz` を開くと {bundles[0].get('themes', themes)}レイヤ + "
+            "背景地図（地理院タイル 淡色地図）が"
+            "重ね順どおりに表示されます。GeoParquet と QML もこの zip に入っています"
+            "（QGIS 3.28 以降が必要）。",
+            "",
+        ]
+    if pmtiles:
+        lines += [
+            "## Web 地図で使う",
+            "",
+            "PMTiles は**落とさずに URL をそのまま指定**できます（HTTP Range で必要なタイルだけ取得）。",
+            "",
+            "```",
+            f"{base}/{pmtiles[0]['pmtiles']}",
+            "```",
+            "",
+        ]
+    lines += [
+        f"出典: 国土交通省 都市局 {manifest.get('source_page', '')}",
+        "",
+        "本データは提供元が公開する**参考情報**です（概ねの位置を示すもので、建築確認等の"
+        "公式手続に用いることは想定されていません）。詳細は README と出典元をご確認ください。",
+    ]
+    return "\n".join(lines) + "\n"
+
+
+def write_release_notes(manifest: dict, *, repo: Optional[str] = None) -> Path:
+    path = config.DIST_DIR / "release-notes.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(build_release_notes(manifest, repo=repo), encoding="utf-8")
+    return path
+
+
 def write_catalog_md(manifest: dict) -> Path:
     path = config.ROOT / "CATALOG.md"
+    parquet = manifest.get("parquet", [])
     lines = [
         "# データカタログ",
         "",
@@ -136,7 +218,8 @@ def write_catalog_md(manifest: dict) -> Path:
             "## 一括ダウンロード（QGIS 用一式）",
             "",
             "GeoParquet 全テーマ + QML + `.qlr` / `.qgz` を1本にまとめた zip です。",
-            "解凍してできたフォルダの `toshikeikaku.qgz` を開くと、26レイヤが重ね順どおりに表示されます。",
+            "解凍してできたフォルダの `toshikeikaku.qgz` を開くと、"
+            f"{bundles[0].get('themes', len(parquet))}レイヤが重ね順どおりに表示されます。",
             "",
             "| ファイル | 内容 | サイズ |",
             "| --- | --- | --- |",
@@ -159,13 +242,13 @@ def write_catalog_md(manifest: dict) -> Path:
         src = p.get("source_files") or (len(p.get("themes", [])) if p.get("themes") else "")
         lines.append(f"| `{p['pmtiles']}` | {name} | {_fmt_mb(p.get('bytes'))} | {src} |")
 
-    parquet = manifest.get("parquet", [])
     if parquet:
         lines += [
             "",
-            "## GeoParquet（解析用・属性と座標は元データのまま）",
+            "## GeoParquet（QGIS・解析用。属性と座標は元データのまま）",
             "",
-            "同名の QML（`styles/<テーマ>.qml`）を隣に置くと QGIS が配色を自動適用します。",
+            "Release には個別添付せず、**上の zip に同梱**しています（同名の QML も隣に入って"
+            "いるので、QGIS に読み込むだけで配色が当たります）。",
             "",
             "| ファイル | 名称 | サイズ | 地物数 |",
             "| --- | --- | --- | --- |",
