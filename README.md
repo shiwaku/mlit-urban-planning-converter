@@ -9,6 +9,8 @@
 - **コンバーター** — GeoJSON → PMTiles（テーマ別 / 都道府県別を選択可）／ GeoParquet（テーマ別・全国統合）
 - **QGIS スタイル** — テーマごとの配色を QML で同梱。GeoParquet の隣に置けば読み込むだけで色分け表示。
   26レイヤを正しい重ね順でまとめて開く `.qlr` / `.qgz` も配布
+- **一括ダウンロード** — QGIS 用一式（GeoParquet 26テーマ + QML + `.qlr` / `.qgz`）を
+  `toshikeikaku-qgis.zip` 1本で配布。解凍して `toshikeikaku.qgz` を開けば完成状態
 - **バージョン管理** — 版ごとに GitHub Release を作成。**過去版はそのまま残る**
 - **ワンクリック更新** — GitHub Actions の手動実行で 更新検知 → 変換 → 配信 を一括処理
 
@@ -99,6 +101,7 @@ make download PREF="東京都"
 make convert SPLIT=theme           # dist/*.pmtiles を生成
 make parquet THEME="youto"         # dist/youto.parquet を生成
 make qml                           # styles/ と dist/ に QGIS 用ファイルを生成
+make bundle                        # dist/toshikeikaku-qgis.zip（QGIS 一式）を作成
 make catalog
 ```
 
@@ -142,6 +145,7 @@ raw/extracted/<都道府県コード>_<都道府県>/<市区町村コード>_<�
 | `convert [--split theme\|prefecture]` | PMTiles 生成（`dist/*.pmtiles`） |
 | `parquet [--theme youto ...]` | GeoParquet 生成（`dist/*.parquet`）。テーマ別・全国統合 |
 | `qml [--theme youto ...]` | QGIS 用スタイル生成。`*.qml`（レイヤ単位）と `toshikeikaku.qlr` / `.qgz`（26レイヤ + 重ね順）を `styles/` と `dist/` の両方へ |
+| `bundle [--theme youto ...]` | QGIS 一式（`*.parquet` + `*.qml` + `.qlr` / `.qgz`）を `dist/toshikeikaku-qgis.zip` にまとめる。`parquet` と `qml` の後に実行 |
 | `catalog` | `versions/manifest-<版>.json` / `versions.json` / `CATALOG.md` 生成 |
 | `all` | 上記を一括実行（`--no-parquet` で GeoParquet を省略） |
 | `check-update` | 更新有無を判定（CI 用、`--github-output` 対応） |
@@ -164,7 +168,7 @@ raw/extracted/<都道府県コード>_<都道府県>/<市区町村コード>_<�
    **ダウンロードは差分方式**: 前回の zip を Actions cache（`raw/zip`）から復元し、
    content-ID が変わった県だけ提供元から再取得します（提供元サーバーへの負荷も最小化）
 4. `data-<YYYYMMDD>` タグの **Release** を作成し、`*.pmtiles` / `*.parquet` /
-   `*.qml` / `*.qlr` / `*.qgz` と `manifest.json` を添付
+   `*.qml` / `*.qlr` / `*.qgz` / `toshikeikaku-qgis.zip`（QGIS 一式）と `manifest.json` を添付
 5. `versions/`・`versions.json`・`CATALOG.md`・`styles/` をコミット
 
 を実行します。PMTiles / GeoParquet バイナリは git には置かず Release アセットとして
@@ -188,7 +192,7 @@ GitHub がリポジトリごとに提供している**ファイル配布機能**
 | 置き場 | 内容 | 理由 |
 | --- | --- | --- |
 | git リポジトリ | 変換コード・`versions.json`（版の台帳）・`CATALOG.md`・`styles/`（QGIS 用ファイル） | テキストで差分管理に向く |
-| **GitHub Releases** | `*.pmtiles` 全26テーマ + `*.parquet` 全26テーマ + `*.qml` + `*.qlr` / `*.qgz` + `manifest.json` | 合計 GB 級のバイナリ。git に置くと履歴が肥大化し、100MB 超は GitHub が拒否。Releases は1ファイル2GBまで・帯域無料 |
+| **GitHub Releases** | `*.pmtiles` 全26テーマ + `*.parquet` 全26テーマ + `*.qml` + `*.qlr` / `*.qgz` + **`toshikeikaku-qgis.zip`（QGIS 一式）** + `manifest.json` | 合計 GB 級のバイナリ。git に置くと履歴が肥大化し、100MB 超は GitHub が拒否。Releases は1ファイル2GBまで・帯域無料 |
 
 ### リポジトリからの辿り方
 
@@ -199,10 +203,15 @@ GitHub がリポジトリごとに提供している**ファイル配布機能**
 3. リリース（例: `都市計画決定GISデータ 20260707`）の「**Assets**」を展開
 4. `youto.pmtiles` / `youto.parquet` などをクリックするとダウンロードされる
 
+Assets は 80本を超えるため、**QGIS で全テーマ見たいだけなら
+`toshikeikaku-qgis.zip` 1本だけ**落とせば済みます（後述）。
+1ファイルずつ選ぶのは「特定テーマだけ欲しい」場合の使い方です。
+
 ### URL の使い方
 
 ```bash
 # 常に最新版を指す固定 URL（releases/latest/download/<ファイル名>）
+https://github.com/shiwaku/mlit-urban-planning-converter/releases/latest/download/toshikeikaku-qgis.zip
 https://github.com/shiwaku/mlit-urban-planning-converter/releases/latest/download/youto.pmtiles
 https://github.com/shiwaku/mlit-urban-planning-converter/releases/latest/download/youto.parquet
 https://github.com/shiwaku/mlit-urban-planning-converter/releases/latest/download/youto.qml
@@ -218,9 +227,46 @@ https://github.com/shiwaku/mlit-urban-planning-converter/releases/download/data-
   版の履歴は [`versions.json`](versions.json) を参照してください
 - QGIS ではこの URL をそのまま PMTiles ソースとして指定できます
 
-## QGIS での利用 — GeoParquet + QML
+### まとめて落としたいとき
 
-`<テーマ>.parquet` と `<テーマ>.qml` を**同じフォルダに並べて置く**のがポイントです。
+**PMTiles は落とさずに使うのが基本**です（上の URL を Web地図や QGIS のソースに
+そのまま指定でき、必要なタイルだけ HTTP Range で取得されます）。
+セルフホストやオフライン利用で実体が必要な場合は、[GitHub CLI](https://cli.github.com/)
+のパターン指定で一括取得できます。
+
+```bash
+gh release download data-20260707 -R shiwaku/mlit-urban-planning-converter -p '*.pmtiles'
+gh release download data-20260707 -R shiwaku/mlit-urban-planning-converter -p '*.parquet' -p '*.qml'
+```
+
+- タグを省略すると最新リリースが対象になります
+- ブラウザだけで済ませたい・QGIS で開きたい場合は次の zip が早いです
+
+## QGIS での利用 — 一括 zip（推奨）
+
+**[`toshikeikaku-qgis.zip`](https://github.com/shiwaku/mlit-urban-planning-converter/releases/latest/download/toshikeikaku-qgis.zip)**（約 586 MB）を落として解凍し、
+できた `toshikeikaku/` フォルダの **`toshikeikaku.qgz` を開くだけ**で、
+26レイヤ + 背景地図（地理院タイル 淡色地図）が重ね順どおりに表示されます。
+
+```
+toshikeikaku/
+├─ README.txt          使い方
+├─ toshikeikaku.qgz    ← これを開く（背景地図・重ね順・初期表示範囲つき）
+├─ toshikeikaku.qlr    既存プロジェクトに D&D すると26レイヤが一括で入る
+├─ youto.parquet       データ本体 …… 全26テーマ
+├─ youto.qml           スタイル（QGIS が自動適用）
+└─ …
+```
+
+- 中身は下の「GeoParquet + QML」を**全部揃えた状態**です。`.qgz` / `.qlr` は
+  `./<テーマ>.parquet` を相対パスで参照しているので、**フォルダごと**扱ってください
+- 前提は同じく **QGIS 3.28 以降**（GDAL の Parquet ドライバ）
+- 手元で作り直す場合は `make bundle`（`make parquet` と `make qml` の後）
+
+## QGIS での利用 — GeoParquet + QML（テーマ単位）
+
+特定テーマだけ使うときは、`<テーマ>.parquet` と `<テーマ>.qml` を
+**同じフォルダに並べて置く**のがポイントです。
 QGIS が自動適用するのは、データファイルと**同じディレクトリにある同名の `.qml`** だけです
 （`youto.parquet` → 同じフォルダの `youto.qml`）。並べて置けば、parquet をドラッグ&ドロップ
 した時点で用途地域が色分け表示され、属性テーブルも和名になります。
@@ -257,6 +303,10 @@ QML はレイヤ1枚のスタイルしか持てないため、**レイヤの重�
 | --- | --- | --- |
 | `toshikeikaku.qlr` | 26レイヤ + スタイル + 重ね順 | QGIS に D&D。**いま開いているプロジェクトに追加**される |
 | `toshikeikaku.qgz` | 上記 + 背景地図（地理院タイル 淡色地図）+ プロジェクト CRS + 初期表示範囲 | ダブルクリックで開く。**新しいプロジェクトとして完成状態** |
+
+26テーマすべてを揃えるなら
+[一括 zip](#qgis-での利用--一括-zip推奨) を落とすのが早いです。以下は
+**一部のテーマだけ**手で揃える場合の例です。
 
 ```bash
 mkdir -p toshikeikaku && cd toshikeikaku

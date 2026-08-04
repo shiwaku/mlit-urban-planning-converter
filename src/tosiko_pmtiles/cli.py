@@ -1,4 +1,4 @@
-"""コマンドラインエントリ: scrape / download / convert / parquet / qml / catalog / all / check-update。"""
+"""コマンドラインエントリ: scrape / download / convert / parquet / qml / bundle / catalog / all / check-update。"""
 from __future__ import annotations
 
 import argparse
@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Optional
 
 from . import (
+    bundle as bundle_mod,
     catalog,
     config,
     convert as convert_mod,
@@ -43,6 +44,10 @@ def _convert_path() -> Path:
 
 def _parquet_path() -> Path:
     return config.DIST_DIR / "parquet.json"
+
+
+def _bundle_path() -> Path:
+    return config.DIST_DIR / "bundle.json"
 
 
 def cmd_scrape(args) -> int:
@@ -112,6 +117,18 @@ def cmd_qml(args) -> int:
     return 0
 
 
+def cmd_bundle(args) -> int:
+    """QGIS 一式（parquet + qml + qlr + qgz）を1本の zip にまとめる。"""
+    config.ensure_dirs()
+    # 版番号は zip 同梱の README.txt に書くだけなので、無ければ省く。
+    version = None
+    if _sources_path().exists():
+        version = json.loads(_sources_path().read_text(encoding="utf-8")).get("version")
+    result = bundle_mod.build(themes=args.theme or None, version=version)
+    _write_json(_bundle_path(), {"generated_at": _now_iso(), "results": [result]})
+    return 0
+
+
 def _warn_if_stale(results: list[dict], key: str, suffix: str) -> None:
     """中間 JSON の記録と dist/ の実ファイルがずれていたら警告する。
 
@@ -141,6 +158,7 @@ def _build_and_write_catalog(split: str, release_url: Optional[str]) -> dict:
     dl = json.loads(_download_path().read_text(encoding="utf-8")) if _download_path().exists() else {}
     cv = json.loads(_convert_path().read_text(encoding="utf-8")) if _convert_path().exists() else {}
     pq = json.loads(_parquet_path().read_text(encoding="utf-8")) if _parquet_path().exists() else {}
+    bd = json.loads(_bundle_path().read_text(encoding="utf-8")) if _bundle_path().exists() else {}
     # Release へは dist/*.pmtiles / dist/*.parquet をまとめて添付するので、
     # dist/ に残った古いファイルは manifest に載らないまま配信されてしまう。
     _warn_if_stale(cv.get("results", []), "pmtiles", ".pmtiles")
@@ -150,6 +168,7 @@ def _build_and_write_catalog(split: str, release_url: Optional[str]) -> dict:
         dl.get("entries", []),
         cv.get("results", []),
         parquet_results=pq.get("results", []),
+        bundle_results=bd.get("results", []),
         split=cv.get("split", split),
     )
     v_path, d_path = catalog.write_manifest(manifest)
@@ -176,6 +195,9 @@ def cmd_all(args) -> int:
     if not args.no_parquet:
         cmd_parquet(args)
     cmd_qml(args)
+    # bundle は parquet と qml が揃っていないと作れない。catalog に載せるのでその前に。
+    if not args.no_parquet:
+        cmd_bundle(args)
     _build_and_write_catalog(args.split, args.release_url)
     return 0
 
@@ -257,12 +279,18 @@ def build_parser() -> argparse.ArgumentParser:
     qp.add_argument("--theme", action="append", help="対象テーマコード（複数指定可）。省略で全テーマ")
     qp.set_defaults(func=cmd_qml)
 
+    bp = sub.add_parser(
+        "bundle", help="QGIS 一式（parquet + qml + qlr + qgz）を dist/toshikeikaku-qgis.zip にまとめる"
+    )
+    bp.add_argument("--theme", action="append", help="対象テーマコード（複数指定可）。省略で全テーマ")
+    bp.set_defaults(func=cmd_bundle)
+
     kp = sub.add_parser("catalog", help="manifest / versions.json / CATALOG.md を生成")
     kp.add_argument("--split", choices=["theme", "prefecture"], default="theme")
     kp.add_argument("--release-url", default=None)
     kp.set_defaults(func=cmd_catalog)
 
-    ap = sub.add_parser("all", help="scrape→download→convert→parquet→qml→catalog を一括実行")
+    ap = sub.add_parser("all", help="scrape→download→convert→parquet→qml→bundle→catalog を一括実行")
     ap.add_argument("--pref", action="append")
     ap.add_argument("--sleep", type=float, default=1.0)
     ap.add_argument("--force", action="store_true", help="変更が無くても再ダウンロードする")

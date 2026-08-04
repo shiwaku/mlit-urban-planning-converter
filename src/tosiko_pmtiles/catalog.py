@@ -24,6 +24,7 @@ def build_manifest(
     *,
     split: str,
     parquet_results: Optional[list[dict]] = None,
+    bundle_results: Optional[list[dict]] = None,
     generated_at: Optional[str] = None,
 ) -> dict:
     version = scrape_result["version"]
@@ -39,6 +40,7 @@ def build_manifest(
         "prefectures": download_entries or scrape_result.get("prefectures", []),
         "pmtiles": convert_results,
         "parquet": parquet_results or [],
+        "bundles": bundle_results or [],
     }
 
 
@@ -96,6 +98,10 @@ def update_versions_index(manifest: dict, *, release_url: Optional[str] = None) 
             {"name": p["parquet"], "bytes": p.get("bytes"), "features": p.get("features")}
             for p in manifest.get("parquet", [])
         ],
+        "bundles": [
+            {"name": b["file"], "bytes": b.get("bytes"), "entries": b.get("entries")}
+            for b in manifest.get("bundles", [])
+        ],
     }
     others = [v for v in index.get("versions", []) if v.get("version") != manifest["version"]]
     index["versions"] = [entry] + others
@@ -122,6 +128,27 @@ def write_catalog_md(manifest: dict) -> Path:
         f"- 分割方式: `{manifest['split']}`",
         f"- 座標参照系: {manifest.get('crs', f'EPSG:{config.SOURCE_EPSG}')}",
         "",
+    ]
+
+    bundles = manifest.get("bundles", [])
+    if bundles:
+        lines += [
+            "## 一括ダウンロード（QGIS 用一式）",
+            "",
+            "GeoParquet 全テーマ + QML + `.qlr` / `.qgz` を1本にまとめた zip です。",
+            "解凍してできたフォルダの `toshikeikaku.qgz` を開くと、26レイヤが重ね順どおりに表示されます。",
+            "",
+            "| ファイル | 内容 | サイズ |",
+            "| --- | --- | --- |",
+        ]
+        for b in bundles:
+            lines.append(
+                f"| `{b['file']}` | GeoParquet {b.get('themes', 0)}テーマ + QML + `.qlr` / `.qgz` "
+                f"（{b.get('entries', 0)} ファイル） | {_fmt_mb(b.get('bytes'))} |"
+            )
+        lines.append("")
+
+    lines += [
         "## PMTiles（地図描画用）",
         "",
         "| ファイル | 名称 | サイズ | ソース数 |",
