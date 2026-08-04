@@ -31,6 +31,8 @@ BASEMAP_URL = "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png"
 BASEMAP_ID = "gsi_pale_basemap"
 # 初期表示範囲（EPSG:6668 の経緯度）。日本全体が入る範囲。
 DEFAULT_EXTENT = (122.0, 20.0, 154.0, 46.0)
+# .qgz（zip）内のタイムスタンプ。再現性のため固定する（ZIP 形式が表せる最小の日時）。
+ZIP_EPOCH = (1980, 1, 1, 0, 0, 0)
 
 # GeoJSON のジオメトリ種別 -> QGIS の wkbType 表記。MultiPolygon と Polygon が
 # 混在するテーマは Multi 側に寄せる（QGIS は単一の型を期待するため）。
@@ -253,8 +255,12 @@ def write_all(
         qlr_path.write_text(qlr, encoding="utf-8")
         qgz_path = out_dir / f"{PROJECT_BASENAME}.qgz"
         # .qgz は .qgs を1つ含む zip。QGIS は同名の .qgs を探す。
-        with zipfile.ZipFile(qgz_path, "w", zipfile.ZIP_DEFLATED) as zf:
-            zf.writestr(f"{PROJECT_BASENAME}.qgs", qgs)
+        # タイムスタンプは固定する。実行時刻を入れると中身が同じでも zip のバイト列が
+        # 毎回変わり、styles/ がコミット対象なので実行のたびに空の差分が出てしまう。
+        info = zipfile.ZipInfo(f"{PROJECT_BASENAME}.qgs", date_time=ZIP_EPOCH)
+        info.compress_type = zipfile.ZIP_DEFLATED
+        with zipfile.ZipFile(qgz_path, "w") as zf:
+            zf.writestr(info, qgs)
         results += [
             {"file": qlr_path.name, "dir": str(out_dir), "bytes": qlr_path.stat().st_size},
             {"file": qgz_path.name, "dir": str(out_dir), "bytes": qgz_path.stat().st_size},
