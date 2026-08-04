@@ -1,7 +1,7 @@
 {
   "version": "20260707",
   "tag": "data-20260707",
-  "generated_at": "2026-08-04T11:26:22+00:00",
+  "generated_at": "2026-08-04T11:55:10+00:00",
   "source_page": "https://www.mlit.go.jp/toshi/tosiko/toshi_tosiko_tk_000182.html",
   "info_page": "https://www.mlit.go.jp/toshi/tosiko/toshi_tosiko_tk_000087.html",
   "fingerprint": "c13bd267bdb0ebff8b740a1434c272bc2e1901ffb1685bcfc2471df16aa80e21",
@@ -1278,7 +1278,7 @@
     {
       "file": "toshikeikaku-qgis.zip",
       "root": "toshikeikaku",
-      "bytes": 613982524,
+      "bytes": 613983439,
       "entries": 55,
       "themes": 26,
       "missing": []
