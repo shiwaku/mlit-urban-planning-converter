@@ -1,0 +1,114 @@
+{
+  "_comment": "テーマごとの配色・属性和名の定義。ビューア（viewer/src/layers.ts）と QGIS 用 QML 生成（src/tosiko_pmtiles/qml.py）が共有する唯一の出所。色は https://toshikeikaku-info.jp/ の定義に準拠し、rgba のアルファもサイトの値を踏襲する。サイト未収録のテーマはアルファ 1 とし、共通の不透明度 defaultOpacity で透過させる。",
+  "defaultOpacity": 0.5,
+  "youto": {
+    "_comment": "用途地域は YoutoCode（1..13）で色分け。田園住居地域(8) は参考サイト未収録のため補完。abbr は『用途地域スタンプ作成.xlsx』の中段表記に準拠し、「第N種」→「N種」「低層住居専用」→「低住」「中高層住居専用」→「中高」の規則で最大4字に揃える（xlsx に出現しない 4・8 も同じ規則で補完）。",
+    "outline": "rgba(0,0,0,0.55)",
+    "fallback": "rgba(180,180,180,0.6)",
+    "codes": [
+      { "code": 1, "name": "第一種低層住居専用地域", "abbr": "1種低住", "color": "rgba(0,255,153,1)" },
+      { "code": 2, "name": "第二種低層住居専用地域", "abbr": "2種低住", "color": "rgba(0,85,46,1)" },
+      { "code": 3, "name": "第一種中高層住居専用地域", "abbr": "1種中高", "color": "rgba(146,208,80,1)" },
+      { "code": 4, "name": "第二種中高層住居専用地域", "abbr": "2種中高", "color": "rgba(204,255,153,1)" },
+      { "code": 5, "name": "第一種住居地域", "abbr": "1種住", "color": "rgba(255,255,102,1)" },
+      { "code": 6, "name": "第二種住居地域", "abbr": "2種住", "color": "rgba(255,204,153,1)" },
+      { "code": 7, "name": "準住居地域", "abbr": "準住居", "color": "rgba(255,204,102,1)" },
+      { "code": 8, "name": "田園住居地域", "abbr": "田園住居", "color": "rgba(215,235,110,1)" },
+      { "code": 9, "name": "近隣商業地域", "abbr": "近隣商業", "color": "rgba(255,102,204,1)" },
+      { "code": 10, "name": "商業地域", "abbr": "商業", "color": "rgba(255,0,102,1)" },
+      { "code": 11, "name": "準工業地域", "abbr": "準工", "color": "rgba(153,0,255,1)" },
+      { "code": 12, "name": "工業地域", "abbr": "工業", "color": "rgba(204,255,255,1)" },
+      { "code": 13, "name": "工業専用地域", "abbr": "工業専用", "color": "rgba(51,204,255,1)" }
+    ]
+  },
+  "fallbackStyle": { "kind": "single", "fill": "rgba(150,150,150,0.5)", "outline": "rgba(0,0,0,1)" },
+  "themes": {
+    "youto": { "geom": "fill", "kind": "youto" },
+    "senbiki": {
+      "geom": "fill",
+      "kind": "cats",
+      "prop": "AreaType",
+      "cats": {
+        "市街化区域": { "label": "市街化区域", "fill": "rgba(255,250,190,1)", "outline": "rgba(255,160,230,1)" },
+        "市街化調整区域": { "label": "市街化調整区域", "fill": "rgba(220,220,220,1)", "outline": "rgba(255,160,230,1)" }
+      },
+      "fallback": { "label": "その他", "fill": "rgba(210,210,210,1)", "outline": "rgba(160,160,160,1)" }
+    },
+    "bouka": {
+      "geom": "fill",
+      "kind": "cats",
+      "prop": "AreaType",
+      "cats": {
+        "防火地域": { "label": "防火地域", "fill": "rgba(255,0,100,0.6)", "outline": "rgba(255,0,102,1)" },
+        "準防火地域": { "label": "準防火地域", "fill": "rgba(255,150,200,0.4)", "outline": "rgba(255,0,102,1)" }
+      },
+      "fallback": { "label": "その他", "fill": "rgba(255,120,170,0.4)", "outline": "rgba(255,0,102,1)" }
+    },
+    "ritteki": {
+      "geom": "fill",
+      "kind": "cats",
+      "prop": "AreaType",
+      "cats": {
+        "立地適正化計画区域": { "label": "立地適正化計画区域", "fill": "rgba(215,250,165,1)", "outline": "rgba(160,195,95,1)" },
+        "居住誘導区域": { "label": "居住誘導区域", "fill": "rgba(0,150,0,0.5)", "outline": "rgba(0,0,255,1)" },
+        "都市機能誘導区域": { "label": "都市機能誘導区域", "fill": "rgba(0,150,0,0.5)", "outline": "rgba(255,0,0,1)" }
+      },
+      "fallback": { "label": "その他", "fill": "rgba(215,250,165,1)", "outline": "rgba(160,195,95,1)" }
+    },
+    "tokei": { "geom": "fill", "kind": "single", "fill": "rgba(200,200,200,1)", "outline": "rgba(100,100,100,1)" },
+    "jyuntoshi": { "geom": "fill", "kind": "single", "fill": "rgba(200,50,20,0.5)", "outline": "rgba(200,50,20,1)" },
+    "koudoti": { "geom": "fill", "kind": "single", "fill": "rgba(230,200,170,1)", "outline": "rgba(120,90,40,1)" },
+    "koudori": { "geom": "fill", "kind": "single", "fill": "rgba(200,200,200,0.7)", "outline": "rgba(0,0,0,1)" },
+    "tokureiyouseki": { "geom": "fill", "kind": "single", "fill": "rgba(180,150,220,1)", "outline": "rgba(120,90,180,1)" },
+    "kousoujyukyo": { "geom": "fill", "kind": "single", "fill": "rgba(120,180,255,1)", "outline": "rgba(40,100,200,1)" },
+    "kyojyuchosei": { "geom": "fill", "kind": "single", "fill": "rgba(0,150,0,0.5)", "outline": "rgba(0,100,0,1)" },
+    "tkbt": { "geom": "fill", "kind": "single", "fill": "rgba(255,200,255,0.5)", "outline": "rgba(255,102,204,1)" },
+    "tokuteiyouto": { "geom": "fill", "kind": "single", "fill": "rgba(200,200,50,0.5)", "outline": "rgba(200,200,50,1)" },
+    "tokuteiyuudou": { "geom": "fill", "kind": "single", "fill": "rgba(255,180,120,1)", "outline": "rgba(200,120,60,1)" },
+    "tokuteibou": { "geom": "fill", "kind": "single", "fill": "rgba(255,120,120,1)", "outline": "rgba(200,60,60,1)" },
+    "fuuchichiku": { "geom": "fill", "kind": "single", "fill": "rgba(50,200,20,0.5)", "outline": "rgba(50,150,20,1)" },
+    "ryokukachiiki": { "geom": "fill", "kind": "single", "fill": "rgba(120,220,120,1)", "outline": "rgba(30,150,30,1)" },
+    "tokuryoku": { "geom": "fill", "kind": "single", "fill": "rgba(34,139,34,0.5)", "outline": "rgba(0,100,0,1)" },
+    "rekifuu": { "geom": "fill", "kind": "single", "fill": "rgba(150,120,80,1)", "outline": "rgba(110,80,40,1)" },
+    "toshisaisei": { "geom": "fill", "kind": "single", "fill": "rgba(255,100,180,1)", "outline": "rgba(200,40,120,1)" },
+    "chikukei": { "geom": "fill", "kind": "single", "fill": "rgba(255,170,0,1)", "outline": "rgba(200,120,0,1)" },
+    "tochiku": { "geom": "fill", "kind": "single", "fill": "rgba(255,140,90,1)", "outline": "rgba(200,90,40,1)" },
+    "kouen": { "geom": "fill", "kind": "single", "fill": "rgba(255,255,80,1)", "outline": "rgba(30,180,30,1)" },
+    "soubou": { "geom": "fill", "kind": "single", "fill": "rgba(120,120,200,1)", "outline": "rgba(60,60,150,1)" },
+    "fukkousaiseikyoten": { "geom": "fill", "kind": "single", "fill": "rgba(200,150,100,1)", "outline": "rgba(150,100,60,1)" },
+    "douro": { "geom": "line", "kind": "single", "fill": "rgba(0,0,255,1)", "outline": "rgba(0,0,255,1)" }
+  },
+  "_attributeLabels_comment": "属性名（ローマ字）→ 和名。出典: 国土交通省 都市局『都市計画決定GISデータ データ定義書』。QGIS ではフィールド別名（alias）として QML に書き出す。",
+  "attributeLabels": {
+    "Pref": "都道府県",
+    "Citycode": "市区町村コード",
+    "Cityname": "市区町村名",
+    "YoutoName": "用途地域名",
+    "YoutoCode": "用途地域コード",
+    "FAR": "容積率",
+    "BCR": "建蔽率",
+    "AreaType": "種類",
+    "AreaName": "名称",
+    "AreaCode": "種類コード",
+    "TokeiName": "都市計画区域名",
+    "TokeiType": "種類",
+    "TokeiCode": "種類コード",
+    "DistName": "名称",
+    "DistType": "種類",
+    "DistCode": "種類コード",
+    "ParkName": "公園名",
+    "ParkType": "種類",
+    "ParkCode": "種類コード",
+    "DouroType": "種類",
+    "DouroCode": "種類コード",
+    "FaciName": "施設名",
+    "FaciType": "種類",
+    "FaciCode": "種類コード",
+    "INDate": "当初決定日",
+    "FNDate": "最終告示日",
+    "INNumber": "当初告示番号",
+    "FNNumber": "最終告示番号",
+    "ValidType": "効力発生日の種類",
+    "Custodian": "決定者"
+  }
+}

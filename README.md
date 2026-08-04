@@ -1,12 +1,13 @@
-# 都市計画決定GISデータ PMTiles パイプライン
+# 都市計画決定GISデータ PMTiles / GeoParquet パイプライン
 
 国土交通省 都市局が公開する
 **[都市計画決定GISデータ 全国データダウンロードページ](https://www.mlit.go.jp/toshi/tosiko/toshi_tosiko_tk_000182.html)**
-の全国 GeoJSON を自動でダウンロードし、テーマ別の **PMTiles** に変換して
-**GitHub Releases** で配信するためのツール群です。
+の全国 GeoJSON を自動でダウンロードし、テーマ別の **PMTiles**（地図描画用）と
+**GeoParquet**（解析用）に変換して **GitHub Releases** で配信するためのツール群です。
 
 - **DLツール** — ダウンロードページを毎回スクレイプし、47都道府県の GeoJSON zip を取得・展開
-- **コンバーター** — GeoJSON → PMTiles（テーマ別 / 都道府県別を選択可）
+- **コンバーター** — GeoJSON → PMTiles（テーマ別 / 都道府県別を選択可）／ GeoParquet（テーマ別・全国統合）
+- **QGIS スタイル** — テーマごとの配色を QML で同梱。GeoParquet の隣に置けば読み込むだけで色分け表示
 - **バージョン管理** — 版ごとに GitHub Release を作成。**過去版はそのまま残る**
 - **ワンクリック更新** — GitHub Actions の手動実行で 更新検知 → 変換 → 配信 を一括処理
 
@@ -22,8 +23,26 @@
   日本語名の対応は [`data/themes.json`](data/themes.json) を参照（出典: データ定義書）。
 - 座標系は EPSG:6668（JGD2011 緯度経度、実用上 WGS84 と同等）。
 
-生成された PMTiles の一覧は [`CATALOG.md`](CATALOG.md)、版の履歴は
+生成物の一覧は [`CATALOG.md`](CATALOG.md)、版の履歴は
 [`versions.json`](versions.json) にまとまります。
+
+### 2つの出力形式
+
+| | PMTiles | GeoParquet |
+| --- | --- | --- |
+| 用途 | Web 地図・QGIS での描画 | 集計・空間解析・他データとの結合 |
+| 単位 | テーマ別 全国1ファイル（`youto.pmtiles`） | テーマ別 全国1ファイル（`youto.parquet`） |
+| 座標・属性 | ズームに応じて間引き・量子化 | **元 GeoJSON のまま**（欠落なし） |
+| 読み方 | MapLibre / QGIS / pmtiles CLI | DuckDB / GeoPandas / QGIS / Fiona 等 |
+
+GeoParquet は **GeoParquet 1.1.0**（geometry = WKB、CRS = EPSG:6668 の PROJJSON）で書き出し、
+空間絞り込み用に `bbox` struct カラム（covering）を付けています。圧縮は zstd、
+行グループは最大 50,000 行、かつジオメトリがおおむね 64MB に収まる行数で区切るので、
+DuckDB 等は範囲条件で不要な行グループを読み飛ばせます。
+
+> ℹ️ ジオメトリは提供元 GeoJSON をそのまま WKB 化しています（簡略化・修復はしません）。
+> このため、元データに含まれる自己交差等の**不正ジオメトリもそのまま残ります**
+> （版 `20260707` で全 418,351 地物中 12 件）。解析前に `ST_MakeValid` 等の適用を検討してください。
 
 ## 収録テーマ（レイヤー）の説明
 
@@ -67,15 +86,18 @@
 ## ローカルでの実行
 
 前提: Python 3.10+ / [tippecanoe](https://github.com/felt/tippecanoe)（PMTiles 出力対応版）。
-tippecanoe が必要なのは `convert` のみで、`scrape` / `download` は Python だけで動きます。
+tippecanoe が必要なのは `convert` のみで、`scrape` / `download` / `parquet` / `qml` は
+Python だけで動きます（GeoParquet は pyarrow / shapely / pyproj を使用。`make setup` で入ります）。
 
 ```bash
 make setup                         # venv 作成 + 依存インストール
-make all                           # 全県: scrape→download→convert→catalog
+make all                           # 全県: scrape→download→convert→parquet→qml→catalog
 
-# 一部の県だけ試す
+# 一部の県・テーマだけ試す
 make download PREF="東京都"
 make convert SPLIT=theme           # dist/*.pmtiles を生成
+make parquet THEME="youto"         # dist/youto.parquet を生成
+make qml                           # styles/*.qml を生成
 make catalog
 ```
 
@@ -117,8 +139,10 @@ raw/extracted/<都道府県コード>_<都道府県>/<市区町村コード>_<�
 | `scrape` | ダウンロードページ解析 → `dist/sources.json` |
 | `download [--pref 東京都 ...] [--force]` | GeoJSON zip 取得・展開（`raw/`）。**既取得で内容が変わっていない県はスキップ**（`--force` で全再取得） |
 | `convert [--split theme\|prefecture]` | PMTiles 生成（`dist/*.pmtiles`） |
+| `parquet [--theme youto ...]` | GeoParquet 生成（`dist/*.parquet`）。テーマ別・全国統合 |
+| `qml [--theme youto ...]` | QGIS 用スタイル生成（`styles/*.qml`） |
 | `catalog` | `versions/manifest-<版>.json` / `versions.json` / `CATALOG.md` 生成 |
-| `all` | 上記を一括実行 |
+| `all` | 上記を一括実行（`--no-parquet` で GeoParquet を省略） |
 | `check-update` | 更新有無を判定（CI 用、`--github-output` 対応） |
 
 ### 変換の粒度
@@ -126,6 +150,8 @@ raw/extracted/<都道府県コード>_<都道府県>/<市区町村コード>_<�
 - `--split theme`（既定）: テーマごとに 1 つの PMTiles（例 `youto.pmtiles`）。
   レイヤーには全都道府県の当該テーマ地物を統合。Web地図で必要テーマだけ読み込める。
 - `--split prefecture`: 都道府県ごとに 1 つの PMTiles。テーマ = レイヤーのマルチレイヤー構成。
+- GeoParquet は**テーマ別・全国統合のみ**（`--split` の対象外）。県で絞りたい場合は
+  ファイル内の `Pref` 列で絞り込みます（DuckDB なら `WHERE Pref = '東京都'`）。
 
 ## 自動更新（GitHub Actions）
 
@@ -133,19 +159,21 @@ raw/extracted/<都道府県コード>_<都道府県>/<市区町村コード>_<�
 
 1. **手動（`workflow_dispatch`）で起動**（Actions タブから実行。定期実行は行いません）
 2. `check-update` で提供元の更新を検知（県ごとの `content-ID` の変化で判定。変更のあった県数も出力）
-3. 変更があれば ダウンロード → 変換 → カタログ生成。
+3. 変更があれば ダウンロード → 変換（PMTiles / GeoParquet / QML）→ カタログ生成。
    **ダウンロードは差分方式**: 前回の zip を Actions cache（`raw/zip`）から復元し、
    content-ID が変わった県だけ提供元から再取得します（提供元サーバーへの負荷も最小化）
-4. `data-<YYYYMMDD>` タグの **Release** を作成し、`*.pmtiles` と `manifest.json` を添付
-5. `versions/`・`versions.json`・`CATALOG.md` をコミット
+4. `data-<YYYYMMDD>` タグの **Release** を作成し、`*.pmtiles` / `*.parquet` / `*.qml` と
+   `manifest.json` を添付
+5. `versions/`・`versions.json`・`CATALOG.md`・`styles/` をコミット
 
-を実行します。PMTiles バイナリは git には置かず Release アセットとして管理するため、
-**過去の版は過去の Release として保持**されます。
+を実行します。PMTiles / GeoParquet バイナリは git には置かず Release アセットとして
+管理するため、**過去の版は過去の Release として保持**されます。
 
-## 生成データ（PMTiles）の入手 — GitHub Releases
+## 生成データ（PMTiles / GeoParquet）の入手 — GitHub Releases
 
-生成された PMTiles は **git リポジトリの中には入っていません**（`git clone` しても
-`*.pmtiles` は含まれません）。**GitHub Releases** に版ごとに添付して配布しています。
+生成された PMTiles・GeoParquet は **git リポジトリの中には入っていません**（`git clone` しても
+`*.pmtiles` / `*.parquet` は含まれません）。**GitHub Releases** に版ごとに添付して配布しています。
+QGIS 用スタイル `styles/*.qml` だけは小さなテキストなのでリポジトリにも入っています。
 
 ### GitHub Releases とは
 
@@ -158,8 +186,8 @@ GitHub がリポジトリごとに提供している**ファイル配布機能**
 
 | 置き場 | 内容 | 理由 |
 | --- | --- | --- |
-| git リポジトリ | 変換コード・`versions.json`（版の台帳）・`CATALOG.md` | テキストで差分管理に向く |
-| **GitHub Releases** | `*.pmtiles` 全26テーマ + `manifest.json` | 合計 260MB 超のバイナリ。git に置くと履歴が肥大化し、100MB 超は GitHub が拒否。Releases は1ファイル2GBまで・帯域無料 |
+| git リポジトリ | 変換コード・`versions.json`（版の台帳）・`CATALOG.md`・`styles/*.qml` | テキストで差分管理に向く |
+| **GitHub Releases** | `*.pmtiles` 全26テーマ + `*.parquet` 全26テーマ + `*.qml` + `manifest.json` | 合計 GB 級のバイナリ。git に置くと履歴が肥大化し、100MB 超は GitHub が拒否。Releases は1ファイル2GBまで・帯域無料 |
 
 ### リポジトリからの辿り方
 
@@ -168,13 +196,15 @@ GitHub がリポジトリごとに提供している**ファイル配布機能**
    - 見当たらない場合は URL 末尾に `/releases` を付ける →
      https://github.com/shiwaku/mlit-urban-planning-converter/releases
 3. リリース（例: `都市計画決定GISデータ 20260707`）の「**Assets**」を展開
-4. `youto.pmtiles` などをクリックするとダウンロードされる
+4. `youto.pmtiles` / `youto.parquet` などをクリックするとダウンロードされる
 
 ### URL の使い方
 
 ```bash
 # 常に最新版を指す固定 URL（releases/latest/download/<ファイル名>）
 https://github.com/shiwaku/mlit-urban-planning-converter/releases/latest/download/youto.pmtiles
+https://github.com/shiwaku/mlit-urban-planning-converter/releases/latest/download/youto.parquet
+https://github.com/shiwaku/mlit-urban-planning-converter/releases/latest/download/youto.qml
 
 # 特定の版に固定したい場合（releases/download/<タグ>/<ファイル名>）
 https://github.com/shiwaku/mlit-urban-planning-converter/releases/download/data-20260707/youto.pmtiles
@@ -186,6 +216,68 @@ https://github.com/shiwaku/mlit-urban-planning-converter/releases/download/data-
 - 収録ファイルの一覧・サイズは [`CATALOG.md`](CATALOG.md)、
   版の履歴は [`versions.json`](versions.json) を参照してください
 - QGIS ではこの URL をそのまま PMTiles ソースとして指定できます
+
+## QGIS での利用 — GeoParquet + QML
+
+`<テーマ>.parquet` と `<テーマ>.qml` を**同じフォルダに並べて置く**のがポイントです。
+QGIS はファイル系レイヤを読み込むとき、同名の `.qml` があれば自動でスタイルを適用するため、
+parquet をドラッグ&ドロップした時点で用途地域が色分け表示され、属性テーブルも和名になります。
+
+```bash
+mkdir -p toshikeikaku && cd toshikeikaku
+BASE=https://github.com/shiwaku/mlit-urban-planning-converter/releases/latest/download
+curl -L -O "$BASE/youto.parquet"
+curl -L -O "$BASE/youto.qml"     # ← 同じフォルダに置く
+# あとは youto.parquet を QGIS にドラッグ&ドロップするだけ
+```
+
+- 前提: **QGIS 3.28 以降**（GDAL の Parquet ドライバが必要）。
+  「レイヤ > レイヤを追加 > ベクタレイヤの追加」からでも読み込めます
+- QML には次が入っています
+  - **配色**: 用途地域は `YoutoCode`（13区分）、区域区分・防火地域・立地適正化計画区域は
+    `AreaType` によるカテゴリ分け。その他のテーマは単一シンボル。
+    レイヤ不透明度は 0.5（下の地理院タイル等が透ける）
+  - **フィールド別名**: `Pref` → 都道府県、`FAR` → 容積率 など（データ定義書に準拠）
+- 配色は Web ビューアと同じ [`data/styles.json`](data/styles.json) から生成しているので、
+  ビューアと QGIS で見た目が揃います。色を変えたい場合は QGIS 上で編集するか、
+  `data/styles.json` を直して `make qml` で作り直してください
+- リポジトリ内の [`styles/`](styles/) にも同じ QML が入っています（Release からの取得が面倒な場合はこちら）
+
+### DuckDB / GeoPandas から使う
+
+```sql
+INSTALL spatial; LOAD spatial;   -- geometry が GEOMETRY('EPSG:6668') 型として読める
+
+-- 属性で絞って集計する（空間拡張なしでも動く）
+SELECT YoutoName, count(*) AS n FROM 'youto.parquet'
+WHERE Pref = '東京都' GROUP BY YoutoName ORDER BY n DESC;
+
+-- bbox カラム（covering）で範囲を絞る。不要な行グループを読み飛ばせる
+SELECT Cityname, YoutoName FROM 'youto.parquet'
+WHERE bbox.xmin < 139.78 AND bbox.xmax > 139.74
+  AND bbox.ymin < 35.69 AND bbox.ymax > 35.67;
+
+-- ある地点の用途地域を引く（東京駅 → 千代田区・商業地域・容積率900%・建蔽率80%）
+SELECT Cityname, YoutoName, FAR, BCR FROM 'youto.parquet'
+WHERE ST_Intersects(geometry, ST_Point(139.7671, 35.6812));
+```
+
+```python
+# GeoPandas
+import geopandas as gpd
+gdf = gpd.read_parquet("youto.parquet")            # CRS は EPSG:6668 が入っている
+tokyo = gpd.read_parquet("youto.parquet", filters=[("Pref", "==", "東京都")])
+```
+
+面積を求めるときは、平面直角座標系（東京なら `EPSG:6677`）に変換してから `ST_Area` を使います。
+このとき **`always_xy := true` が必須**です。EPSG:6668 は EPSG 定義上の軸順が緯度→経度である一方、
+GeoParquet の座標は仕様どおり経度→緯度で格納されているため、指定しないと結果が `inf` / `NaN` になります。
+
+```sql
+-- 東京都の商業地域の合計面積（7,404.3 ha）
+SELECT round(sum(ST_Area(ST_Transform(geometry, 'EPSG:6668', 'EPSG:6677', always_xy := true)))/10000, 1) AS ha
+FROM 'youto.parquet' WHERE Pref = '東京都' AND YoutoCode = 10;
+```
 
 ## Web 地図での利用
 
@@ -232,12 +324,20 @@ npm run dev      # http://localhost:8000（dev サーバーが ../dist/*.pmtiles
 
 ```
 src/tosiko_pmtiles/   スクレイプ・DL・変換・カタログのコード
+  convert.py            GeoJSON → PMTiles（tippecanoe）
+  geoparquet.py         GeoJSON → GeoParquet（pyarrow + shapely）
+  qml.py                data/styles.json → QGIS スタイル
 data/themes.json      テーマコード → 日本語名
+data/styles.json      配色・属性和名（ビューアと QML の共通の出所）
+styles/               生成された QGIS スタイル（*.qml、コミット対象）
 versions/             版ごとの manifest（監査証跡・コミット対象）
 versions.json         版の履歴インデックス
 viewer/               MapLibre + PMTiles ビューア（Vite + TypeScript）
 raw/ dist/            中間・出力物（.gitignore、コミットしない）
 ```
+
+> 配色を変えるときは `data/styles.json` を直します。ビューア（`viewer/src/layers.ts`）は
+> これを直接 import し、QGIS 用 QML は `make qml` で再生成されるので、両者がずれません。
 
 ## ライセンス / 出典
 

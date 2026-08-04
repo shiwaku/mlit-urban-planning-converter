@@ -3,114 +3,218 @@
     {
       "version": "20260707",
       "tag": "data-20260707",
-      "generated_at": "2026-07-14T11:54:25+00:00",
+      "generated_at": "2026-08-04T09:05:18+00:00",
       "split": "theme",
-      "release_url": "https://github.com/shiwaku/mlit-urban-planning-converter/releases/tag/data-20260707",
+      "release_url": null,
       "prefecture_count": 47,
       "pmtiles": [
         {
           "name": "youto.pmtiles",
-          "bytes": 64275271
+          "bytes": 4524823
         },
         {
           "name": "tokei.pmtiles",
-          "bytes": 38953751
-        },
-        {
-          "name": "jyuntoshi.pmtiles",
-          "bytes": 397005
+          "bytes": 970182
         },
         {
           "name": "senbiki.pmtiles",
-          "bytes": 33744182
+          "bytes": 894727
         },
         {
           "name": "ritteki.pmtiles",
-          "bytes": 32903202
+          "bytes": 277431
         },
         {
           "name": "koudoti.pmtiles",
-          "bytes": 10948154
+          "bytes": 2813687
         },
         {
           "name": "koudori.pmtiles",
-          "bytes": 588265
+          "bytes": 40603
         },
         {
           "name": "bouka.pmtiles",
-          "bytes": 7432205
+          "bytes": 1558995
         },
         {
           "name": "tkbt.pmtiles",
-          "bytes": 3985613
-        },
-        {
-          "name": "tokuteiyouto.pmtiles",
-          "bytes": 3396607
-        },
-        {
-          "name": "tokuteiyuudou.pmtiles",
-          "bytes": 48474
+          "bytes": 168072
         },
         {
           "name": "fuuchichiku.pmtiles",
-          "bytes": 3548316
+          "bytes": 48693
         },
         {
           "name": "ryokukachiiki.pmtiles",
-          "bytes": 461453
+          "bytes": 24693
         },
         {
           "name": "tokuryoku.pmtiles",
-          "bytes": 470389
+          "bytes": 66132
         },
         {
           "name": "kousoujyukyo.pmtiles",
-          "bytes": 3098
-        },
-        {
-          "name": "kyojyuchosei.pmtiles",
-          "bytes": 36942
+          "bytes": 3046
         },
         {
           "name": "tokureiyouseki.pmtiles",
-          "bytes": 6188
-        },
-        {
-          "name": "tokuteibou.pmtiles",
-          "bytes": 20192
-        },
-        {
-          "name": "rekifuu.pmtiles",
-          "bytes": 281429
+          "bytes": 4045
         },
         {
           "name": "toshisaisei.pmtiles",
-          "bytes": 57250
+          "bytes": 10406
         },
         {
           "name": "chikukei.pmtiles",
-          "bytes": 8695458
+          "bytes": 309709
         },
         {
           "name": "tochiku.pmtiles",
-          "bytes": 6662503
+          "bytes": 136841
         },
         {
           "name": "douro.pmtiles",
-          "bytes": 33621655
+          "bytes": 84325
         },
         {
           "name": "kouen.pmtiles",
-          "bytes": 14361662
+          "bytes": 127960
         },
         {
-          "name": "soubou.pmtiles",
-          "bytes": 73521
+          "name": "tokuteibou.pmtiles",
+          "bytes": 13082
+        }
+      ],
+      "parquet": [
+        {
+          "name": "youto.parquet",
+          "bytes": 133291070,
+          "features": 102159
         },
         {
-          "name": "fukkousaiseikyoten.pmtiles",
-          "bytes": 7212
+          "name": "tokei.parquet",
+          "bytes": 89184321,
+          "features": 10279
+        },
+        {
+          "name": "jyuntoshi.parquet",
+          "bytes": 1261948,
+          "features": 41
+        },
+        {
+          "name": "senbiki.parquet",
+          "bytes": 81662300,
+          "features": 7259
+        },
+        {
+          "name": "ritteki.parquet",
+          "bytes": 82970256,
+          "features": 9675
+        },
+        {
+          "name": "koudoti.parquet",
+          "bytes": 26406144,
+          "features": 18460
+        },
+        {
+          "name": "koudori.parquet",
+          "bytes": 375457,
+          "features": 969
+        },
+        {
+          "name": "bouka.parquet",
+          "bytes": 16888037,
+          "features": 9931
+        },
+        {
+          "name": "tkbt.parquet",
+          "bytes": 11187638,
+          "features": 10254
+        },
+        {
+          "name": "tokuteiyouto.parquet",
+          "bytes": 9135393,
+          "features": 1639
+        },
+        {
+          "name": "tokuteiyuudou.parquet",
+          "bytes": 45123,
+          "features": 29
+        },
+        {
+          "name": "fuuchichiku.parquet",
+          "bytes": 8748583,
+          "features": 2155
+        },
+        {
+          "name": "ryokukachiiki.parquet",
+          "bytes": 1259765,
+          "features": 217
+        },
+        {
+          "name": "tokuryoku.parquet",
+          "bytes": 705556,
+          "features": 687
+        },
+        {
+          "name": "kousoujyukyo.parquet",
+          "bytes": 9409,
+          "features": 1
+        },
+        {
+          "name": "kyojyuchosei.parquet",
+          "bytes": 54664,
+          "features": 4
+        },
+        {
+          "name": "tokureiyouseki.parquet",
+          "bytes": 13628,
+          "features": 2
+        },
+        {
+          "name": "tokuteibou.parquet",
+          "bytes": 21008,
+          "features": 14
+        },
+        {
+          "name": "rekifuu.parquet",
+          "bytes": 784543,
+          "features": 77
+        },
+        {
+          "name": "toshisaisei.parquet",
+          "bytes": 32252,
+          "features": 95
+        },
+        {
+          "name": "chikukei.parquet",
+          "bytes": 16413123,
+          "features": 10886
+        },
+        {
+          "name": "tochiku.parquet",
+          "bytes": 13244790,
+          "features": 6522
+        },
+        {
+          "name": "douro.parquet",
+          "bytes": 98317035,
+          "features": 185782
+        },
+        {
+          "name": "kouen.parquet",
+          "bytes": 21844955,
+          "features": 41161
+        },
+        {
+          "name": "soubou.parquet",
+          "bytes": 47632,
+          "features": 51
+        },
+        {
+          "name": "fukkousaiseikyoten.parquet",
+          "bytes": 23056,
+          "features": 2
         }
       ]
     }

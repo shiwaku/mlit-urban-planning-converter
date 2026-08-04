@@ -1,4 +1,4 @@
-"""コマンドラインエントリ: scrape / download / convert / catalog / all / check-update。"""
+"""コマンドラインエントリ: scrape / download / convert / parquet / qml / catalog / all / check-update。"""
 from __future__ import annotations
 
 import argparse
@@ -8,7 +8,15 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-from . import catalog, config, convert as convert_mod, download as download_mod, scrape as scrape_mod
+from . import (
+    catalog,
+    config,
+    convert as convert_mod,
+    download as download_mod,
+    geoparquet as geoparquet_mod,
+    qml as qml_mod,
+    scrape as scrape_mod,
+)
 
 
 def _now_iso() -> str:
@@ -30,6 +38,10 @@ def _download_path() -> Path:
 
 def _convert_path() -> Path:
     return config.DIST_DIR / "convert.json"
+
+
+def _parquet_path() -> Path:
+    return config.DIST_DIR / "parquet.json"
 
 
 def cmd_scrape(args) -> int:
@@ -75,14 +87,41 @@ def cmd_convert(args) -> int:
     return 0
 
 
+def cmd_parquet(args) -> int:
+    config.ensure_dirs()
+    results = geoparquet_mod.convert(
+        themes=args.theme or None,
+        row_group_size=args.row_group_size,
+        compression=args.compression,
+        compression_level=args.compression_level,
+    )
+    _write_json(_parquet_path(), {"generated_at": _now_iso(), "results": results})
+    total = sum(r.get("bytes", 0) for r in results)
+    features = sum(r.get("features", 0) for r in results)
+    print(
+        f"parquet: {len(results)} GeoParquet / {features:,} features / "
+        f"合計 {total/1048576:.1f} MB -> {config.DIST_DIR}"
+    )
+    return 0
+
+
+def cmd_qml(args) -> int:
+    results = qml_mod.write_all(themes=args.theme or None)
+    for r in results:
+        print(f"  -> {config.STYLES_DIR / r['qml']}")
+    return 0
+
+
 def _build_and_write_catalog(split: str, release_url: Optional[str]) -> dict:
     sources = _load_sources()
     dl = json.loads(_download_path().read_text(encoding="utf-8")) if _download_path().exists() else {}
     cv = json.loads(_convert_path().read_text(encoding="utf-8")) if _convert_path().exists() else {}
+    pq = json.loads(_parquet_path().read_text(encoding="utf-8")) if _parquet_path().exists() else {}
     manifest = catalog.build_manifest(
         sources,
         dl.get("entries", []),
         cv.get("results", []),
+        parquet_results=pq.get("results", []),
         split=cv.get("split", split),
     )
     v_path, d_path = catalog.write_manifest(manifest)
@@ -106,6 +145,9 @@ def cmd_all(args) -> int:
         return rc
     cmd_download(args)
     cmd_convert(args)
+    if not args.no_parquet:
+        cmd_parquet(args)
+    cmd_qml(args)
     _build_and_write_catalog(args.split, args.release_url)
     return 0
 
@@ -152,6 +194,13 @@ def cmd_check_update(args) -> int:
     return 0
 
 
+def _add_parquet_args(p: argparse.ArgumentParser) -> None:
+    p.add_argument("--theme", action="append", help="対象テーマコード（複数指定可）。省略で全テーマ")
+    p.add_argument("--row-group-size", type=int, default=geoparquet_mod.DEFAULT_ROW_GROUP_SIZE)
+    p.add_argument("--compression", default=geoparquet_mod.DEFAULT_COMPRESSION)
+    p.add_argument("--compression-level", type=int, default=geoparquet_mod.DEFAULT_COMPRESSION_LEVEL)
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="tosiko_pmtiles", description="都市計画決定GISデータ → PMTiles パイプライン")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -172,12 +221,20 @@ def build_parser() -> argparse.ArgumentParser:
     cp.add_argument("--extra", default="", help="tippecanoe への追加引数（スペース区切り）")
     cp.set_defaults(func=cmd_convert)
 
+    pp = sub.add_parser("parquet", help="GeoJSON をテーマ別 GeoParquet（全国統合）に変換")
+    _add_parquet_args(pp)
+    pp.set_defaults(func=cmd_parquet)
+
+    qp = sub.add_parser("qml", help="QGIS 用スタイル（styles/*.qml）を生成")
+    qp.add_argument("--theme", action="append", help="対象テーマコード（複数指定可）。省略で全テーマ")
+    qp.set_defaults(func=cmd_qml)
+
     kp = sub.add_parser("catalog", help="manifest / versions.json / CATALOG.md を生成")
     kp.add_argument("--split", choices=["theme", "prefecture"], default="theme")
     kp.add_argument("--release-url", default=None)
     kp.set_defaults(func=cmd_catalog)
 
-    ap = sub.add_parser("all", help="scrape→download→convert→catalog を一括実行")
+    ap = sub.add_parser("all", help="scrape→download→convert→parquet→qml→catalog を一括実行")
     ap.add_argument("--pref", action="append")
     ap.add_argument("--sleep", type=float, default=1.0)
     ap.add_argument("--force", action="store_true", help="変更が無くても再ダウンロードする")
@@ -186,6 +243,8 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--maxzoom", type=int, default=14)
     ap.add_argument("--extra", default="")
     ap.add_argument("--release-url", default=None)
+    ap.add_argument("--no-parquet", action="store_true", help="GeoParquet の生成を省く")
+    _add_parquet_args(ap)
     ap.set_defaults(func=cmd_all)
 
     up = sub.add_parser("check-update", help="更新有無を判定（CI用）")
