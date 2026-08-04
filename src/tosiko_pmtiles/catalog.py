@@ -23,6 +23,7 @@ def build_manifest(
     convert_results: list[dict],
     *,
     split: str,
+    parquet_results: Optional[list[dict]] = None,
     generated_at: Optional[str] = None,
 ) -> dict:
     version = scrape_result["version"]
@@ -34,8 +35,10 @@ def build_manifest(
         "info_page": scrape_result.get("info_page"),
         "fingerprint": scrape_result.get("fingerprint"),
         "split": split,
+        "crs": f"EPSG:{config.SOURCE_EPSG}",
         "prefectures": download_entries or scrape_result.get("prefectures", []),
         "pmtiles": convert_results,
+        "parquet": parquet_results or [],
     }
 
 
@@ -89,6 +92,10 @@ def update_versions_index(manifest: dict, *, release_url: Optional[str] = None) 
         "release_url": release_url,
         "prefecture_count": len(manifest.get("prefectures", [])),
         "pmtiles": [{"name": p["pmtiles"], "bytes": p.get("bytes")} for p in manifest.get("pmtiles", [])],
+        "parquet": [
+            {"name": p["parquet"], "bytes": p.get("bytes"), "features": p.get("features")}
+            for p in manifest.get("parquet", [])
+        ],
     }
     others = [v for v in index.get("versions", []) if v.get("version") != manifest["version"]]
     index["versions"] = [entry] + others
@@ -113,8 +120,9 @@ def write_catalog_md(manifest: dict) -> Path:
         f"- 生成日時: {manifest['generated_at']}",
         f"- 出典: 国土交通省 都市局「都市計画決定GISデータ」 {manifest.get('source_page','')}",
         f"- 分割方式: `{manifest['split']}`",
+        f"- 座標参照系: {manifest.get('crs', f'EPSG:{config.SOURCE_EPSG}')}",
         "",
-        "## PMTiles",
+        "## PMTiles（地図描画用）",
         "",
         "| ファイル | 名称 | サイズ | ソース数 |",
         "| --- | --- | --- | --- |",
@@ -123,6 +131,23 @@ def write_catalog_md(manifest: dict) -> Path:
         name = p.get("name") or p.get("prefecture") or p.get("theme") or ""
         src = p.get("source_files") or (len(p.get("themes", [])) if p.get("themes") else "")
         lines.append(f"| `{p['pmtiles']}` | {name} | {_fmt_mb(p.get('bytes'))} | {src} |")
+
+    parquet = manifest.get("parquet", [])
+    if parquet:
+        lines += [
+            "",
+            "## GeoParquet（解析用・属性と座標は元データのまま）",
+            "",
+            "同名の QML（`styles/<テーマ>.qml`）を隣に置くと QGIS が配色を自動適用します。",
+            "",
+            "| ファイル | 名称 | サイズ | 地物数 |",
+            "| --- | --- | --- | --- |",
+        ]
+        for p in parquet:
+            lines.append(
+                f"| `{p['parquet']}` | {p.get('name','')} | {_fmt_mb(p.get('bytes'))} | {p.get('features', 0):,} |"
+            )
+
     lines += [
         "",
         "## 収録都道府県",

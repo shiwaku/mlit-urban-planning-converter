@@ -1,11 +1,12 @@
 {
   "version": "20260707",
   "tag": "data-20260707",
-  "generated_at": "2026-07-14T11:54:25+00:00",
+  "generated_at": "2026-08-04T09:42:56+00:00",
   "source_page": "https://www.mlit.go.jp/toshi/tosiko/toshi_tosiko_tk_000182.html",
   "info_page": "https://www.mlit.go.jp/toshi/tosiko/toshi_tosiko_tk_000087.html",
   "fingerprint": "c13bd267bdb0ebff8b740a1434c272bc2e1901ffb1685bcfc2471df16aa80e21",
   "split": "theme",
+  "crs": "EPSG:6668",
   "prefectures": [
     {
       "pref": "北海道",
@@ -15,8 +16,8 @@
       "modified": null,
       "bytes": 22240891,
       "sha256": "d2147701afac5a67f3f024a8cf7dacf6f45a0547fa29b49e7044882b944a5e29",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904008.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:21 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904008.zip",
       "geojson_files": 513
     },
     {
@@ -27,8 +28,8 @@
       "modified": null,
       "bytes": 7289076,
       "sha256": "0c56131e2a62927c62ef6c5c024bb0b86ba464ecb478efda4aa30316e2696eb7",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904009.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:21 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904009.zip",
       "geojson_files": 124
     },
     {
@@ -39,8 +40,8 @@
       "modified": "2026-07-01",
       "bytes": 11336594,
       "sha256": "722763798ce391211547f7acd6a97fa2d6174f7258f150e2f0b82da83dad9993",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904010.zip",
+      "last_modified": "Thu, 02 Jul 2026 01:19:35 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904010.zip",
       "geojson_files": 121
     },
     {
@@ -51,8 +52,8 @@
       "modified": null,
       "bytes": 16949959,
       "sha256": "a70b4bf8bd8101f1cfa18725eeada806f83e8234c8be7077d8f6a05d1678884e",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904011.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:29 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904011.zip",
       "geojson_files": 160
     },
     {
@@ -63,8 +64,8 @@
       "modified": null,
       "bytes": 5413396,
       "sha256": "4b71578dec616ef275dd841d2601702c83ac0ed3db76b1ea99f235959c0fc384",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904012.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:29 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904012.zip",
       "geojson_files": 78
     },
     {
@@ -75,8 +76,8 @@
       "modified": null,
       "bytes": 6380247,
       "sha256": "a265dae82d1a3f870a8e4d5a56722c5cb5d7ebb02e0e750c09704d9c231f80f6",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904013.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:29 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904013.zip",
       "geojson_files": 136
     },
     {
@@ -87,8 +88,8 @@
       "modified": null,
       "bytes": 14425689,
       "sha256": "f13c4f9d7fbb2b014a2fd349e7d10048c45f64ce45379312ae2f7bb5c118dfca",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904014.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:29 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904014.zip",
       "geojson_files": 161
     },
     {
@@ -99,8 +100,8 @@
       "modified": null,
       "bytes": 24833550,
       "sha256": "53559c6d14f3b7c53f12cbec4dfed7e7c7fb156184d1ff34188815eb64b2f80d",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904015.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:28 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904015.zip",
       "geojson_files": 313
     },
     {
@@ -111,8 +112,8 @@
       "modified": null,
       "bytes": 11297421,
       "sha256": "2c0782212b36a2f9d949c0484f5e81ec24df434105ae91fdd171113ed7e4ab90",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904016.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:28 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904016.zip",
       "geojson_files": 151
     },
     {
@@ -123,8 +124,8 @@
       "modified": null,
       "bytes": 15118154,
       "sha256": "539ae502e94938a6f32aa1c13ad98b05035f98261f6b5563ad059f84eb13eb1d",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904017.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:27 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904017.zip",
       "geojson_files": 174
     },
     {
@@ -135,8 +136,8 @@
       "modified": null,
       "bytes": 28532962,
       "sha256": "2264cf2366b348b8a607644f45c40136edb39df8d9b5edb20f5e2ef6c6ad9432",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904018.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:27 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904018.zip",
       "geojson_files": 482
     },
     {
@@ -147,8 +148,8 @@
       "modified": null,
       "bytes": 34388646,
       "sha256": "17ebd7764cc2f8295e4b20e3b1640ad1c74bfdf6863ddd9e4743ab0a0006ca83",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904019.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:26 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904019.zip",
       "geojson_files": 345
     },
     {
@@ -160,7 +161,8 @@
       "bytes": 46862319,
       "sha256": "f55c26ae044060e0f11a10e2e458ff5eadb0aa9837a6855ee5397dbe30784952",
       "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904020.zip",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904020.zip",
+      "cached": true,
       "geojson_files": 359
     },
     {
@@ -171,8 +173,8 @@
       "modified": "2026-07-02",
       "bytes": 51919658,
       "sha256": "42ad7e3c0b40db811b0535ecba012e85d2fa27261558e15797d2efb45d8e113a",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904021.zip",
+      "last_modified": "Thu, 02 Jul 2026 04:55:10 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904021.zip",
       "geojson_files": 292
     },
     {
@@ -183,8 +185,8 @@
       "modified": null,
       "bytes": 13300409,
       "sha256": "f52bad25e6b2dce3181e1a29cdf82d2ea209d74be924bc83e5965c4e34d72703",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904022.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:35 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904022.zip",
       "geojson_files": 164
     },
     {
@@ -195,8 +197,8 @@
       "modified": null,
       "bytes": 5209693,
       "sha256": "d20f985cf14fef8e63f65aae3f2fd308cb42e33613fb9cfcccae4cdcb69e0523",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904023.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:35 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904023.zip",
       "geojson_files": 72
     },
     {
@@ -207,8 +209,8 @@
       "modified": null,
       "bytes": 7798369,
       "sha256": "15e044116d7a9858678a44e2874e627b6441a509837e533754e4072e86dc7004",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904024.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:34 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904024.zip",
       "geojson_files": 83
     },
     {
@@ -219,8 +221,8 @@
       "modified": null,
       "bytes": 4183174,
       "sha256": "42ba202e34aabc9d955bb507df95a82f0293fb9b0a57acaf170b9e3179e5f638",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904025.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:34 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904025.zip",
       "geojson_files": 78
     },
     {
@@ -231,8 +233,8 @@
       "modified": null,
       "bytes": 3860455,
       "sha256": "a4d7255874d0da4ebce6e21937b71b93ca050d4447e6073a6b041e11b1e46f1f",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904026.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:34 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904026.zip",
       "geojson_files": 94
     },
     {
@@ -243,8 +245,8 @@
       "modified": "2026-07-01",
       "bytes": 16745872,
       "sha256": "d283cb5ecc03f30f8f314c52d3cdcb5aad2246cfca38035f3b51784ff575a5a0",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904027.zip",
+      "last_modified": "Thu, 02 Jul 2026 01:19:34 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904027.zip",
       "geojson_files": 230
     },
     {
@@ -255,8 +257,8 @@
       "modified": null,
       "bytes": 18284483,
       "sha256": "a4f0a04474063d330ec211a5f00e246c95fc2d73d642ae43cd3fcee3b9cde983",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904028.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:33 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904028.zip",
       "geojson_files": 189
     },
     {
@@ -267,8 +269,8 @@
       "modified": null,
       "bytes": 26107947,
       "sha256": "e64024b1f84e0b0031be1e42f236b5968595ead371913a575061e4ed44dadbd3",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904029.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:33 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904029.zip",
       "geojson_files": 235
     },
     {
@@ -279,8 +281,8 @@
       "modified": null,
       "bytes": 38445664,
       "sha256": "df0704fe2c3255c930bd4b814ad2589473d36709c21db88aae96f4110ad644bc",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904030.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:44 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904030.zip",
       "geojson_files": 441
     },
     {
@@ -291,8 +293,8 @@
       "modified": null,
       "bytes": 13201290,
       "sha256": "563f1e8a428088ef5eeb99604376fa8e01213d400acb4f18a087726127e05cce",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904031.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:43 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904031.zip",
       "geojson_files": 120
     },
     {
@@ -303,8 +305,8 @@
       "modified": "2026-07-02",
       "bytes": 13010921,
       "sha256": "1a894c1983703c8cf79f2e3cad704248090cd7a0828b9b3d08e2195d46d548be",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904032.zip",
+      "last_modified": "Thu, 02 Jul 2026 04:55:11 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904032.zip",
       "geojson_files": 152
     },
     {
@@ -315,8 +317,8 @@
       "modified": "2026-07-01",
       "bytes": 18855218,
       "sha256": "c75d72a2e3b07167a48c2db7b694714447ed8c3f85058b9f5d565ae695797128",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904033.zip",
+      "last_modified": "Thu, 02 Jul 2026 01:19:35 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904033.zip",
       "geojson_files": 184
     },
     {
@@ -327,8 +329,8 @@
       "modified": "2026-07-02",
       "bytes": 35093554,
       "sha256": "7a29fd7476c33b1792ceae0d234e9035f9a9733ec8a9bef88221b86f3024102d",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904034.zip",
+      "last_modified": "Thu, 02 Jul 2026 04:55:09 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904034.zip",
       "geojson_files": 412
     },
     {
@@ -339,8 +341,8 @@
       "modified": null,
       "bytes": 36850945,
       "sha256": "6b20a8bd7db0acbb822c4806a45ce413f39f315482cc1016f7d83ea0ec7dede4",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904035.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:42 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904035.zip",
       "geojson_files": 271
     },
     {
@@ -351,8 +353,8 @@
       "modified": "2026-07-02",
       "bytes": 14168654,
       "sha256": "62c7a749b5e1cd814bc17efc8be269b8c77beb4096a0a625b0c3cf400b65f0ad",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904037.zip",
+      "last_modified": "Thu, 02 Jul 2026 04:55:09 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904037.zip",
       "geojson_files": 188
     },
     {
@@ -363,8 +365,8 @@
       "modified": null,
       "bytes": 6419402,
       "sha256": "ab02ed276502d5c399b0ac3b405ca47142472a496825f127aa883c2d878125df",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904038.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:42 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904038.zip",
       "geojson_files": 66
     },
     {
@@ -375,8 +377,8 @@
       "modified": null,
       "bytes": 1951519,
       "sha256": "0c29be125ccbb27bfa35543fa7d7f6c581ebb5761845789b4f7ee5d6f9d08750",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904039.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:41 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904039.zip",
       "geojson_files": 38
     },
     {
@@ -387,8 +389,8 @@
       "modified": "2026-07-01",
       "bytes": 5819147,
       "sha256": "0fe4721711c916dbf62dff722f33869a2e38c79ed7d37d8de9315ae55869687a",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904040.zip",
+      "last_modified": "Thu, 02 Jul 2026 01:19:36 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904040.zip",
       "geojson_files": 48
     },
     {
@@ -399,8 +401,8 @@
       "modified": null,
       "bytes": 12114113,
       "sha256": "8d55b91ee7dcd00e49589592e61726478cbb8d4ee32bf290f352514adc2fca7f",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904041.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:11 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904041.zip",
       "geojson_files": 97
     },
     {
@@ -411,8 +413,8 @@
       "modified": null,
       "bytes": 31581051,
       "sha256": "46bd78b1cbc9b569336db4b0805d536c83a4a7535a921acd5c5083446acdd980",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904042.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:11 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904042.zip",
       "geojson_files": 132
     },
     {
@@ -423,8 +425,8 @@
       "modified": null,
       "bytes": 21542613,
       "sha256": "8917012ac3f780bbd111f9ba33af8292548d59cb62fddcd3c5c4fa008a35e3a3",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904043.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:10 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904043.zip",
       "geojson_files": 137
     },
     {
@@ -435,8 +437,8 @@
       "modified": null,
       "bytes": 4836439,
       "sha256": "3ce75bf4033399f75be18e9bdfc734449e6095d97c21e62d127513b50ee82b6f",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904044.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:10 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904044.zip",
       "geojson_files": 59
     },
     {
@@ -447,8 +449,8 @@
       "modified": null,
       "bytes": 6376855,
       "sha256": "befef49963b1f9a06f9dd8fb927fabda0ce4f25b03d18689799d9bc98e9b3427",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904045.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:10 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904045.zip",
       "geojson_files": 82
     },
     {
@@ -459,8 +461,8 @@
       "modified": null,
       "bytes": 8619597,
       "sha256": "6fa42e23d13eb76e41ba4bcf611cbee290ec9af935f73a20f6ac35b3cdbf18ba",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904046.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:10 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904046.zip",
       "geojson_files": 104
     },
     {
@@ -471,8 +473,8 @@
       "modified": null,
       "bytes": 5877504,
       "sha256": "af0a52e16b0a86a7d48e573ea14c0a5ce14143c137b9e6c26884f0d32953a2ea",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904047.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:10 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904047.zip",
       "geojson_files": 56
     },
     {
@@ -483,8 +485,8 @@
       "modified": null,
       "bytes": 34253395,
       "sha256": "d7b37503a26fc3c12f93295c10c057f7ee008567dc040e52c9dbf84fd90787ac",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904048.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:09 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904048.zip",
       "geojson_files": 330
     },
     {
@@ -495,8 +497,8 @@
       "modified": null,
       "bytes": 6458081,
       "sha256": "2cbe212ae4ee0e6fb884053107f248ef046b17b9538fa55f3bebeddfb62dd55f",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904049.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:09 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904049.zip",
       "geojson_files": 77
     },
     {
@@ -507,8 +509,8 @@
       "modified": null,
       "bytes": 22011218,
       "sha256": "39182de1af85ed4831379a7d1291e217cf1404ad060237796b15e3fb40901292",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904050.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:07 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904050.zip",
       "geojson_files": 83
     },
     {
@@ -519,8 +521,8 @@
       "modified": "2026-07-01",
       "bytes": 9482667,
       "sha256": "b832b0a9b8a2d352ec788479ddeed575a150a4ffe953d8ac9f769e8eae36f0cb",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904051.zip",
+      "last_modified": "Thu, 02 Jul 2026 01:19:37 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904051.zip",
       "geojson_files": 107
     },
     {
@@ -531,8 +533,8 @@
       "modified": null,
       "bytes": 9909033,
       "sha256": "563f3a05a51ef3cbe27376662976cc353e0c496f5ebf0d686a84672ec7c37c4b",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904052.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:14 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904052.zip",
       "geojson_files": 97
     },
     {
@@ -543,8 +545,8 @@
       "modified": "2026-07-01",
       "bytes": 8403605,
       "sha256": "d64a935fd811c21c0d54a858350a54946bf0791bd01d58ffd034930117297ea0",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904053.zip",
+      "last_modified": "Thu, 02 Jul 2026 01:19:36 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904053.zip",
       "geojson_files": 70
     },
     {
@@ -555,8 +557,8 @@
       "modified": null,
       "bytes": 15813242,
       "sha256": "2c2b869651de30567d7c63760f0e0dd280dc50e29f7cea3b595ae307775eda5b",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904054.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:14 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904054.zip",
       "geojson_files": 142
     },
     {
@@ -567,8 +569,8 @@
       "modified": null,
       "bytes": 11641557,
       "sha256": "c3e3ebf035115b2ef29138813e5c1eccf2444dba71e8f5f706c2e613baa0aa2a",
-      "last_modified": null,
-      "zip_path": "/tmp/claude-1000/-mnt-c-Users-yshiw-Documents-GIS-ksj-toshi-tosiko-tk/20a2c2d7-996d-421e-badb-3a22f0991430/scratchpad/allzip/001904055.zip",
+      "last_modified": "Thu, 21 May 2026 05:29:14 GMT",
+      "zip_path": "/mnt/c/Users/yshiw/Documents/GIS/mlit-urban-planning-converter/raw/zip/001904055.zip",
       "geojson_files": 126
     }
   ],
@@ -780,6 +782,496 @@
       "pmtiles": "fukkousaiseikyoten.pmtiles",
       "bytes": 7212,
       "source_files": 1
+    }
+  ],
+  "parquet": [
+    {
+      "kind": "theme",
+      "theme": "youto",
+      "name": "用途地域",
+      "parquet": "youto.parquet",
+      "bytes": 133291070,
+      "features": 102159,
+      "source_files": 1215,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        124.13742703276246,
+        24.330076031581754,
+        145.61586199799171,
+        45.449771313094914
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "tokei",
+      "name": "都市計画区域",
+      "parquet": "tokei.parquet",
+      "bytes": 89184321,
+      "features": 10279,
+      "source_files": 1373,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        124.06903914000009,
+        24.32884941000009,
+        145.66694792,
+        45.4498188
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "jyuntoshi",
+      "name": "準都市計画区域",
+      "parquet": "jyuntoshi.parquet",
+      "bytes": 1261948,
+      "features": 41,
+      "source_files": 25,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        130.4144899409204,
+        31.83360824438107,
+        143.95903744491343,
+        43.8746761735055
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "senbiki",
+      "name": "区域区分",
+      "parquet": "senbiki.parquet",
+      "bytes": 81662300,
+      "features": 7259,
+      "source_files": 637,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        127.63660494311188,
+        26.07447259,
+        144.55890278,
+        43.8766518
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "ritteki",
+      "name": "立地適正化計画区域",
+      "parquet": "ritteki.parquet",
+      "bytes": 82970256,
+      "features": 9675,
+      "source_files": 582,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        124.06903914000009,
+        24.32884941000009,
+        145.66694792,
+        45.4498188
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "koudoti",
+      "name": "高度地区",
+      "parquet": "koudoti.parquet",
+      "bytes": 26406144,
+      "features": 18460,
+      "source_files": 214,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        127.72950362110382,
+        26.23798358579929,
+        141.57646682500294,
+        43.23105365925877
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "koudori",
+      "name": "高度利用地区",
+      "parquet": "koudori.parquet",
+      "bytes": 375457,
+      "features": 969,
+      "source_files": 231,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        127.65962586738091,
+        26.19191168875316,
+        143.89638617988268,
+        43.80451969794893
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "bouka",
+      "name": "防火地域・準防火地域",
+      "parquet": "bouka.parquet",
+      "bytes": 16888037,
+      "features": 9931,
+      "source_files": 581,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        127.65867382567033,
+        26.157804120572003,
+        144.981815113786,
+        44.93941659616287
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "tkbt",
+      "name": "特別用途地区",
+      "parquet": "tkbt.parquet",
+      "bytes": 11187638,
+      "features": 10254,
+      "source_files": 337,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        124.14635033856807,
+        24.337475468435283,
+        145.00367593101194,
+        44.364065883836446
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "tokuteiyouto",
+      "name": "特定用途制限地域",
+      "parquet": "tokuteiyouto.parquet",
+      "bytes": 9135393,
+      "features": 1639,
+      "source_files": 77,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        127.77195106109806,
+        26.241470133114472,
+        145.03635232704997,
+        44.20584751846793
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "tokuteiyuudou",
+      "name": "特定用途誘導地区",
+      "parquet": "tokuteiyuudou.parquet",
+      "bytes": 45123,
+      "features": 29,
+      "source_files": 6,
+      "geometry_types": [
+        "Polygon"
+      ],
+      "bbox": [
+        131.23715922980463,
+        33.94565438151546,
+        139.57843700446887,
+        35.83148888263812
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "fuuchichiku",
+      "name": "風致地区",
+      "parquet": "fuuchichiku.parquet",
+      "bytes": 8748583,
+      "features": 2155,
+      "source_files": 185,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        127.67824321786496,
+        26.13239453191328,
+        141.9855832508321,
+        43.16456032131337
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "ryokukachiiki",
+      "name": "緑化地域",
+      "parquet": "ryokukachiiki.parquet",
+      "bytes": 1259765,
+      "features": 217,
+      "source_files": 4,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        136.79993122405713,
+        35.033878560766496,
+        139.69590235109442,
+        35.68297650355901
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "tokuryoku",
+      "name": "特別緑地保全地区",
+      "parquet": "tokuryoku.parquet",
+      "bytes": 705556,
+      "features": 687,
+      "source_files": 80,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        130.2621657002292,
+        33.496302248460324,
+        141.48570358213607,
+        43.110182508469755
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "kousoujyukyo",
+      "name": "高層住居誘導地区",
+      "parquet": "kousoujyukyo.parquet",
+      "bytes": 9409,
+      "features": 1,
+      "source_files": 1,
+      "geometry_types": [
+        "Polygon"
+      ],
+      "bbox": [
+        139.8013602662941,
+        35.644691928676785,
+        139.8058160918412,
+        35.65002851261256
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "kyojyuchosei",
+      "name": "居住調整地域",
+      "parquet": "kyojyuchosei.parquet",
+      "bytes": 54664,
+      "features": 4,
+      "source_files": 1,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        141.12523296334302,
+        41.240071125395346,
+        141.24480075793662,
+        41.33549779534249
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "tokureiyouseki",
+      "name": "特例容積率適用地区",
+      "parquet": "tokureiyouseki.parquet",
+      "bytes": 13628,
+      "features": 2,
+      "source_files": 2,
+      "geometry_types": [
+        "Polygon"
+      ],
+      "bbox": [
+        139.76257435392395,
+        35.67253958520649,
+        139.90099705866766,
+        36.55999369807637
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "tokuteibou",
+      "name": "特定防災街区整備地区",
+      "parquet": "tokuteibou.parquet",
+      "bytes": 21008,
+      "features": 14,
+      "source_files": 8,
+      "geometry_types": [
+        "Polygon"
+      ],
+      "bbox": [
+        134.83675914381868,
+        34.44716201108942,
+        139.82319718586672,
+        35.74423466785702
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "rekifuu",
+      "name": "歴史的風土保存地区",
+      "parquet": "rekifuu.parquet",
+      "bytes": 784543,
+      "features": 77,
+      "source_files": 7,
+      "geometry_types": [
+        "Polygon"
+      ],
+      "bbox": [
+        135.65350903213948,
+        34.48485653203805,
+        139.59320918933463,
+        35.34267509278945
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "toshisaisei",
+      "name": "都市再生特別地区",
+      "parquet": "toshisaisei.parquet",
+      "bytes": 32252,
+      "features": 95,
+      "source_files": 14,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        130.882725330671,
+        33.88552187759635,
+        141.35668871851033,
+        43.069382580068705
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "chikukei",
+      "name": "地区計画",
+      "parquet": "chikukei.parquet",
+      "bytes": 16413123,
+      "features": 10886,
+      "source_files": 601,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        124.1119443911898,
+        24.331104496080258,
+        144.456347419762,
+        43.829171
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "tochiku",
+      "name": "土地区画整理事業",
+      "parquet": "tochiku.parquet",
+      "bytes": 13244790,
+      "features": 6522,
+      "source_files": 485,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        124.16310592470238,
+        24.33276848856929,
+        144.43772677036912,
+        44.37143940905098
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "douro",
+      "name": "都市計画道路",
+      "parquet": "douro.parquet",
+      "bytes": 98317035,
+      "features": 185782,
+      "source_files": 785,
+      "geometry_types": [
+        "LineString",
+        "MultiLineString"
+      ],
+      "bbox": [
+        124.13748112486586,
+        24.331104290425216,
+        145.0245863265669,
+        44.95578980729623
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "kouen",
+      "name": "公園",
+      "parquet": "kouen.parquet",
+      "bytes": 21844955,
+      "features": 41161,
+      "source_files": 716,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        124.11100144692622,
+        24.33048494616215,
+        144.99900619942733,
+        44.94482136701273
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "soubou",
+      "name": "航空機騒音障害防止地区",
+      "parquet": "soubou.parquet",
+      "bytes": 47632,
+      "features": 51,
+      "source_files": 5,
+      "geometry_types": [
+        "Polygon"
+      ],
+      "bbox": [
+        140.3027055645032,
+        35.653548046581456,
+        140.4552721616253,
+        35.870633319643204
+      ]
+    },
+    {
+      "kind": "theme",
+      "theme": "fukkousaiseikyoten",
+      "name": "一団地の復興再生拠点市街地形成施設",
+      "parquet": "fukkousaiseikyoten.parquet",
+      "bytes": 23056,
+      "features": 2,
+      "source_files": 1,
+      "geometry_types": [
+        "MultiPolygon",
+        "Polygon"
+      ],
+      "bbox": [
+        140.9981231160296,
+        37.44800696940549,
+        141.02842236578846,
+        37.460687748661734
+      ]
     }
   ]
 }

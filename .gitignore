@@ -1,9 +1,11 @@
-# ダウンロード・展開・変換の中間/出力物（gitには置かない。PMTilesはGitHub Releasesへ）
+# ダウンロード・展開・変換の中間/出力物（gitには置かない。PMTiles / GeoParquet は GitHub Releases へ）
+# styles/*.qml は data/styles.json から生成する小さなテキストなので、例外的にコミットする。
 raw/
 dist/
 *.zip
 *.pmtiles
 *.mbtiles
+*.parquet
 
 # Python
 __pycache__/

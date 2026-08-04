@@ -1,12 +1,14 @@
-# 都市計画決定GISデータ → PMTiles パイプライン
+# 都市計画決定GISデータ → PMTiles / GeoParquet パイプライン
 #
 # 使い方:
 #   make setup                 # venv 作成 + 依存インストール
 #   make scrape                # ダウンロードページ解析
 #   make download              # 全県 GeoJSON 取得（PREF="東京都 京都府" で県指定）
 #   make convert               # PMTiles 生成（SPLIT=theme|prefecture）
+#   make parquet               # テーマ別 GeoParquet 生成（THEME="youto tokei" で絞り込み）
+#   make qml                   # QGIS 用スタイル生成（styles/*.qml と .qlr / .qgz）
 #   make catalog               # manifest / versions.json / CATALOG.md 生成
-#   make all                   # scrape→download→convert→catalog
+#   make all                   # scrape→download→convert→parquet→qml→catalog
 #   make check-update          # 更新有無の判定（CI用）
 #   make clean / clean-dist
 
@@ -17,11 +19,13 @@ SPLIT     ?= theme
 MINZOOM   ?= 4
 MAXZOOM   ?= 14
 PREF      ?=
+THEME     ?=
 EXTRA     ?=
 
-PREF_ARGS = $(foreach p,$(PREF),--pref $(p))
+PREF_ARGS  = $(foreach p,$(PREF),--pref $(p))
+THEME_ARGS = $(foreach t,$(THEME),--theme $(t))
 
-.PHONY: setup scrape download convert catalog all check-update clean clean-dist
+.PHONY: setup scrape download convert parquet qml catalog all check-update clean clean-dist
 
 setup:
 	$(PY) -m venv $(VENV)
@@ -36,6 +40,12 @@ download:
 
 convert:
 	$(RUN) convert --split $(SPLIT) --minzoom $(MINZOOM) --maxzoom $(MAXZOOM) $(if $(EXTRA),--extra "$(EXTRA)",)
+
+parquet:
+	$(RUN) parquet $(THEME_ARGS)
+
+qml:
+	$(RUN) qml $(THEME_ARGS)
 
 catalog:
 	$(RUN) catalog --split $(SPLIT)

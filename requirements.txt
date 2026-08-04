@@ -1,2 +1,6 @@
 requests>=2.31
 beautifulsoup4>=4.12
+# GeoParquet 生成（テーマ別・全国統合）
+pyarrow>=16.0
+shapely>=2.0
+pyproj>=3.6

@@ -64,7 +64,9 @@ function pmtilesDevServer(): Plugin {
 export default defineConfig({
   base: './',
   plugins: [pmtilesDevServer()],
-  server: { port: 8000 },
+  // layers.ts が ../../data/styles.json（viewer/ の外）を import するため、
+  // dev サーバーにもリポジトリ直下の読み取りを許可する。
+  server: { port: 8000, fs: { allow: ['..'] } },
   define: {
     __BUILD_TIME__: JSON.stringify(new Date().toISOString().replace('T', ' ').slice(0, 16) + ' UTC'),
   },

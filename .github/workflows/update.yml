@@ -86,6 +86,17 @@ jobs:
         if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
         run: PYTHONPATH=src python -m tosiko_pmtiles.cli convert --split "$SPLIT"
 
+      # 解析用の配布物。PMTiles と違い属性・座標を間引かずに持つ。
+      - name: Convert to GeoParquet
+        if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
+        run: PYTHONPATH=src python -m tosiko_pmtiles.cli parquet
+
+      # QGIS 用スタイル。data/styles.json からの生成なのでデータ版に依存しないが、
+      # 配色を変えたときに Release の QML も追随するよう毎回作り直す。
+      - name: Build QGIS styles (QML / QLR / QGZ)
+        if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
+        run: PYTHONPATH=src python -m tosiko_pmtiles.cli qml
+
       - name: Build catalog
         if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
         run: |
@@ -103,16 +114,17 @@ jobs:
           if ! gh release view "$TAG" >/dev/null 2>&1; then
             gh release create "$TAG" \
               --title "都市計画決定GISデータ ${VER}" \
-              --notes "国土交通省 都市局『都市計画決定GISデータ』を PMTiles 化した版 ${VER}。出典: https://www.mlit.go.jp/toshi/tosiko/toshi_tosiko_tk_000182.html"
+              --notes "国土交通省 都市局『都市計画決定GISデータ』を PMTiles / GeoParquet 化した版 ${VER}。QGIS 用スタイル（*.qml）とプロジェクト（*.qlr / *.qgz）も同梱。出典: https://www.mlit.go.jp/toshi/tosiko/toshi_tosiko_tk_000182.html"
           fi
-          gh release upload "$TAG" dist/*.pmtiles dist/manifest.json --clobber
+          gh release upload "$TAG" dist/*.pmtiles dist/*.parquet \
+            styles/*.qml styles/*.qlr styles/*.qgz dist/manifest.json --clobber
 
       - name: Commit catalog
         if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add versions/ versions.json CATALOG.md data/themes.json
+          git add versions/ versions.json CATALOG.md data/themes.json data/styles.json styles/
           if git diff --cached --quiet; then
             echo "コミットする変更はありません"
           else
