@@ -97,6 +97,12 @@ jobs:
         if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
         run: PYTHONPATH=src python -m tosiko_pmtiles.cli qml
 
+      # 一括ダウンロード用。Release の添付は80本を超えるので、QGIS で全部開きたい人向けに
+      # parquet + qml + qlr + qgz を1本の zip にまとめて置く。parquet と qml の後で実行する。
+      - name: Bundle QGIS set (zip)
+        if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
+        run: PYTHONPATH=src python -m tosiko_pmtiles.cli bundle
+
       - name: Build catalog
         if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
         run: |
@@ -114,9 +120,9 @@ jobs:
           if ! gh release view "$TAG" >/dev/null 2>&1; then
             gh release create "$TAG" \
               --title "都市計画決定GISデータ ${VER}" \
-              --notes "国土交通省 都市局『都市計画決定GISデータ』を PMTiles / GeoParquet 化した版 ${VER}。QGIS 用スタイル（*.qml）とプロジェクト（*.qlr / *.qgz）も同梱。出典: https://www.mlit.go.jp/toshi/tosiko/toshi_tosiko_tk_000182.html"
+              --notes "国土交通省 都市局『都市計画決定GISデータ』を PMTiles / GeoParquet 化した版 ${VER}。QGIS 用スタイル（*.qml）とプロジェクト（*.qlr / *.qgz）も同梱。**QGIS で全部見たい場合は toshikeikaku-qgis.zip だけ落とせば済みます**（解凍して toshikeikaku.qgz を開く）。出典: https://www.mlit.go.jp/toshi/tosiko/toshi_tosiko_tk_000182.html"
           fi
-          gh release upload "$TAG" dist/*.pmtiles dist/*.parquet \
+          gh release upload "$TAG" dist/*.pmtiles dist/*.parquet dist/*-qgis.zip \
             styles/*.qml styles/*.qlr styles/*.qgz dist/manifest.json --clobber
 
       - name: Commit catalog

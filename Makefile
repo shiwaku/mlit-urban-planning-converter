@@ -7,8 +7,9 @@
 #   make convert               # PMTiles 生成（SPLIT=theme|prefecture）
 #   make parquet               # テーマ別 GeoParquet 生成（THEME="youto tokei" で絞り込み）
 #   make qml                   # QGIS 用スタイル生成（styles/*.qml と .qlr / .qgz）
+#   make bundle                # QGIS 一式を dist/toshikeikaku-qgis.zip にまとめる
 #   make catalog               # manifest / versions.json / CATALOG.md 生成
-#   make all                   # scrape→download→convert→parquet→qml→catalog
+#   make all                   # scrape→download→convert→parquet→qml→bundle→catalog
 #   make check-update          # 更新有無の判定（CI用）
 #   make clean / clean-dist
 
@@ -25,7 +26,7 @@ EXTRA     ?=
 PREF_ARGS  = $(foreach p,$(PREF),--pref $(p))
 THEME_ARGS = $(foreach t,$(THEME),--theme $(t))
 
-.PHONY: setup scrape download convert parquet qml catalog all check-update clean clean-dist
+.PHONY: setup scrape download convert parquet qml bundle catalog all check-update clean clean-dist
 
 setup:
 	$(PY) -m venv $(VENV)
@@ -46,6 +47,9 @@ parquet:
 
 qml:
 	$(RUN) qml $(THEME_ARGS)
+
+bundle:
+	$(RUN) bundle $(THEME_ARGS)
 
 catalog:
 	$(RUN) catalog --split $(SPLIT)
