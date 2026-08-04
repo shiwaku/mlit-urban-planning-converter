@@ -1,0 +1,2474 @@
+<!DOCTYPE qgis-layer-definition>
+<!-- 都市計画決定GISデータ（全国）: GeoParquet 26テーマのレイヤ定義。
+     https://github.com/shiwaku/mlit-urban-planning-converter が生成。
+     *.parquet と同じフォルダに置いてから QGIS にドラッグ&ドロップすること。 -->
+<qlr>
+  <layer-tree-group>
+    <layer-tree-layer id="douro_layer" name="都市計画道路" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="fukkousaiseikyoten_layer" name="一団地の復興再生拠点市街地形成施設" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="soubou_layer" name="航空機騒音障害防止地区" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="kouen_layer" name="公園" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="tochiku_layer" name="土地区画整理事業" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="chikukei_layer" name="地区計画" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="toshisaisei_layer" name="都市再生特別地区" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="rekifuu_layer" name="歴史的風土保存地区" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="tokuryoku_layer" name="特別緑地保全地区" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="ryokukachiiki_layer" name="緑化地域" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="fuuchichiku_layer" name="風致地区" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="tokuteibou_layer" name="特定防災街区整備地区" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="bouka_layer" name="防火地域・準防火地域" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="kyojyuchosei_layer" name="居住調整地域" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="kousoujyukyo_layer" name="高層住居誘導地区" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="tokureiyouseki_layer" name="特例容積率適用地区" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="koudori_layer" name="高度利用地区" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="koudoti_layer" name="高度地区" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="tokuteiyuudou_layer" name="特定用途誘導地区" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="tokuteiyouto_layer" name="特定用途制限地域" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="tkbt_layer" name="特別用途地区" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="youto_layer" name="用途地域" source="" providerKey="" checked="Qt::Checked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="ritteki_layer" name="立地適正化計画区域" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="senbiki_layer" name="区域区分" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="jyuntoshi_layer" name="準都市計画区域" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer id="tokei_layer" name="都市計画区域" source="" providerKey="" checked="Qt::Unchecked" expanded="0">
+      <customproperties/>
+    </layer-tree-layer>
+  </layer-tree-group>
+  <maplayers>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>124.06903914000009</xmin>
+        <ymin>24.32884941000009</ymin>
+        <xmax>145.66694792</xmax>
+        <ymax>45.4498188</ymax>
+      </extent>
+      <id>tokei_layer</id>
+      <datasource>./tokei.parquet</datasource>
+      <layername>都市計画区域</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="200,200,200,255"/>
+            <Option name="outline_color" type="QString" value="100,100,100,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>130.4144899409204</xmin>
+        <ymin>31.83360824438107</ymin>
+        <xmax>143.95903744491343</xmax>
+        <ymax>43.8746761735055</ymax>
+      </extent>
+      <id>jyuntoshi_layer</id>
+      <datasource>./jyuntoshi.parquet</datasource>
+      <layername>準都市計画区域</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="200,50,20,128"/>
+            <Option name="outline_color" type="QString" value="200,50,20,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>127.63660494311188</xmin>
+        <ymin>26.07447259</ymin>
+        <xmax>144.55890278</xmax>
+        <ymax>43.8766518</ymax>
+      </extent>
+      <id>senbiki_layer</id>
+      <datasource>./senbiki.parquet</datasource>
+      <layername>区域区分</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="categorizedSymbol" attr="AreaType" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <categories>
+        <category value="市街化区域" symbol="0" label="市街化区域" render="true"/>
+        <category value="市街化調整区域" symbol="1" label="市街化調整区域" render="true"/>
+        <category value="" symbol="2" label="その他" render="true"/>
+      </categories>
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="255,250,190,255"/>
+            <Option name="outline_color" type="QString" value="255,160,230,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="1" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="220,220,220,255"/>
+            <Option name="outline_color" type="QString" value="255,160,230,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="2" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="210,210,210,255"/>
+            <Option name="outline_color" type="QString" value="160,160,160,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>124.06903914000009</xmin>
+        <ymin>24.32884941000009</ymin>
+        <xmax>145.66694792</xmax>
+        <ymax>45.4498188</ymax>
+      </extent>
+      <id>ritteki_layer</id>
+      <datasource>./ritteki.parquet</datasource>
+      <layername>立地適正化計画区域</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="categorizedSymbol" attr="AreaType" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <categories>
+        <category value="立地適正化計画区域" symbol="0" label="立地適正化計画区域" render="true"/>
+        <category value="居住誘導区域" symbol="1" label="居住誘導区域" render="true"/>
+        <category value="都市機能誘導区域" symbol="2" label="都市機能誘導区域" render="true"/>
+        <category value="" symbol="3" label="その他" render="true"/>
+      </categories>
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="215,250,165,255"/>
+            <Option name="outline_color" type="QString" value="160,195,95,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="1" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="0,150,0,128"/>
+            <Option name="outline_color" type="QString" value="0,0,255,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="2" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="0,150,0,128"/>
+            <Option name="outline_color" type="QString" value="255,0,0,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="3" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="215,250,165,255"/>
+            <Option name="outline_color" type="QString" value="160,195,95,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>124.13742703276246</xmin>
+        <ymin>24.330076031581754</ymin>
+        <xmax>145.61586199799171</xmax>
+        <ymax>45.449771313094914</ymax>
+      </extent>
+      <id>youto_layer</id>
+      <datasource>./youto.parquet</datasource>
+      <layername>用途地域</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="categorizedSymbol" attr="YoutoCode" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <categories>
+        <category value="1" symbol="0" label="第一種低層住居専用地域" render="true"/>
+        <category value="2" symbol="1" label="第二種低層住居専用地域" render="true"/>
+        <category value="3" symbol="2" label="第一種中高層住居専用地域" render="true"/>
+        <category value="4" symbol="3" label="第二種中高層住居専用地域" render="true"/>
+        <category value="5" symbol="4" label="第一種住居地域" render="true"/>
+        <category value="6" symbol="5" label="第二種住居地域" render="true"/>
+        <category value="7" symbol="6" label="準住居地域" render="true"/>
+        <category value="8" symbol="7" label="田園住居地域" render="true"/>
+        <category value="9" symbol="8" label="近隣商業地域" render="true"/>
+        <category value="10" symbol="9" label="商業地域" render="true"/>
+        <category value="11" symbol="10" label="準工業地域" render="true"/>
+        <category value="12" symbol="11" label="工業地域" render="true"/>
+        <category value="13" symbol="12" label="工業専用地域" render="true"/>
+        <category value="" symbol="13" label="その他・不明" render="true"/>
+      </categories>
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="0,255,153,255"/>
+            <Option name="outline_color" type="QString" value="0,0,0,140"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="1" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="0,85,46,255"/>
+            <Option name="outline_color" type="QString" value="0,0,0,140"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="2" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="146,208,80,255"/>
+            <Option name="outline_color" type="QString" value="0,0,0,140"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="3" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="204,255,153,255"/>
+            <Option name="outline_color" type="QString" value="0,0,0,140"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="4" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="255,255,102,255"/>
+            <Option name="outline_color" type="QString" value="0,0,0,140"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="5" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="255,204,153,255"/>
+            <Option name="outline_color" type="QString" value="0,0,0,140"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="6" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="255,204,102,255"/>
+            <Option name="outline_color" type="QString" value="0,0,0,140"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="7" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="215,235,110,255"/>
+            <Option name="outline_color" type="QString" value="0,0,0,140"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="8" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="255,102,204,255"/>
+            <Option name="outline_color" type="QString" value="0,0,0,140"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="9" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="255,0,102,255"/>
+            <Option name="outline_color" type="QString" value="0,0,0,140"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="10" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="153,0,255,255"/>
+            <Option name="outline_color" type="QString" value="0,0,0,140"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="11" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="204,255,255,255"/>
+            <Option name="outline_color" type="QString" value="0,0,0,140"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="12" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="51,204,255,255"/>
+            <Option name="outline_color" type="QString" value="0,0,0,140"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="13" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="180,180,180,153"/>
+            <Option name="outline_color" type="QString" value="0,0,0,140"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>124.14635033856807</xmin>
+        <ymin>24.337475468435283</ymin>
+        <xmax>145.00367593101194</xmax>
+        <ymax>44.364065883836446</ymax>
+      </extent>
+      <id>tkbt_layer</id>
+      <datasource>./tkbt.parquet</datasource>
+      <layername>特別用途地区</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="255,200,255,128"/>
+            <Option name="outline_color" type="QString" value="255,102,204,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>127.77195106109806</xmin>
+        <ymin>26.241470133114472</ymin>
+        <xmax>145.03635232704997</xmax>
+        <ymax>44.20584751846793</ymax>
+      </extent>
+      <id>tokuteiyouto_layer</id>
+      <datasource>./tokuteiyouto.parquet</datasource>
+      <layername>特定用途制限地域</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="200,200,50,128"/>
+            <Option name="outline_color" type="QString" value="200,200,50,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="Polygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>131.23715922980463</xmin>
+        <ymin>33.94565438151546</ymin>
+        <xmax>139.57843700446887</xmax>
+        <ymax>35.83148888263812</ymax>
+      </extent>
+      <id>tokuteiyuudou_layer</id>
+      <datasource>./tokuteiyuudou.parquet</datasource>
+      <layername>特定用途誘導地区</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="255,180,120,255"/>
+            <Option name="outline_color" type="QString" value="200,120,60,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>127.72950362110382</xmin>
+        <ymin>26.23798358579929</ymin>
+        <xmax>141.57646682500294</xmax>
+        <ymax>43.23105365925877</ymax>
+      </extent>
+      <id>koudoti_layer</id>
+      <datasource>./koudoti.parquet</datasource>
+      <layername>高度地区</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="230,200,170,255"/>
+            <Option name="outline_color" type="QString" value="120,90,40,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>127.65962586738091</xmin>
+        <ymin>26.19191168875316</ymin>
+        <xmax>143.89638617988268</xmax>
+        <ymax>43.80451969794893</ymax>
+      </extent>
+      <id>koudori_layer</id>
+      <datasource>./koudori.parquet</datasource>
+      <layername>高度利用地区</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="200,200,200,178"/>
+            <Option name="outline_color" type="QString" value="0,0,0,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="Polygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>139.76257435392395</xmin>
+        <ymin>35.67253958520649</ymin>
+        <xmax>139.90099705866766</xmax>
+        <ymax>36.55999369807637</ymax>
+      </extent>
+      <id>tokureiyouseki_layer</id>
+      <datasource>./tokureiyouseki.parquet</datasource>
+      <layername>特例容積率適用地区</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="180,150,220,255"/>
+            <Option name="outline_color" type="QString" value="120,90,180,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="Polygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>139.8013602662941</xmin>
+        <ymin>35.644691928676785</ymin>
+        <xmax>139.8058160918412</xmax>
+        <ymax>35.65002851261256</ymax>
+      </extent>
+      <id>kousoujyukyo_layer</id>
+      <datasource>./kousoujyukyo.parquet</datasource>
+      <layername>高層住居誘導地区</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="120,180,255,255"/>
+            <Option name="outline_color" type="QString" value="40,100,200,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>141.12523296334302</xmin>
+        <ymin>41.240071125395346</ymin>
+        <xmax>141.24480075793662</xmax>
+        <ymax>41.33549779534249</ymax>
+      </extent>
+      <id>kyojyuchosei_layer</id>
+      <datasource>./kyojyuchosei.parquet</datasource>
+      <layername>居住調整地域</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="0,150,0,128"/>
+            <Option name="outline_color" type="QString" value="0,100,0,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>127.65867382567033</xmin>
+        <ymin>26.157804120572003</ymin>
+        <xmax>144.981815113786</xmax>
+        <ymax>44.93941659616287</ymax>
+      </extent>
+      <id>bouka_layer</id>
+      <datasource>./bouka.parquet</datasource>
+      <layername>防火地域・準防火地域</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="categorizedSymbol" attr="AreaType" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <categories>
+        <category value="防火地域" symbol="0" label="防火地域" render="true"/>
+        <category value="準防火地域" symbol="1" label="準防火地域" render="true"/>
+        <category value="" symbol="2" label="その他" render="true"/>
+      </categories>
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="255,0,100,153"/>
+            <Option name="outline_color" type="QString" value="255,0,102,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="1" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="255,150,200,102"/>
+            <Option name="outline_color" type="QString" value="255,0,102,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      <symbol name="2" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="255,120,170,102"/>
+            <Option name="outline_color" type="QString" value="255,0,102,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="Polygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>134.83675914381868</xmin>
+        <ymin>34.44716201108942</ymin>
+        <xmax>139.82319718586672</xmax>
+        <ymax>35.74423466785702</ymax>
+      </extent>
+      <id>tokuteibou_layer</id>
+      <datasource>./tokuteibou.parquet</datasource>
+      <layername>特定防災街区整備地区</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="255,120,120,255"/>
+            <Option name="outline_color" type="QString" value="200,60,60,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>127.67824321786496</xmin>
+        <ymin>26.13239453191328</ymin>
+        <xmax>141.9855832508321</xmax>
+        <ymax>43.16456032131337</ymax>
+      </extent>
+      <id>fuuchichiku_layer</id>
+      <datasource>./fuuchichiku.parquet</datasource>
+      <layername>風致地区</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="50,200,20,128"/>
+            <Option name="outline_color" type="QString" value="50,150,20,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>136.79993122405713</xmin>
+        <ymin>35.033878560766496</ymin>
+        <xmax>139.69590235109442</xmax>
+        <ymax>35.68297650355901</ymax>
+      </extent>
+      <id>ryokukachiiki_layer</id>
+      <datasource>./ryokukachiiki.parquet</datasource>
+      <layername>緑化地域</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="120,220,120,255"/>
+            <Option name="outline_color" type="QString" value="30,150,30,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>130.2621657002292</xmin>
+        <ymin>33.496302248460324</ymin>
+        <xmax>141.48570358213607</xmax>
+        <ymax>43.110182508469755</ymax>
+      </extent>
+      <id>tokuryoku_layer</id>
+      <datasource>./tokuryoku.parquet</datasource>
+      <layername>特別緑地保全地区</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="34,139,34,128"/>
+            <Option name="outline_color" type="QString" value="0,100,0,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="Polygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>135.65350903213948</xmin>
+        <ymin>34.48485653203805</ymin>
+        <xmax>139.59320918933463</xmax>
+        <ymax>35.34267509278945</ymax>
+      </extent>
+      <id>rekifuu_layer</id>
+      <datasource>./rekifuu.parquet</datasource>
+      <layername>歴史的風土保存地区</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="150,120,80,255"/>
+            <Option name="outline_color" type="QString" value="110,80,40,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>130.882725330671</xmin>
+        <ymin>33.88552187759635</ymin>
+        <xmax>141.35668871851033</xmax>
+        <ymax>43.069382580068705</ymax>
+      </extent>
+      <id>toshisaisei_layer</id>
+      <datasource>./toshisaisei.parquet</datasource>
+      <layername>都市再生特別地区</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="255,100,180,255"/>
+            <Option name="outline_color" type="QString" value="200,40,120,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>124.1119443911898</xmin>
+        <ymin>24.331104496080258</ymin>
+        <xmax>144.456347419762</xmax>
+        <ymax>43.829171</ymax>
+      </extent>
+      <id>chikukei_layer</id>
+      <datasource>./chikukei.parquet</datasource>
+      <layername>地区計画</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="255,170,0,255"/>
+            <Option name="outline_color" type="QString" value="200,120,0,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>124.16310592470238</xmin>
+        <ymin>24.33276848856929</ymin>
+        <xmax>144.43772677036912</xmax>
+        <ymax>44.37143940905098</ymax>
+      </extent>
+      <id>tochiku_layer</id>
+      <datasource>./tochiku.parquet</datasource>
+      <layername>土地区画整理事業</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="255,140,90,255"/>
+            <Option name="outline_color" type="QString" value="200,90,40,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>124.11100144692622</xmin>
+        <ymin>24.33048494616215</ymin>
+        <xmax>144.99900619942733</xmax>
+        <ymax>44.94482136701273</ymax>
+      </extent>
+      <id>kouen_layer</id>
+      <datasource>./kouen.parquet</datasource>
+      <layername>公園</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="255,255,80,255"/>
+            <Option name="outline_color" type="QString" value="30,180,30,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="Polygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>140.3027055645032</xmin>
+        <ymin>35.653548046581456</ymin>
+        <xmax>140.4552721616253</xmax>
+        <ymax>35.870633319643204</ymax>
+      </extent>
+      <id>soubou_layer</id>
+      <datasource>./soubou.parquet</datasource>
+      <layername>航空機騒音障害防止地区</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="120,120,200,255"/>
+            <Option name="outline_color" type="QString" value="60,60,150,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Polygon" wkbType="MultiPolygon" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>140.9981231160296</xmin>
+        <ymin>37.44800696940549</ymin>
+        <xmax>141.02842236578846</xmax>
+        <ymax>37.460687748661734</ymax>
+      </extent>
+      <id>fukkousaiseikyoten_layer</id>
+      <datasource>./fukkousaiseikyoten.parquet</datasource>
+      <layername>一団地の復興再生拠点市街地形成施設</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="fill" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="color" type="QString" value="200,150,100,255"/>
+            <Option name="outline_color" type="QString" value="150,100,60,255"/>
+            <Option name="outline_style" type="QString" value="solid"/>
+            <Option name="outline_width" type="QString" value="0.2"/>
+            <Option name="outline_width_unit" type="QString" value="MM"/>
+            <Option name="style" type="QString" value="solid"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0,0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+    <maplayer type="vector" geometry="Line" wkbType="MultiLineString" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyLocal="1" simplifyMaxScale="1" simplifyAlgorithm="0" readOnly="0" labelsEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0">
+      <extent>
+        <xmin>124.13748112486586</xmin>
+        <ymin>24.331104290425216</ymin>
+        <xmax>145.0245863265669</xmax>
+        <ymax>44.95578980729623</ymax>
+      </extent>
+      <id>douro_layer</id>
+      <datasource>./douro.parquet</datasource>
+      <layername>都市計画道路</layername>
+      <srs>
+      <spatialrefsys nativeFormat="Wkt">
+        <wkt>GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]</wkt>
+        <proj4>+proj=longlat +ellps=GRS80 +no_defs +type=crs</proj4>
+        <srsid>6668</srsid>
+        <srid>6668</srid>
+        <authid>EPSG:6668</authid>
+        <description>JGD2011</description>
+        <projectionacronym>longlat</projectionacronym>
+        <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+        <geographicflag>true</geographicflag>
+      </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+    <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+      <symbols>
+      <symbol name="0" type="line" alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0">
+        <layer class="SimpleLine" enabled="1" locked="0" pass="0">
+          <Option type="Map">
+            <Option name="line_color" type="QString" value="0,0,255,255"/>
+            <Option name="line_style" type="QString" value="solid"/>
+            <Option name="line_width" type="QString" value="0.4"/>
+            <Option name="line_width_unit" type="QString" value="MM"/>
+            <Option name="capstyle" type="QString" value="square"/>
+            <Option name="joinstyle" type="QString" value="bevel"/>
+            <Option name="offset" type="QString" value="0"/>
+            <Option name="offset_unit" type="QString" value="MM"/>
+            <Option name="use_custom_dash" type="QString" value="0"/>
+          </Option>
+        </layer>
+      </symbol>
+      </symbols>
+    </renderer-v2>
+      <layerOpacity>0.5</layerOpacity>
+    <aliases>
+      <alias field="Pref" index="0" name="都道府県"/>
+      <alias field="Citycode" index="1" name="市区町村コード"/>
+      <alias field="Cityname" index="2" name="市区町村名"/>
+      <alias field="YoutoName" index="3" name="用途地域名"/>
+      <alias field="YoutoCode" index="4" name="用途地域コード"/>
+      <alias field="FAR" index="5" name="容積率"/>
+      <alias field="BCR" index="6" name="建蔽率"/>
+      <alias field="AreaType" index="7" name="種類"/>
+      <alias field="AreaName" index="8" name="名称"/>
+      <alias field="AreaCode" index="9" name="種類コード"/>
+      <alias field="TokeiName" index="10" name="都市計画区域名"/>
+      <alias field="TokeiType" index="11" name="種類"/>
+      <alias field="TokeiCode" index="12" name="種類コード"/>
+      <alias field="DistName" index="13" name="名称"/>
+      <alias field="DistType" index="14" name="種類"/>
+      <alias field="DistCode" index="15" name="種類コード"/>
+      <alias field="ParkName" index="16" name="公園名"/>
+      <alias field="ParkType" index="17" name="種類"/>
+      <alias field="ParkCode" index="18" name="種類コード"/>
+      <alias field="DouroType" index="19" name="種類"/>
+      <alias field="DouroCode" index="20" name="種類コード"/>
+      <alias field="FaciName" index="21" name="施設名"/>
+      <alias field="FaciType" index="22" name="種類"/>
+      <alias field="FaciCode" index="23" name="種類コード"/>
+      <alias field="INDate" index="24" name="当初決定日"/>
+      <alias field="FNDate" index="25" name="最終告示日"/>
+      <alias field="INNumber" index="26" name="当初告示番号"/>
+      <alias field="FNNumber" index="27" name="最終告示番号"/>
+      <alias field="ValidType" index="28" name="効力発生日の種類"/>
+      <alias field="Custodian" index="29" name="決定者"/>
+    </aliases>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+    </maplayer>
+  </maplayers>
+</qlr>

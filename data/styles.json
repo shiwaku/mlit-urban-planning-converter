@@ -1,6 +1,16 @@
 {
   "_comment": "テーマごとの配色・属性和名の定義。ビューア（viewer/src/layers.ts）と QGIS 用 QML 生成（src/tosiko_pmtiles/qml.py）が共有する唯一の出所。色は https://toshikeikaku-info.jp/ の定義に準拠し、rgba のアルファもサイトの値を踏襲する。サイト未収録のテーマはアルファ 1 とし、共通の不透明度 defaultOpacity で透過させる。",
   "defaultOpacity": 0.5,
+  "_defaultVisible_comment": "QGIS プロジェクト（.qlr / .qgz）を開いたときに最初からチェックが入っているテーマ。26枚すべて表示すると重いので既定は用途地域のみ。ビューア側の初期表示は layers.ts の on フラグが持つ。",
+  "defaultVisible": ["youto"],
+  "_drawOrder_comment": "重ね順。先頭が最背面、末尾が最前面。広域な区域（都市計画区域）を下に、用途地域を中位、細かい地区・線（都市計画道路）を上に置く。ビューアはこの順に addLayer し、レイヤーパネルではこれを反転して表示する（パネル先頭＝最前面）。QGIS 用の .qlr / .qgz も同じ順序を使う。",
+  "drawOrder": [
+    "tokei", "jyuntoshi", "senbiki", "ritteki", "youto", "tkbt", "tokuteiyouto",
+    "tokuteiyuudou", "koudoti", "koudori", "tokureiyouseki", "kousoujyukyo",
+    "kyojyuchosei", "bouka", "tokuteibou", "fuuchichiku", "ryokukachiiki",
+    "tokuryoku", "rekifuu", "toshisaisei", "chikukei", "tochiku", "kouen",
+    "soubou", "fukkousaiseikyoten", "douro"
+  ],
   "youto": {
     "_comment": "用途地域は YoutoCode（1..13）で色分け。田園住居地域(8) は参考サイト未収録のため補完。abbr は『用途地域スタンプ作成.xlsx』の中段表記に準拠し、「第N種」→「N種」「低層住居専用」→「低住」「中高層住居専用」→「中高」の規則で最大4字に揃える（xlsx に出現しない 4・8 も同じ規則で補完）。",
     "outline": "rgba(0,0,0,0.55)",

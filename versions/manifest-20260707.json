@@ -1,7 +1,7 @@
 {
   "version": "20260707",
   "tag": "data-20260707",
-  "generated_at": "2026-08-04T09:05:18+00:00",
+  "generated_at": "2026-08-04T09:42:56+00:00",
   "source_page": "https://www.mlit.go.jp/toshi/tosiko/toshi_tosiko_tk_000182.html",
   "info_page": "https://www.mlit.go.jp/toshi/tosiko/toshi_tosiko_tk_000087.html",
   "fingerprint": "c13bd267bdb0ebff8b740a1434c272bc2e1901ffb1685bcfc2471df16aa80e21",
@@ -580,95 +580,127 @@
       "theme": "youto",
       "name": "用途地域",
       "pmtiles": "youto.pmtiles",
-      "bytes": 4524823,
-      "source_files": 52
+      "bytes": 64275271,
+      "source_files": 1215
     },
     {
       "kind": "theme",
       "theme": "tokei",
       "name": "都市計画区域",
       "pmtiles": "tokei.pmtiles",
-      "bytes": 970182,
-      "source_files": 57
+      "bytes": 38953751,
+      "source_files": 1373
+    },
+    {
+      "kind": "theme",
+      "theme": "jyuntoshi",
+      "name": "準都市計画区域",
+      "pmtiles": "jyuntoshi.pmtiles",
+      "bytes": 397005,
+      "source_files": 25
     },
     {
       "kind": "theme",
       "theme": "senbiki",
       "name": "区域区分",
       "pmtiles": "senbiki.pmtiles",
-      "bytes": 894727,
-      "source_files": 51
+      "bytes": 33744182,
+      "source_files": 637
     },
     {
       "kind": "theme",
       "theme": "ritteki",
       "name": "立地適正化計画区域",
       "pmtiles": "ritteki.pmtiles",
-      "bytes": 277431,
-      "source_files": 7
+      "bytes": 32903202,
+      "source_files": 582
     },
     {
       "kind": "theme",
       "theme": "koudoti",
       "name": "高度地区",
       "pmtiles": "koudoti.pmtiles",
-      "bytes": 2813687,
-      "source_files": 50
+      "bytes": 10948154,
+      "source_files": 214
     },
     {
       "kind": "theme",
       "theme": "koudori",
       "name": "高度利用地区",
       "pmtiles": "koudori.pmtiles",
-      "bytes": 40603,
-      "source_files": 11
+      "bytes": 588265,
+      "source_files": 231
     },
     {
       "kind": "theme",
       "theme": "bouka",
       "name": "防火地域・準防火地域",
       "pmtiles": "bouka.pmtiles",
-      "bytes": 1558995,
-      "source_files": 51
+      "bytes": 7432205,
+      "source_files": 581
     },
     {
       "kind": "theme",
       "theme": "tkbt",
       "name": "特別用途地区",
       "pmtiles": "tkbt.pmtiles",
-      "bytes": 168072,
-      "source_files": 19
+      "bytes": 3985613,
+      "source_files": 337
+    },
+    {
+      "kind": "theme",
+      "theme": "tokuteiyouto",
+      "name": "特定用途制限地域",
+      "pmtiles": "tokuteiyouto.pmtiles",
+      "bytes": 3396607,
+      "source_files": 77
+    },
+    {
+      "kind": "theme",
+      "theme": "tokuteiyuudou",
+      "name": "特定用途誘導地区",
+      "pmtiles": "tokuteiyuudou.pmtiles",
+      "bytes": 48474,
+      "source_files": 6
     },
     {
       "kind": "theme",
       "theme": "fuuchichiku",
       "name": "風致地区",
       "pmtiles": "fuuchichiku.pmtiles",
-      "bytes": 48693,
-      "source_files": 8
+      "bytes": 3548316,
+      "source_files": 185
     },
     {
       "kind": "theme",
       "theme": "ryokukachiiki",
       "name": "緑化地域",
       "pmtiles": "ryokukachiiki.pmtiles",
-      "bytes": 24693,
-      "source_files": 1
+      "bytes": 461453,
+      "source_files": 4
     },
     {
       "kind": "theme",
       "theme": "tokuryoku",
       "name": "特別緑地保全地区",
       "pmtiles": "tokuryoku.pmtiles",
-      "bytes": 66132,
-      "source_files": 23
+      "bytes": 470389,
+      "source_files": 80
     },
     {
       "kind": "theme",
       "theme": "kousoujyukyo",
       "name": "高層住居誘導地区",
       "pmtiles": "kousoujyukyo.pmtiles",
-      "bytes": 3046,
+      "bytes": 3098,
+      "source_files": 1
+    },
+    {
+      "kind": "theme",
+      "theme": "kyojyuchosei",
+      "name": "居住調整地域",
+      "pmtiles": "kyojyuchosei.pmtiles",
+      "bytes": 36942,
       "source_files": 1
     },
     {
@@ -676,56 +708,80 @@
       "theme": "tokureiyouseki",
       "name": "特例容積率適用地区",
       "pmtiles": "tokureiyouseki.pmtiles",
-      "bytes": 4045,
-      "source_files": 1
+      "bytes": 6188,
+      "source_files": 2
+    },
+    {
+      "kind": "theme",
+      "theme": "tokuteibou",
+      "name": "特定防災街区整備地区",
+      "pmtiles": "tokuteibou.pmtiles",
+      "bytes": 20192,
+      "source_files": 8
+    },
+    {
+      "kind": "theme",
+      "theme": "rekifuu",
+      "name": "歴史的風土保存地区",
+      "pmtiles": "rekifuu.pmtiles",
+      "bytes": 281429,
+      "source_files": 7
     },
     {
       "kind": "theme",
       "theme": "toshisaisei",
       "name": "都市再生特別地区",
       "pmtiles": "toshisaisei.pmtiles",
-      "bytes": 10406,
-      "source_files": 1
+      "bytes": 57250,
+      "source_files": 14
     },
     {
       "kind": "theme",
       "theme": "chikukei",
       "name": "地区計画",
       "pmtiles": "chikukei.pmtiles",
-      "bytes": 309709,
-      "source_files": 7
+      "bytes": 8695458,
+      "source_files": 601
     },
     {
       "kind": "theme",
       "theme": "tochiku",
       "name": "土地区画整理事業",
       "pmtiles": "tochiku.pmtiles",
-      "bytes": 136841,
-      "source_files": 10
+      "bytes": 6662503,
+      "source_files": 485
     },
     {
       "kind": "theme",
       "theme": "douro",
       "name": "都市計画道路",
       "pmtiles": "douro.pmtiles",
-      "bytes": 84325,
-      "source_files": 1
+      "bytes": 33621655,
+      "source_files": 785
     },
     {
       "kind": "theme",
       "theme": "kouen",
       "name": "公園",
       "pmtiles": "kouen.pmtiles",
-      "bytes": 127960,
-      "source_files": 4
+      "bytes": 14361662,
+      "source_files": 716
     },
     {
       "kind": "theme",
-      "theme": "tokuteibou",
-      "name": "tokuteibou",
-      "pmtiles": "tokuteibou.pmtiles",
-      "bytes": 13082,
-      "source_files": 4
+      "theme": "soubou",
+      "name": "航空機騒音障害防止地区",
+      "pmtiles": "soubou.pmtiles",
+      "bytes": 73521,
+      "source_files": 5
+    },
+    {
+      "kind": "theme",
+      "theme": "fukkousaiseikyoten",
+      "name": "一団地の復興再生拠点市街地形成施設",
+      "pmtiles": "fukkousaiseikyoten.pmtiles",
+      "bytes": 7212,
+      "source_files": 1
     }
   ],
   "parquet": [

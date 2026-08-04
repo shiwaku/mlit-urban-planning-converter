@@ -1,9 +1,12 @@
 """テーマごとの QGIS レイヤスタイル（QML）を生成する。
 
 配色は `data/styles.json`（ビューアと共有）から作るので、Web ビューアと QGIS で
-同じ見た目になる。QGIS はファイル系レイヤを読み込むとき、同じディレクトリにある
-`<ファイル名>.qml` を自動で適用する。したがって `youto.parquet` と `youto.qml` を
-並べて置けば、読み込んだ時点で用途地域が色分けされた状態になる。
+同じ見た目になる。QGIS はファイル系レイヤを読み込むとき、**同じディレクトリにある
+同名の `<ファイル名>.qml`** を自動で適用する。したがって `youto.parquet` と
+`youto.qml` を並べて置けば、読み込んだ時点で用途地域が色分けされた状態になる。
+
+出力先は 2 箇所。`styles/` はコミット対象の正本、`dist/` は生成した GeoParquet の
+隣に置くための複製で、QGIS の自動適用が効くのはこちら。
 
 出力するもの:
   - 単一シンボル（塗り / 線）またはカテゴリ分け（用途地域 = YoutoCode、
@@ -14,7 +17,7 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Union
 from xml.sax.saxutils import quoteattr
 
 from . import config
@@ -123,7 +126,7 @@ def _categorized_renderer(attr: str, categories: list[tuple[str, str]], symbols:
     )
 
 
-def _renderer_for(theme: str) -> tuple[str, str]:
+def renderer_for(theme: str) -> tuple[str, str]:
     """テーマ -> (renderer-v2 の XML, ジオメトリ種別)。"""
     styles = config.load_styles()
     style = styles["themes"].get(theme, styles["fallbackStyle"])
@@ -157,7 +160,7 @@ def _renderer_for(theme: str) -> tuple[str, str]:
     return _single_renderer(fill_symbol("0", style["fill"], style["outline"])), geom
 
 
-def _aliases() -> str:
+def aliases_xml() -> str:
     labels = config.load_styles()["attributeLabels"]
     rows = "\n".join(
         f'    <alias field={quoteattr(field)} index="{i}" name={quoteattr(label)}/>'
@@ -167,7 +170,7 @@ def _aliases() -> str:
 
 
 def build_qml(theme: str) -> str:
-    renderer, geom = _renderer_for(theme)
+    renderer, geom = renderer_for(theme)
     opacity = config.load_styles()["defaultOpacity"]
     # 0=点 / 1=線 / 2=面
     geometry_type = 1 if geom == "line" else 2
@@ -180,7 +183,7 @@ def build_qml(theme: str) -> str:
         f'<qgis version="{QGIS_VERSION}" styleCategories="Symbology|Fields">\n'
         f"{renderer}\n"
         f"  <layerOpacity>{opacity}</layerOpacity>\n"
-        f"{_aliases()}\n"
+        f"{aliases_xml()}\n"
         f"  <layerGeometryType>{geometry_type}</layerGeometryType>\n"
         "</qgis>\n"
     )
@@ -189,16 +192,27 @@ def build_qml(theme: str) -> str:
 def write_all(
     *,
     out_dir: Optional[Path] = None,
+    mirror_dir: Union[Path, bool, None] = None,
     themes: Optional[list[str]] = None,
 ) -> list[dict]:
-    """全テーマ分の QML を書き出し、manifest 用の結果リストを返す。"""
+    """全テーマ分の QML を書き出し、manifest 用の結果リストを返す。
+
+    `mirror_dir`（既定は dist/）にも同じものを書く。QGIS が自動適用するのは
+    データファイルと同じディレクトリにある QML だけなので、生成した GeoParquet の
+    隣にも置いておく。`mirror_dir=False` を渡すと複製しない。
+    """
     out_dir = out_dir or config.STYLES_DIR
     out_dir.mkdir(parents=True, exist_ok=True)
+    mirror = config.DIST_DIR if mirror_dir is None else mirror_dir
     codes = themes or sorted(config.load_styles()["themes"], key=config.theme_order)
     results: list[dict] = []
     for theme in codes:
+        text = build_qml(theme)
         path = out_dir / f"{theme}.qml"
-        path.write_text(build_qml(theme), encoding="utf-8")
+        path.write_text(text, encoding="utf-8")
+        if mirror:
+            mirror.mkdir(parents=True, exist_ok=True)
+            (mirror / f"{theme}.qml").write_text(text, encoding="utf-8")
         results.append(
             {
                 "theme": theme,
@@ -207,5 +221,6 @@ def write_all(
                 "bytes": path.stat().st_size,
             }
         )
-    print(f"qml: {len(results)} ファイル -> {out_dir}")
+    where = f"{out_dir}" + (f" と {mirror}" if mirror else "")
+    print(f"qml: {len(results)} ファイル -> {where}")
     return results

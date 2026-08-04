@@ -6,7 +6,7 @@
 #   make download              # 全県 GeoJSON 取得（PREF="東京都 京都府" で県指定）
 #   make convert               # PMTiles 生成（SPLIT=theme|prefecture）
 #   make parquet               # テーマ別 GeoParquet 生成（THEME="youto tokei" で絞り込み）
-#   make qml                   # QGIS 用スタイル styles/*.qml 生成
+#   make qml                   # QGIS 用スタイル生成（styles/*.qml と .qlr / .qgz）
 #   make catalog               # manifest / versions.json / CATALOG.md 生成
 #   make all                   # scrape→download→convert→parquet→qml→catalog
 #   make check-update          # 更新有無の判定（CI用）

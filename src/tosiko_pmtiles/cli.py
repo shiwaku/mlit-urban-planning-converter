@@ -14,6 +14,7 @@ from . import (
     convert as convert_mod,
     download as download_mod,
     geoparquet as geoparquet_mod,
+    qgis_project as qgis_project_mod,
     qml as qml_mod,
     scrape as scrape_mod,
 )
@@ -106,10 +107,33 @@ def cmd_parquet(args) -> int:
 
 
 def cmd_qml(args) -> int:
-    results = qml_mod.write_all(themes=args.theme or None)
-    for r in results:
-        print(f"  -> {config.STYLES_DIR / r['qml']}")
+    qml_mod.write_all(themes=args.theme or None)
+    qgis_project_mod.write_all(themes=args.theme or None)
     return 0
+
+
+def _warn_if_stale(results: list[dict], key: str, suffix: str) -> None:
+    """中間 JSON の記録と dist/ の実ファイルがずれていたら警告する。
+
+    catalog は convert.json / parquet.json を読んで manifest を作るため、テーマを絞って
+    生成し直した直後などに中間 JSON が古いまま残っていると、manifest・CATALOG.md・
+    versions.json が実際の成果物より少ない（多い）内容で上書きされてしまう。
+    """
+    listed = {r[key]: r.get("bytes") for r in results}
+    on_disk = {p.name: p.stat().st_size for p in config.DIST_DIR.glob(f"*{suffix}")}
+    missing = sorted(set(on_disk) - set(listed))
+    extra = sorted(set(listed) - set(on_disk))
+    resized = sorted(n for n in set(listed) & set(on_disk) if listed[n] != on_disk[n])
+    if not (missing or extra or resized):
+        return
+    print(f"!! 警告: dist/*{suffix} と中間 JSON の記録が一致しません。", file=sys.stderr)
+    if missing:
+        print(f"   記録に無い実ファイル ({len(missing)}): {', '.join(missing)}", file=sys.stderr)
+    if extra:
+        print(f"   実ファイルが無い記録 ({len(extra)}): {', '.join(extra)}", file=sys.stderr)
+    if resized:
+        print(f"   サイズ不一致 ({len(resized)}): {', '.join(resized)}", file=sys.stderr)
+    print("   全テーマを生成し直してから catalog を実行してください。", file=sys.stderr)
 
 
 def _build_and_write_catalog(split: str, release_url: Optional[str]) -> dict:
@@ -117,6 +141,10 @@ def _build_and_write_catalog(split: str, release_url: Optional[str]) -> dict:
     dl = json.loads(_download_path().read_text(encoding="utf-8")) if _download_path().exists() else {}
     cv = json.loads(_convert_path().read_text(encoding="utf-8")) if _convert_path().exists() else {}
     pq = json.loads(_parquet_path().read_text(encoding="utf-8")) if _parquet_path().exists() else {}
+    # Release へは dist/*.pmtiles / dist/*.parquet をまとめて添付するので、
+    # dist/ に残った古いファイルは manifest に載らないまま配信されてしまう。
+    _warn_if_stale(cv.get("results", []), "pmtiles", ".pmtiles")
+    _warn_if_stale(pq.get("results", []), "parquet", ".parquet")
     manifest = catalog.build_manifest(
         sources,
         dl.get("entries", []),

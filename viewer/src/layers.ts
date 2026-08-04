@@ -39,8 +39,12 @@ export function opacityOf(def: ThemeDef): number {
  * 広域な区域（都市計画区域）を上に、用途地域を中位、細かい地区・線（都市計画道路）を下に置く。
  * 地図の描画順は main.ts の addDataLayers がこの配列順に addLayer するため、
  * **配列末尾ほど地図で最前面**（都市計画区域が最背面、都市計画道路が最前面）になる。
+ *
+ * 並び順の出所は data/styles.json の `drawOrder`（QGIS 用の .qlr / .qgz と共有）。
+ * 下の THEMES_UNORDERED はテーマの中身（表示名・初期表示・説明）だけを持ち、
+ * 実際の順序は末尾で drawOrder に従って並べ替える。
  */
-export const THEMES: ThemeDef[] = [
+const THEMES_UNORDERED: ThemeDef[] = [
   { key: 'tokei', name: '都市計画区域', geom: 'fill', on: false,
     desc: '一体の都市として総合的に整備し、開発し、及び保全する必要がある区域（都市計画法第5条）。' },
   { key: 'jyuntoshi', name: '準都市計画区域', geom: 'fill', on: false,
@@ -94,6 +98,11 @@ export const THEMES: ThemeDef[] = [
   { key: 'douro', name: '都市計画道路', geom: 'line', on: false,
     desc: '都市計画に都市施設として定められた道路（都市計画法第11条）。計画決定・事業中・整備済みの路線を含み、区域内では建築の制限がある（同法第53条・第54条）。' },
 ]
+
+const DRAW_ORDER: string[] = stylesJson.drawOrder
+export const THEMES: ThemeDef[] = [...THEMES_UNORDERED].sort(
+  (a, b) => DRAW_ORDER.indexOf(a.key) - DRAW_ORDER.indexOf(b.key),
+)
 
 // ---- 配色（data/styles.json / https://toshikeikaku-info.jp/ を参考） ----
 
