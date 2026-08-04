@@ -152,6 +152,12 @@ def _tree_layer(layer_id: str, name: str, checked: bool, indent: str) -> str:
     )
 
 
+def _visible_themes(themes: list[str]) -> set[str]:
+    """初期チェックを入れるテーマ。`defaultVisible` が "all" なら全部 ON。"""
+    conf = config.load_styles().get("defaultVisible", "all")
+    return set(themes) if conf == "all" else set(conf)
+
+
 def _ordered_themes(available: set[str]) -> list[str]:
     """drawOrder の順（背面→前面）。データが無いテーマは落とす。"""
     return [t for t in config.load_styles()["drawOrder"] if t in available]
@@ -168,7 +174,7 @@ def _load_parquet_meta() -> dict[str, dict]:
 
 def build_qlr(themes: list[str], meta: dict[str, dict]) -> str:
     srs = _srs_xml()
-    visible = set(config.load_styles()["defaultVisible"])
+    visible = _visible_themes(themes)
     # レイヤツリーは先頭が最前面。drawOrder は先頭が最背面なので反転する。
     tree = "\n".join(
         _tree_layer(_layer_id(t), config.theme_name(t), t in visible, "    ")
@@ -193,7 +199,7 @@ def build_qlr(themes: list[str], meta: dict[str, dict]) -> str:
 
 def build_qgs(themes: list[str], meta: dict[str, dict]) -> str:
     srs = _srs_xml()
-    visible = set(config.load_styles()["defaultVisible"])
+    visible = _visible_themes(themes)
     tree = "\n".join(
         _tree_layer(_layer_id(t), config.theme_name(t), t in visible, "    ")
         for t in reversed(themes)
