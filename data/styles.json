@@ -1,8 +1,8 @@
 {
   "_comment": "テーマごとの配色・属性和名の定義。ビューア（viewer/src/layers.ts）と QGIS 用 QML 生成（src/tosiko_pmtiles/qml.py）が共有する唯一の出所。色は https://toshikeikaku-info.jp/ の定義に準拠し、rgba のアルファもサイトの値を踏襲する。サイト未収録のテーマはアルファ 1 とし、共通の不透明度 defaultOpacity で透過させる。",
   "defaultOpacity": 0.5,
-  "_defaultVisible_comment": "QGIS プロジェクト（.qlr / .qgz）を開いたときに最初からチェックが入っているテーマ。26枚すべて表示すると重いので既定は用途地域のみ。ビューア側の初期表示は layers.ts の on フラグが持つ。",
-  "defaultVisible": ["youto"],
+  "_defaultVisible_comment": "QGIS プロジェクト（.qlr / .qgz）を開いたときに最初からチェックが入っているテーマ。\"all\" で全テーマ ON（配布物は全レイヤ入りなので既定はこちら。全国表示のままだと全26枚を描くので重い）。テーマコードの配列を書けばそれだけを ON にできる。ビューア側の初期表示は layers.ts の on フラグが持つ。",
+  "defaultVisible": "all",
   "_drawOrder_comment": "重ね順。先頭が最背面、末尾が最前面。広域な区域（都市計画区域）を下に、用途地域を中位、細かい地区・線（都市計画道路）を上に置く。ビューアはこの順に addLayer し、レイヤーパネルではこれを反転して表示する（パネル先頭＝最前面）。QGIS 用の .qlr / .qgz も同じ順序を使う。",
   "drawOrder": [
     "tokei", "jyuntoshi", "senbiki", "ritteki", "youto", "tkbt", "tokuteiyouto",

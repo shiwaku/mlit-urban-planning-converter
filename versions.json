@@ -3,7 +3,7 @@
     {
       "version": "20260707",
       "tag": "data-20260707",
-      "generated_at": "2026-08-04T11:14:22+00:00",
+      "generated_at": "2026-08-04T11:26:22+00:00",
       "split": "theme",
       "release_url": "https://github.com/shiwaku/mlit-urban-planning-converter/releases/tag/data-20260707",
       "prefecture_count": 47,
@@ -248,7 +248,7 @@
       "bundles": [
         {
           "name": "toshikeikaku-qgis.zip",
-          "bytes": 613982409,
+          "bytes": 613982524,
           "entries": 55
         }
       ]
