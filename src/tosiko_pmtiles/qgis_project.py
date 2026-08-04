@@ -139,51 +139,50 @@ def _maplayer(theme: str, meta: dict, srs: str) -> str:
     )
 
 
+def _basemap_datasource() -> str:
+    """XYZ レイヤの datasource。QGIS 3.34 の出力と同じ並び・同じ encode。"""
+    return (
+        "http-header:referer=&amp;type=xyz&amp;url="
+        + BASEMAP_URL.replace("{", "%7B").replace("}", "%7D")
+        + "&amp;zmax=18&amp;zmin=0"
+    )
+
+
 def _basemap_maplayer() -> str:
     """地理院タイル（淡色地図）の XYZ ラスタレイヤ。
 
-    QGIS 自身が書き出した .qgs（QGIS-Documentation の training_manual、pfaedle）の
-    XYZ レイヤをそのまま写した構造にしてある。ラスタは手書きの最小構成では読み込みに
-    失敗しうるので、実物に合わせるのが確実:
+    QGIS 3.34 が実際に書き出した「地理院タイルを XYZ で読んでいるプロジェクト」
+    （geolonia/maff-abandoned-farmland-matching-tool の qgis/*.qgs.j2）をそのまま
+    写している。手書きの最小構成では読み込めても描画されないため、実物合わせが確実:
 
+      - URI は `http-header:referer=&type=xyz&url=…&zmax=18&zmin=0`。3.34 の出力に
+        **`crs` と `format` は無い**（`type=xyz` では provider 側が EPSG:3857 に
+        固定するので `crs` は効かない。値を持たない `format` は URI のパースを
+        壊しうるので書かない）
+      - `url` は **percent encode する**（`{z}` → `%7Bz%7D`）。実際に動いている
+        プロジェクトがこの形なので、これに合わせる
       - タイルは Web メルカトル。レイヤの CRS と extent は EPSG:3857 で書く
         （プロジェクトの EPSG:6668 を流用すると、メートル値が度として扱われて出てこない）
-      - URI はパラメータをアルファベット順に並べ、`format` は**値を持たないフラグ**として
-        書く（`format=` ではない）
-      - **`url` は percent encode しない**。QGIS 3.34 の読み取り経路では
-        `mBaseUrl = uri.param("url")` をそのまま使い、リテラルの `{x}` `{y}` `{z}` を
-        文字列置換する（`qgswmsprovider.cpp` の createTileRequestsXYZ）。デコードを
-        行う prepareUri() はこの経路を通らないので、`%7Bz%7D` と書くと置換されず
-        壊れた URL を叩いて真っ白になる。`&` や `=` を含まない URL なので、
-        波括弧のまま書いても URI のパース自体は壊れない
-      - `crs` は xyz では provider 側が EPSG:3857 に固定するので効かないが、実物に
-        合わせて書いておく（`EPSG3857` のようにコロンを落とした値は無効）
-      - <pipe> には rasterrenderer だけでなく brightnesscontrast / huesaturation /
-        rasterresampler まで入れる。<noData> と <map-layer-style-manager> も実物にある
+      - <pipe> は provider の resampling・rasterrenderer（minMaxOrigin まで）・
+        brightnesscontrast・huesaturation・rasterresampler・resamplingStage を揃える。
+        <noData> / <flags> / <temporal> / <customproperties>（Option 形式）も実物にある
     """
-    ds = (
-        f"crs=EPSG:{BASEMAP_EPSG}&amp;format&amp;type=xyz&amp;url={escape(BASEMAP_URL)}"
-        "&amp;zmax=18&amp;zmin=0"
-    )
     return (
         f'    <maplayer type="raster" hasScaleBasedVisibilityFlag="0" minScale="1e+08" maxScale="0" '
-        f'styleCategories="AllStyleCategories" autoRefreshEnabled="0" autoRefreshTime="0" '
+        f'styleCategories="AllStyleCategories" autoRefreshMode="Disabled" autoRefreshTime="0" '
         f'refreshOnNotifyEnabled="0" refreshOnNotifyMessage="" legendPlaceholderImage="">\n'
         f"{_extent_xml(list(BASEMAP_EXTENT), '      ')}\n"
         f"      <wgs84extent>\n"
         f"        <xmin>-180</xmin>\n"
         f"        <ymin>-85.05112877980660357</ymin>\n"
         f"        <xmax>180</xmax>\n"
-        f"        <ymax>85.05112877980658936</ymax>\n"
+        f"        <ymax>85.05112877980660357</ymax>\n"
         f"      </wgs84extent>\n"
         f"      <id>{BASEMAP_ID}</id>\n"
-        f"      <datasource>{ds}</datasource>\n"
+        f"      <datasource>{_basemap_datasource()}</datasource>\n"
         f"      <keywordList>\n        <value></value>\n      </keywordList>\n"
         f"      <layername>{escape(BASEMAP_NAME)}</layername>\n"
         f"      <srs>\n{_srs_xml(BASEMAP_EPSG)}\n      </srs>\n"
-        f"      <customproperties>\n"
-        f'        <property key="identify/format" value="Undefined"/>\n'
-        f"      </customproperties>\n"
         f"      <provider>wms</provider>\n"
         f"      <noData>\n"
         f'        <noDataList bandNo="1" useSrcNoData="0"/>\n'
@@ -191,25 +190,67 @@ def _basemap_maplayer() -> str:
         f'      <map-layer-style-manager current="default">\n'
         f'        <map-layer-style name="default"/>\n'
         f"      </map-layer-style-manager>\n"
+        f"      <metadataUrls/>\n"
+        f"      <flags>\n"
+        f"        <Identifiable>1</Identifiable>\n"
+        f"        <Removable>1</Removable>\n"
+        f"        <Searchable>1</Searchable>\n"
+        f"        <Private>0</Private>\n"
+        f"      </flags>\n"
+        f'      <temporal bandNumber="1" fetchMode="0" enabled="0" mode="0">\n'
+        f"        <fixedRange>\n          <start></start>\n          <end></end>\n        </fixedRange>\n"
+        f"      </temporal>\n"
+        f"      <customproperties>\n"
+        f'        <Option type="Map">\n'
+        f'          <Option type="QString" name="identify/format" value="Undefined"/>\n'
+        f"        </Option>\n"
+        f"      </customproperties>\n"
         f"      <pipe>\n"
-        f'        <rasterrenderer opacity="1" alphaBand="-1" band="1" type="singlebandcolordata">\n'
+        f"        <provider>\n"
+        f'          <resampling maxOversampling="2" zoomedInResamplingMethod="nearestNeighbour" '
+        f'enabled="false" zoomedOutResamplingMethod="nearestNeighbour"/>\n'
+        f"        </provider>\n"
+        f'        <rasterrenderer type="singlebandcolordata" alphaBand="-1" opacity="1" '
+        f'nodataColor="" band="1">\n'
         f"          <rasterTransparency/>\n"
+        f"          <minMaxOrigin>\n"
+        f"            <limits>None</limits>\n"
+        f"            <extent>WholeRaster</extent>\n"
+        f"            <statAccuracy>Estimated</statAccuracy>\n"
+        f"            <cumulativeCutLower>0.02</cumulativeCutLower>\n"
+        f"            <cumulativeCutUpper>0.98</cumulativeCutUpper>\n"
+        f"            <stdDevFactor>2</stdDevFactor>\n"
+        f"          </minMaxOrigin>\n"
         f"        </rasterrenderer>\n"
-        f'        <brightnesscontrast brightness="0" contrast="0"/>\n'
-        f'        <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" '
-        f'colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>\n'
+        f'        <brightnesscontrast contrast="0" gamma="1" brightness="0"/>\n'
+        f'        <huesaturation colorizeBlue="128" colorizeStrength="100" grayscaleMode="0" '
+        f'invertColors="0" saturation="0" colorizeOn="0" colorizeRed="255" colorizeGreen="128"/>\n'
         f'        <rasterresampler maxOversampling="2"/>\n'
+        f"        <resamplingStage>resamplingFilter</resamplingStage>\n"
         f"      </pipe>\n"
         f"      <blendMode>0</blendMode>\n"
         f"    </maplayer>"
     )
 
 
-def _tree_layer(layer_id: str, name: str, checked: bool, indent: str) -> str:
+def _tree_layer(
+    layer_id: str,
+    name: str,
+    checked: bool,
+    indent: str,
+    *,
+    source: str = "",
+    provider_key: str = "",
+) -> str:
+    """レイヤツリーの1行。
+
+    背景地図は QGIS の実出力と同じく source / providerKey を埋める（データ側の
+    ベクタレイヤは空でも id で解決される）。
+    """
     state = "Qt::Checked" if checked else "Qt::Unchecked"
     return (
         f"{indent}<layer-tree-layer id={quoteattr(layer_id)} name={quoteattr(name)} "
-        f'source="" providerKey="" checked="{state}" expanded="0">\n'
+        f'source="{source}" providerKey="{provider_key}" checked="{state}" expanded="0">\n'
         f"{indent}  <customproperties/>\n"
         f"{indent}</layer-tree-layer>"
     )
@@ -267,7 +308,14 @@ def build_qgs(themes: list[str], meta: dict[str, dict]) -> str:
         _tree_layer(_layer_id(t), config.theme_name(t), t in visible, "    ")
         for t in reversed(themes)
     )
-    tree += "\n" + _tree_layer(BASEMAP_ID, BASEMAP_NAME, True, "    ")
+    tree += "\n" + _tree_layer(
+        BASEMAP_ID,
+        BASEMAP_NAME,
+        True,
+        "    ",
+        source=_basemap_datasource(),
+        provider_key="wms",
+    )
     layers = "\n".join(_maplayer(t, meta.get(t, {}), srs) for t in themes)
     layers += "\n" + _basemap_maplayer()
     # 描画順（先頭が最前面）。レイヤツリーと同じ並びを明示しておく。
@@ -299,6 +347,13 @@ def build_qgs(themes: list[str], meta: dict[str, dict]) -> str:
         "    <Paths>\n"
         "      <Absolute type=\"bool\">false</Absolute>\n"
         "    </Paths>\n"
+        # QGIS は ProjectionsEnabled が 1 でないと <projectCrs> を読まない
+        # （qgsproject.cpp: readNumEntry("SpatialRefSys", "/ProjectionsEnabled", 0) が
+        # 偽なら projectCrs ノードを見にいかない）。これが無いとプロジェクト CRS が
+        # 「CRSなし」になり、投影変換ができず EPSG:3857 の背景地図が描かれない。
+        "    <SpatialRefSys>\n"
+        "      <ProjectionsEnabled type=\"int\">1</ProjectionsEnabled>\n"
+        "    </SpatialRefSys>\n"
         "  </properties>\n"
         "</qgis>\n"
     )
