@@ -118,12 +118,15 @@ jobs:
           TAG="${{ steps.check.outputs.tag }}"
           VER="${{ steps.check.outputs.version }}"
           if ! gh release view "$TAG" >/dev/null 2>&1; then
-            gh release create "$TAG" \
-              --title "都市計画決定GISデータ ${VER}" \
-              --notes "国土交通省 都市局『都市計画決定GISデータ』を PMTiles / GeoParquet 化した版 ${VER}。QGIS 用スタイル（*.qml）とプロジェクト（*.qlr / *.qgz）も同梱。**QGIS で全部見たい場合は toshikeikaku-qgis.zip だけ落とせば済みます**（解凍して toshikeikaku.qgz を開く）。出典: https://www.mlit.go.jp/toshi/tosiko/toshi_tosiko_tk_000182.html"
+            gh release create "$TAG" --title "都市計画決定GISデータ ${VER}" --notes-file dist/release-notes.md
+          else
+            # 本文は manifest から作り直しているので、再実行時も最新の内容に揃える。
+            gh release edit "$TAG" --notes-file dist/release-notes.md
           fi
-          gh release upload "$TAG" dist/*.pmtiles dist/*.parquet dist/*-qgis.zip \
-            styles/*.qml styles/*.qlr styles/*.qgz dist/manifest.json --clobber
+          # 添付は PMTiles（URL 直参照で使う）と QGIS 一式 zip、台帳の manifest.json のみ。
+          # GeoParquet / QML / .qlr / .qgz は zip に入っているので個別には添付しない
+          # （Assets が 80 本を超えて選びにくくなるため）。
+          gh release upload "$TAG" dist/*.pmtiles dist/*-qgis.zip dist/manifest.json --clobber
 
       - name: Commit catalog
         if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'

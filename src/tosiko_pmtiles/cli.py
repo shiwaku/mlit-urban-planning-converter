@@ -1,4 +1,4 @@
-"""コマンドラインエントリ: scrape / download / convert / parquet / qml / bundle / catalog / all / check-update。"""
+"""コマンドラインエントリ: scrape / download / convert / parquet / qml / bundle / catalog / notes / all / check-update。"""
 from __future__ import annotations
 
 import argparse
@@ -174,14 +174,28 @@ def _build_and_write_catalog(split: str, release_url: Optional[str]) -> dict:
     v_path, d_path = catalog.write_manifest(manifest)
     idx = catalog.update_versions_index(manifest, release_url=release_url)
     md = catalog.write_catalog_md(manifest)
+    # Release 本文も manifest から作る。手書きだと配信物を変えたときに本文だけ古くなる。
+    notes = catalog.write_release_notes(manifest)
     print(f"catalog: version={manifest['version']} tag={manifest['tag']}")
-    for p in (v_path, d_path, idx, md):
+    for p in (v_path, d_path, idx, md, notes):
         print(f"  -> {p}")
     return manifest
 
 
 def cmd_catalog(args) -> int:
     _build_and_write_catalog(args.split, args.release_url)
+    return 0
+
+
+def cmd_notes(args) -> int:
+    """dist/manifest.json から Release 本文（dist/release-notes.md）を作り直す。"""
+    path = config.DIST_DIR / "manifest.json"
+    if not path.exists():
+        print(f"!! {path} がありません。先に catalog を実行してください。", file=sys.stderr)
+        return 1
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    out = catalog.write_release_notes(manifest, repo=args.repo)
+    print(f"notes: version={manifest['version']} -> {out}")
     return 0
 
 
@@ -289,6 +303,10 @@ def build_parser() -> argparse.ArgumentParser:
     kp.add_argument("--split", choices=["theme", "prefecture"], default="theme")
     kp.add_argument("--release-url", default=None)
     kp.set_defaults(func=cmd_catalog)
+
+    np_ = sub.add_parser("notes", help="dist/manifest.json から Release 本文を生成（catalog でも生成される）")
+    np_.add_argument("--repo", default=None, help="owner/repo。既定は $GITHUB_REPOSITORY")
+    np_.set_defaults(func=cmd_notes)
 
     ap = sub.add_parser("all", help="scrape→download→convert→parquet→qml→bundle→catalog を一括実行")
     ap.add_argument("--pref", action="append")
