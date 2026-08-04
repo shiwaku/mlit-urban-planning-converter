@@ -90,6 +90,16 @@ def _srs_xml(epsg: int = config.SOURCE_EPSG) -> str:
     )
 
 
+def _ellipsoid_authid(epsg: int = config.SOURCE_EPSG) -> str:
+    """計測用の楕円体 authid（JGD2011 なら GRS80 = EPSG:7019）。"""
+    from pyproj import CRS
+
+    ident = (CRS.from_epsg(epsg).ellipsoid.to_json_dict().get("id") or {})
+    if ident.get("authority") and ident.get("code"):
+        return f"{ident['authority']}:{ident['code']}"
+    return "NONE"
+
+
 def _wkb_type(geometry_types: list[str]) -> str:
     return _WKB_TYPE.get(tuple(sorted(geometry_types)), "Unknown")
 
@@ -354,6 +364,16 @@ def build_qgs(themes: list[str], meta: dict[str, dict]) -> str:
         "    <SpatialRefSys>\n"
         "      <ProjectionsEnabled type=\"int\">1</ProjectionsEnabled>\n"
         "    </SpatialRefSys>\n"
+        # 計測に使う楕円体。未設定だと QgsProject::ellipsoid() が "NONE" を返し
+        # （qgsproject.cpp）、経緯度のまま平面計算されて距離・面積が度単位の
+        # 無意味な値になる。データの測地系（JGD2011）と同じ GRS80 を指定する。
+        "    <Measure>\n"
+        f"      <Ellipsoid type=\"QString\">{_ellipsoid_authid()}</Ellipsoid>\n"
+        "    </Measure>\n"
+        "    <Measurement>\n"
+        "      <AreaUnits type=\"QString\">m2</AreaUnits>\n"
+        "      <DistanceUnits type=\"QString\">meters</DistanceUnits>\n"
+        "    </Measurement>\n"
         "  </properties>\n"
         "</qgis>\n"
     )
