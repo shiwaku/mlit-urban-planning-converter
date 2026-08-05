@@ -19,11 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
---------------------------------------------------------------------------------
-
-本リポジトリの「コード」は上記 MIT ライセンスで提供します。
-一方、本パイプラインが取得・変換する「データ」の著作権・利用条件は
-出典である国土交通省 都市局「都市計画決定GISデータ」に従います。
-データを利用・再配布する際は出典を明記し、提供元の利用規約を確認してください。
-（本データは参考情報であり、内容の正確性・最新性は保証されません。）
